@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
-import org.sufficientlysecure.htmltextview.HtmlHttpImageGetter;
+import org.mazhuang.guanggoo.util.MyHttpImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import butterknife.BindView;
@@ -74,7 +74,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mAuthorTextView.setText(topicDetail.getTopic().getMeta().getAuthor().getUsername());
         mNodeTextView.setText(topicDetail.getTopic().getMeta().getNode().getTitle());
 
-        mContentTextView.setHtml(topicDetail.getContent(), new HtmlHttpImageGetter(mContentTextView));
+        mContentTextView.setHtml(topicDetail.getContent(), new MyHttpImageGetter(mContentTextView, null, true));
     }
 
     @Override
