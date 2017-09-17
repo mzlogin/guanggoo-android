@@ -19,11 +19,11 @@ import java.util.List;
  * Created by mazhuang on 2017/9/16.
  */
 
-public class GetTopicTask extends BaseTask<List<Topic>> implements Runnable {
+public class GetTopicListTask extends BaseTask<List<Topic>> implements Runnable {
 
     private String mUrl;
 
-    public GetTopicTask(String url, OnResponseListener<List<Topic>> listener) {
+    public GetTopicListTask(String url, OnResponseListener<List<Topic>> listener) {
         super(listener);
         mUrl = url;
     }
@@ -31,10 +31,9 @@ public class GetTopicTask extends BaseTask<List<Topic>> implements Runnable {
     @Override
     public void run() {
         List<Topic> topics = new ArrayList<>();
-        Connection connection = Jsoup.connect(mUrl);
 
         try {
-            Document doc = Jsoup.connect(mUrl).get();
+            Document doc = getConnection(mUrl).get();
 
             Elements elements = doc.select("div.topic-item");
 
@@ -54,11 +53,18 @@ public class GetTopicTask extends BaseTask<List<Topic>> implements Runnable {
         }
     }
 
-    private Topic createTopicFromElement(Element element) {
+    public static Topic createTopicFromElement(Element element) {
         Topic topic = new Topic();
 
         Element titleElement = element.select("h3.title").select("a").first();
-        topic.setTitle(titleElement.text());
+        if (titleElement != null) { // 主题列表页
+            topic.setTitle(titleElement.text());
+        } else { // 主题详情页
+            titleElement = element.select("h3.title").first();
+            if (titleElement != null) {
+                topic.setTitle(titleElement.text());
+            }
+        }
         topic.setUrl(titleElement.absUrl("href"));
 
         topic.setAvatar(element.select("img.avatar").attr("src"));
@@ -76,7 +82,7 @@ public class GetTopicTask extends BaseTask<List<Topic>> implements Runnable {
         return topic;
     }
 
-    private Meta createMetaFromElement(Element element) {
+    private static Meta createMetaFromElement(Element element) {
         Meta meta = new Meta();
 
         Element nodeElement = element.select("span.node").select("a").first();
@@ -93,7 +99,11 @@ public class GetTopicTask extends BaseTask<List<Topic>> implements Runnable {
 
         meta.setAuthor(user);
 
-        meta.setLastTouched(element.select("span.last-touched").text());
+        Elements lastTouchedElement = element.select("span.last-touched"); // 主题列表页
+        if (lastTouchedElement.isEmpty()) {
+            lastTouchedElement = element.select("span.last-reply-time"); // 主题详情页
+        }
+        meta.setLastTouched(lastTouchedElement.text());
 
         Element lastReplyUserElement = element.select("span.last-reply-username").select("a").first();
         if (lastReplyUserElement != null) {

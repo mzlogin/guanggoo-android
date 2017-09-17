@@ -25,9 +25,12 @@ import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Topic;
+import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.data.task.AuthCheckTask;
 import org.mazhuang.guanggoo.login.LoginFragment;
 import org.mazhuang.guanggoo.login.LoginPresenter;
+import org.mazhuang.guanggoo.topicdetail.TopicDetailFragment;
+import org.mazhuang.guanggoo.topicdetail.TopicDetailPresenter;
 import org.mazhuang.guanggoo.topiclist.TopicListFragment;
 import org.mazhuang.guanggoo.topiclist.TopicListPresenter;
 import org.mazhuang.guanggoo.util.ConstantUtil;
@@ -189,9 +192,12 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    private Fragment getCurrentFragment() {
+        return getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+    }
+
     private void gotoLoginPage(String url) {
-        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        if (currentFragment instanceof LoginFragment) {
+        if (getCurrentFragment() instanceof LoginFragment) {
             return;
         }
 
@@ -207,23 +213,35 @@ public class MainActivity extends AppCompatActivity
         addFragmentToStack(getSupportFragmentManager(), fragment);
     }
 
+    private void gotoTopicDetailPage(String url) {
+        if (getCurrentFragment() instanceof TopicDetailFragment) {
+            return;
+        }
+
+        TopicDetailFragment fragment = new TopicDetailFragment();
+        new TopicDetailPresenter(fragment);
+
+        if (!TextUtils.isEmpty(url)) {
+            Bundle bundle = new Bundle();
+            bundle.putString(TopicDetailFragment.KEY_URL, url);
+            fragment.setArguments(bundle);
+        }
+
+        addFragmentToStack(getSupportFragmentManager(), fragment);
+    }
+
     @Override
     public void onListFragmentInteraction(final Topic item) {
         NetworkTaskScheduler.getInstance().execute(new AuthCheckTask(new OnResponseListener<String>() {
             @Override
-            public void onSucceed(String data) {
-                // TODO: 2017/9/17 打开主题详情页
+            public void onSucceed(String url) {
+                gotoTopicDetailPage(item.getUrl());
             }
 
             @Override
             public void onFailed(String msg) {
                 Toast.makeText(MainActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
-                LoginFragment fragment = new LoginFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString(LoginFragment.KEY_REFERER, item.getUrl());
-                fragment.setArguments(bundle);
-                new LoginPresenter(fragment);
-                addFragmentToStack(getSupportFragmentManager(), fragment);
+                gotoLoginPage(item.getUrl());
             }
         }));
     }
@@ -232,6 +250,9 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(String refererUrl) {
         initLoginedInUserInfo();
 
-        // TODO: 2017/9/17 根据触发登录的类型和页面，这里设置跳转
+        // 根据触发登录的类型和页面，这里设置跳转，目前只有从主题列表跳转到主题详情
+        if (!TextUtils.isEmpty(refererUrl)) {
+            gotoTopicDetailPage(refererUrl);
+        }
     }
 }
