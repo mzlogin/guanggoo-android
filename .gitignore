@@ -53,3 +53,5 @@ fabric.properties
 
 # Bugly
 bugly/
+
+*.swp

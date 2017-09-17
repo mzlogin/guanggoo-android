@@ -1,8 +1,8 @@
 package org.mazhuang.guanggoo.topiclist;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -61,7 +61,7 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_topiclist_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_topic_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -72,6 +72,12 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+            recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+                @Override
+                public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                    outRect.set(0, 0, 0, 1);
+                }
+            });
             mAdapter = new TopicListAdapter(mListener);
             recyclerView.setAdapter(mAdapter);
         }

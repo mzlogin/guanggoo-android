@@ -9,7 +9,7 @@ import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.task.AuthCheckTask;
 import org.mazhuang.guanggoo.login.LoginContract;
 
-public class AuthActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

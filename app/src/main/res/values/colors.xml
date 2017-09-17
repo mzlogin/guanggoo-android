@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#e3e3e3</color>
     <color name="colorAccent">#f3f3f3</color>
     <color name="defaultFontColor">#838383</color>
+    <color name="node_background">#e3e3e3</color>
+    <color name="listBackground">#838383</color>
+    <color name="emphasizeFontColor">#666666</color>
 </resources>

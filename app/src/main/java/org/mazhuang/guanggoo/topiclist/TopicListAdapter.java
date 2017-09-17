@@ -4,13 +4,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.topiclist.TopicListFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Topic} and makes a call to the
@@ -19,7 +25,7 @@ import java.util.List;
  */
 public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.ViewHolder> {
 
-    private List<Topic> mValues;
+    private List<Topic> mData;
     private final OnListFragmentInteractionListener mListener;
 
     public TopicListAdapter(OnListFragmentInteractionListener listener) {
@@ -27,25 +33,33 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.View
     }
 
     public void setData(List<Topic> data) {
-        if (data == mValues) {
+        if (data == mData) {
             return;
         }
 
-        mValues = data;
+        mData = data;
         notifyDataSetChanged();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_topiclist, parent, false);
+                .inflate(R.layout.item_topic_list, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mTitleView.setText(mValues.get(position).getTitle());
+        holder.mItem = mData.get(position);
+        holder.mTitleTextView.setText(mData.get(position).getTitle());
+        Glide.with(holder.mAvatarImageView.getContext())
+                .load(holder.mItem.getAvatar())
+                .centerCrop()
+                .crossFade()
+                .into(holder.mAvatarImageView);
+        holder.mLastTouchedTextView.setText(holder.mItem.getMeta().getLastTouched());
+        holder.mAuthorTextView.setText(holder.mItem.getMeta().getAuthor().getUsername());
+        holder.mNodeTextView.setText(holder.mItem.getMeta().getNode().getTitle());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,23 +75,22 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.View
 
     @Override
     public int getItemCount() {
-        return mValues == null ? 0 : mValues.size();
+        return mData == null ? 0 : mData.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mTitleView;
+        @BindView(R.id.title) TextView mTitleTextView;
+        @BindView(R.id.avatar) ImageView mAvatarImageView;
+        @BindView(R.id.last_touched) TextView mLastTouchedTextView;
+        @BindView(R.id.author) TextView mAuthorTextView;
+        @BindView(R.id.node) TextView mNodeTextView;
         public Topic mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mTitleView = (TextView) view.findViewById(R.id.title);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mTitleView.getText() + "'";
+            ButterKnife.bind(this, view);
         }
     }
 }

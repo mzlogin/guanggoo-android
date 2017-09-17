@@ -91,7 +91,7 @@ public class GetTopicTask extends BaseTask<List<Topic>> implements Runnable {
         user.setUsername(userElement.text());
         user.setUrl(userElement.absUrl("href"));
 
-        meta.setUser(user);
+        meta.setAuthor(user);
 
         meta.setLastTouched(element.select("span.last-touched").text());
 
