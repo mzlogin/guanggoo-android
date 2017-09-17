@@ -10,11 +10,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.mazhuang.guanggoo.LoginActivity;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
-
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
