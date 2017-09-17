@@ -21,4 +21,8 @@
 
 ## 屏幕截图
 
-![](./screenshots/homepage.png)
+<img width="360" src="./screenshots/homepage.png" />
+
+## License
+
+[Apache License 2.0](https://github.com/mzlogin/guanggoo-android/blob/master/LICENSE)
