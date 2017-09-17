@@ -12,4 +12,8 @@ public class BaseFragment<T> extends Fragment {
     public void setPresenter(T presenter) {
         mPresenter = presenter;
     }
+
+    public boolean onBackPressed() {
+        return false;
+    }
 }

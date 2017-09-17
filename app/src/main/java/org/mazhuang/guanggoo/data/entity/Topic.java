@@ -9,6 +9,7 @@ public class Topic {
     private String url;
     private String avatar;
     private Meta meta;
+    private int count;
 
     public String getTitle() {
         return title;
@@ -40,5 +41,13 @@ public class Topic {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

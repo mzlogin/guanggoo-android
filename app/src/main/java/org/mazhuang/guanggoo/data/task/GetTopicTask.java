@@ -1,5 +1,6 @@
 package org.mazhuang.guanggoo.data.task;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -30,6 +31,8 @@ public class GetTopicTask extends BaseTask<List<Topic>> implements Runnable {
     @Override
     public void run() {
         List<Topic> topics = new ArrayList<>();
+        Connection connection = Jsoup.connect(mUrl);
+
         try {
             Document doc = Jsoup.connect(mUrl).get();
 
@@ -64,6 +67,11 @@ public class GetTopicTask extends BaseTask<List<Topic>> implements Runnable {
         Meta meta = createMetaFromElement(metaElement);
 
         topic.setMeta(meta);
+
+        Elements countElements = element.select("div.count");
+        if (countElements != null && !countElements.isEmpty()) {
+            topic.setCount(Integer.valueOf(countElements.first().select("a").first().text()));
+        }
 
         return topic;
     }

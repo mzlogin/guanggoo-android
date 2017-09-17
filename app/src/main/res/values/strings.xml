@@ -1,8 +1,29 @@
 <resources>
-    <string name="app_name">guanggoo</string>
+    <string name="app_name">光谷社区</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="not_logged_in">未登录</string>
+    <string name="nodes">节点</string>
+    <string name="home">首页</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">E-mail</string>
+    <string name="prompt_password">密码</string>
+    <string name="action_sign_in">登录</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">不是有效的 Email 地址</string>
+    <string name="error_invalid_password">密码太短了</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">这里不能为空</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="back_to_quit">连按两次返回键退出</string>
 </resources>

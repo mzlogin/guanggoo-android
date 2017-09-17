@@ -4,6 +4,7 @@ import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.task.GetTopicTask;
+import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import java.util.List;
 
@@ -14,15 +15,17 @@ import java.util.List;
 public class TopicListPresenter implements TopicListContract.Presenter {
 
     private TopicListContract.View mView;
+    private String mUrl;
 
-    public TopicListPresenter(TopicListContract.View view) {
+    public TopicListPresenter(TopicListContract.View view, String url) {
         mView = view;
+        mUrl = url;
         view.setPresenter(this);
     }
 
     @Override
     public void getTopicList() {
-        NetworkTaskScheduler.getInstance().execute(new GetTopicTask("http://www.guanggoo.com",
+        NetworkTaskScheduler.getInstance().execute(new GetTopicTask(mUrl,
                 new OnResponseListener<List<Topic>>() {
                     @Override
                     public void onSucceed(List<Topic> data) {
