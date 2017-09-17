@@ -1,6 +1,5 @@
 package org.mazhuang.guanggoo.topicdetail;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,11 +11,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import org.mazhuang.guanggoo.MainActivity;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
-import org.sufficientlysecure.htmltextview.ClickableTableSpan;
 import org.sufficientlysecure.htmltextview.HtmlHttpImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 

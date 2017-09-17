@@ -78,6 +78,10 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.View
         return mData == null ? 0 : mData.size();
     }
 
+    public boolean isFiiled() {
+        return (mData != null && mData.size() > 0);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         @BindView(R.id.title) TextView mTitleTextView;

@@ -78,11 +78,15 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
                     outRect.set(0, 0, 0, 1);
                 }
             });
-            mAdapter = new TopicListAdapter(mListener);
+            if (mAdapter == null) {
+                mAdapter = new TopicListAdapter(mListener);
+            }
             recyclerView.setAdapter(mAdapter);
         }
 
-        mPresenter.getTopicList();
+        if (!mAdapter.isFiiled()) {
+            mPresenter.getTopicList();
+        }
 
         return view;
     }
