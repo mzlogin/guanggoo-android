@@ -5,6 +5,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +41,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     @BindView(R.id.author) TextView mAuthorTextView;
     @BindView(R.id.node) TextView mNodeTextView;
 
-    @BindView(R.id.content) HtmlTextView mContentTextView;
+    @BindView(R.id.content) WebView mContentTextView;
 
     @Nullable
     @Override
@@ -48,9 +52,29 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
         initParams();
 
+        initWebView();
+
         mPresenter.getTopicDetail(mUrl);
 
         return root;
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mContentTextView != null) {
+            mContentTextView.loadUrl("about:blank");
+            mContentTextView = null;
+        }
+        super.onDestroy();
+    }
+
+    private void initWebView() {
+        mContentTextView.getSettings().setUseWideViewPort(false);
+        mContentTextView.getSettings().setLoadWithOverviewMode(true);
+        mContentTextView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        mContentTextView.setWebChromeClient(new WebChromeClient());
+        mContentTextView.setWebViewClient(new WebViewClient());
+        mContentTextView.getSettings().setJavaScriptEnabled(true);
     }
 
     private void initParams() {
@@ -74,7 +98,8 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mAuthorTextView.setText(topicDetail.getTopic().getMeta().getAuthor().getUsername());
         mNodeTextView.setText(topicDetail.getTopic().getMeta().getNode().getTitle());
 
-        mContentTextView.setHtml(topicDetail.getContent(), new MyHttpImageGetter(mContentTextView, null, true));
+        // 相比 loadData，这个调用能解决中文乱码的问题
+        mContentTextView.loadDataWithBaseURL(null, topicDetail.getContent() + "<style>img{display: inline;height: auto;max-width: 100%;}a{word-break: break-all;word-wrap: break-word;}pre, code, pre code{word-wrap: normal;overflow: auto;}</style>", "text/html", "UTF-8", null);
     }
 
     @Override
