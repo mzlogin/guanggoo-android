@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
  * Created by mazhuang on 2017/9/16.
  */
 
-public class BaseFragment<T> extends Fragment {
+public abstract class BaseFragment<T> extends Fragment {
     protected T mPresenter;
 
     public void setPresenter(T presenter) {
@@ -16,4 +16,6 @@ public class BaseFragment<T> extends Fragment {
     public boolean onBackPressed() {
         return false;
     }
+
+    public abstract String getTitle();
 }

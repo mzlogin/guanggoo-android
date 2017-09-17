@@ -133,4 +133,9 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
         // TODO: Update argument type and name
         void onListFragmentInteraction(Topic item);
     }
+
+    @Override
+    public String getTitle() {
+        return "主题列表";
+    }
 }

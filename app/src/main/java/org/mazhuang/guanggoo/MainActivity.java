@@ -25,7 +25,6 @@ import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Topic;
-import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.data.task.AuthCheckTask;
 import org.mazhuang.guanggoo.login.LoginFragment;
 import org.mazhuang.guanggoo.login.LoginPresenter;
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initViews() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -101,6 +100,38 @@ public class MainActivity extends AppCompatActivity
         new TopicListPresenter(fragment, ConstantUtil.BASE_URL);
 
         addFragmentToStack(getSupportFragmentManager(), fragment);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean canGoBack = (getSupportFragmentManager().getBackStackEntryCount() > 1);
+                if (canGoBack) {
+                    onBackPressed();
+                } else {
+                    drawer.openDrawer(GravityCompat.START);
+                }
+            }
+        });
+
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                Fragment fragment = getCurrentFragment();
+                if (fragment instanceof BaseFragment) {
+                    BaseFragment baseFragment = (BaseFragment) fragment;
+                    setTitle(baseFragment.getTitle());
+                    boolean canGoBack = (getSupportFragmentManager().getBackStackEntryCount() > 1);
+                    if (canGoBack) {
+                        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+                        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    } else {
+                        toolbar.setNavigationIcon(R.drawable.ic_menu);
+                        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    }
+                    // TODO: 2017/9/18 处理 Toolbar 右侧菜单
+                }
+            }
+        });
     }
 
     public static void addFragmentToStack(FragmentManager fm, Fragment fragment) {

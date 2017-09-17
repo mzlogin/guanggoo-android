@@ -164,4 +164,9 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(String url);
     }
+
+    @Override
+    public String getTitle() {
+        return "登录";
+    }
 }

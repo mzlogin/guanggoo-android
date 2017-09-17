@@ -99,11 +99,16 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mNodeTextView.setText(topicDetail.getTopic().getMeta().getNode().getTitle());
 
         // 相比 loadData，这个调用能解决中文乱码的问题
-        mContentTextView.loadDataWithBaseURL(null, topicDetail.getContent() + "<style>img{display: inline;height: auto;max-width: 100%;}a{word-break: break-all;word-wrap: break-word;}pre, code, pre code{word-wrap: normal;overflow: auto;}</style>", "text/html", "UTF-8", null);
+        mContentTextView.loadDataWithBaseURL(null, topicDetail.getContent() + "<style>img{display:inline; height:auto; max-width:100%;} a{word-break:break-all; word-wrap:break-word;} pre, code, pre code{word-wrap:normal; overflow:auto;} pre{padding:16px; bordor-radius:3px; border:1px solid #ccc;}</style>", "text/html", "UTF-8", null);
     }
 
     @Override
     public void onGetTopicDetailFailed(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public String getTitle() {
+        return "主题详情";
     }
 }
