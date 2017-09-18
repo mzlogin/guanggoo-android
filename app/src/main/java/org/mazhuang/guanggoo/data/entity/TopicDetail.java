@@ -1,6 +1,7 @@
 package org.mazhuang.guanggoo.data.entity;
 
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by mazhuang on 2017/9/17.
@@ -9,7 +10,7 @@ import java.util.List;
 public class TopicDetail {
     private Topic topic;
     private String content;
-    private List<Comment> comments;
+    private Map<Integer, Comment> comments;
 
     public String getContent() {
         return content;
@@ -19,11 +20,11 @@ public class TopicDetail {
         this.content = content;
     }
 
-    public List<Comment> getComments() {
+    public Map<Integer, Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(Map<Integer, Comment> comments) {
         this.comments = comments;
     }
 

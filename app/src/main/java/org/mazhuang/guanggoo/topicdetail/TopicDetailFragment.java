@@ -1,7 +1,11 @@
 package org.mazhuang.guanggoo.topicdetail;
 
+import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +21,8 @@ import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
+import org.mazhuang.guanggoo.data.entity.Comment;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
-import org.mazhuang.guanggoo.util.MyHttpImageGetter;
-import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +37,9 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
     private String mUrl;
     private TopicDetail mTopicDetail;
+    private CommentsListAdapter mAdapter;
+
+    private OnListFragmentInteractionListener mListener;
 
     @BindView(R.id.title) TextView mTitleTextView;
     @BindView(R.id.avatar) ImageView mAvatarImageView;
@@ -41,7 +47,9 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     @BindView(R.id.author) TextView mAuthorTextView;
     @BindView(R.id.node) TextView mNodeTextView;
 
-    @BindView(R.id.content) WebView mContentTextView;
+    @BindView(R.id.content) WebView mContentWebView;
+
+    @BindView(R.id.comments) RecyclerView mCommentsRecyclerView;
 
     @Nullable
     @Override
@@ -54,27 +62,44 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
         initWebView();
 
+        initRecyclerView();
+
         mPresenter.getTopicDetail(mUrl);
 
         return root;
     }
 
+    private void initRecyclerView() {
+        mCommentsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mCommentsRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                outRect.set(0, 0, 0, 1);
+            }
+        });
+        if (mAdapter == null) {
+            mAdapter = new CommentsListAdapter(mListener);
+        }
+        mCommentsRecyclerView.setAdapter(mAdapter);
+    }
+
     @Override
     public void onDestroy() {
-        if (mContentTextView != null) {
-            mContentTextView.loadUrl("about:blank");
-            mContentTextView = null;
+        if (mContentWebView != null) {
+            mContentWebView.loadUrl("about:blank");
+            mContentWebView = null;
         }
         super.onDestroy();
     }
 
     private void initWebView() {
-        mContentTextView.getSettings().setUseWideViewPort(false);
-        mContentTextView.getSettings().setLoadWithOverviewMode(true);
-        mContentTextView.getSettings().setPluginState(WebSettings.PluginState.ON);
-        mContentTextView.setWebChromeClient(new WebChromeClient());
-        mContentTextView.setWebViewClient(new WebViewClient());
-        mContentTextView.getSettings().setJavaScriptEnabled(true);
+        mContentWebView.getSettings().setUseWideViewPort(false);
+        mContentWebView.getSettings().setLoadWithOverviewMode(true);
+        mContentWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        mContentWebView.setWebChromeClient(new WebChromeClient());
+        mContentWebView.setWebViewClient(new WebViewClient());
+        mContentWebView.getSettings().setJavaScriptEnabled(true);
     }
 
     private void initParams() {
@@ -99,7 +124,9 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mNodeTextView.setText(topicDetail.getTopic().getMeta().getNode().getTitle());
 
         // 相比 loadData，这个调用能解决中文乱码的问题
-        mContentTextView.loadDataWithBaseURL(null, topicDetail.getContent() + "<style>img{display:inline; height:auto; max-width:100%;} a{word-break:break-all; word-wrap:break-word;} pre, code, pre code{word-wrap:normal; overflow:auto;} pre{padding:16px; bordor-radius:3px; border:1px solid #ccc;}</style>", "text/html", "UTF-8", null);
+        mContentWebView.loadDataWithBaseURL(null, topicDetail.getContent() + "<style>img{display:inline; height:auto; max-width:100%;} a{word-break:break-all; word-wrap:break-word;} pre, code, pre code{word-wrap:normal; overflow:auto;} pre{padding:16px; bordor-radius:3px; border:1px solid #ccc;}</style>", "text/html", "UTF-8", null);
+
+        mAdapter.setData(mTopicDetail.getComments());
     }
 
     @Override
@@ -110,5 +137,28 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     @Override
     public String getTitle() {
         return "主题详情";
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnListFragmentInteractionListener) {
+            mListener = (OnListFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnListFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onListFragmentInteraction(Comment item);
     }
 }

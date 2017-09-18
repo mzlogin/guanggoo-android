@@ -24,10 +24,12 @@ import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
+import org.mazhuang.guanggoo.data.entity.Comment;
 import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.task.AuthCheckTask;
 import org.mazhuang.guanggoo.login.LoginFragment;
 import org.mazhuang.guanggoo.login.LoginPresenter;
+import org.mazhuang.guanggoo.topicdetail.TopicDetailContract;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailFragment;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailPresenter;
 import org.mazhuang.guanggoo.topiclist.TopicListFragment;
@@ -37,7 +39,8 @@ import org.mazhuang.guanggoo.util.ConstantUtil;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         TopicListFragment.OnListFragmentInteractionListener,
-        LoginFragment.OnFragmentInteractionListener {
+        LoginFragment.OnFragmentInteractionListener,
+        TopicDetailFragment.OnListFragmentInteractionListener {
 
     private static String sStackName = MainActivity.class.getName();
 
@@ -285,5 +288,10 @@ public class MainActivity extends AppCompatActivity
         if (!TextUtils.isEmpty(refererUrl)) {
             gotoTopicDetailPage(refererUrl);
         }
+    }
+
+    @Override
+    public void onListFragmentInteraction(Comment item) {
+
     }
 }

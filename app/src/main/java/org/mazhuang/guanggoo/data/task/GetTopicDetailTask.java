@@ -3,10 +3,16 @@ package org.mazhuang.guanggoo.data.task;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.mazhuang.guanggoo.data.OnResponseListener;
+import org.mazhuang.guanggoo.data.entity.Comment;
 import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by mazhuang on 2017/9/17.
@@ -61,6 +67,12 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
         }
 
         topicDetail.setContent(elements.first().outerHtml());
+
+        Elements commentsElements = doc.select("div.topic-reply");
+
+        Map<Integer, Comment> comments = GetCommentsTask.getCommentsFromElements(commentsElements);
+
+        topicDetail.setComments(comments);
 
         successOnUI(topicDetail);
     }
