@@ -4,9 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.mazhuang.guanggoo.App;
-import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.util.ConstantUtil;
@@ -72,9 +70,7 @@ public class LoginTask extends BaseTask<String> {
                     return;
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException|JSONException e) {
             e.printStackTrace();
         }
 

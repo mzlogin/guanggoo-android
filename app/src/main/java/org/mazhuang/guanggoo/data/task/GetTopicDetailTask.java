@@ -1,12 +1,10 @@
 package org.mazhuang.guanggoo.data.task;
 
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
-import org.mazhuang.guanggoo.topicdetail.TopicDetailContract;
 
 import java.io.IOException;
 
@@ -35,9 +33,16 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
             return;
         }
 
-        Elements elements = doc.select("div.ui-header");
+        Elements topicDetailElements = doc.select("div.topic-detail");
 
-        if (elements == null || elements.size() == 0) {
+        if (topicDetailElements.isEmpty()) {
+            failedOnUI("找不到主题详情");
+            return;
+        }
+
+        Elements elements = topicDetailElements.select("div.ui-header");
+
+        if (elements.isEmpty()) {
             failedOnUI("找不到主题元信息");
             return;
         }
@@ -48,9 +53,9 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
 
         topicDetail.setTopic(topic);
 
-        elements = doc.select("div.ui-content");
+        elements = topicDetailElements.select("div.ui-content");
 
-        if (elements == null || elements.size() == 0) {
+        if (elements.isEmpty()) {
             failedOnUI("找不到主题内容");
             return;
         }

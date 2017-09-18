@@ -4,12 +4,18 @@
 
 **目录**
 <!-- vim-markdown-toc GFM -->
-* [功能列表](#功能列表)
+
 * [屏幕截图](#屏幕截图)
+* [功能列表](#功能列表)
+* [界面特性](#界面特性)
 * [API](#api)
 * [License](#license)
 
 <!-- vim-markdown-toc -->
+
+## 屏幕截图
+
+<img width="360" src="./screenshots/homepage.png" />
 
 ## 功能列表
 
@@ -21,13 +27,15 @@
 - [ ] 节点列表
 - [ ] 节点主题列表
 - [ ] 个人信息页
+- [ ] 收藏的主题列表
 - [ ] 浏览用户
 - [ ] 评论
 - [ ] 登出
 - [ ] 注册
 
-界面特性
+## 界面特性
 
+- [x] 主题详情支持动图和视频
 - [ ] ToolBar 设定
     - [x] 如果当前 Fragment 栈里的数量大于 1，就显示返回按钮，可以滑出 Drawer，否则显示菜单，锁定 Drawer
     - [ ] 在合适的时候显示右侧菜单
@@ -35,15 +43,12 @@
 - [ ] 列表上滑加载更多
 - [ ] Loading 动画
 - [ ] 应用内处理图片与链接点开
-- [x] 主题详情支持动图
-
-## 屏幕截图
-
-<img width="360" src="./screenshots/homepage.png" />
 
 ## API
 
 [docs/guanggoo-api.md](./docs/guanggoo-api.md)
+
+因为光谷社区并未提供 API，所以是基于 DOM 解析，网站的前端界面改动有可能导致数据不可用，可以考虑做一个 API 监控脚本，定期测试 API 的可用性。
 
 ## License
 

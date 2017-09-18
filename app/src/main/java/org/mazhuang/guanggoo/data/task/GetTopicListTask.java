@@ -1,7 +1,5 @@
 package org.mazhuang.guanggoo.data.task;
 
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -75,7 +73,7 @@ public class GetTopicListTask extends BaseTask<List<Topic>> implements Runnable 
         topic.setMeta(meta);
 
         Elements countElements = element.select("div.count");
-        if (countElements != null && !countElements.isEmpty()) {
+        if (!countElements.isEmpty()) {
             topic.setCount(Integer.valueOf(countElements.first().select("a").first().text()));
         }
 
@@ -102,6 +100,9 @@ public class GetTopicListTask extends BaseTask<List<Topic>> implements Runnable 
         Elements lastTouchedElement = element.select("span.last-touched"); // 主题列表页
         if (lastTouchedElement.isEmpty()) {
             lastTouchedElement = element.select("span.last-reply-time"); // 主题详情页
+            if (lastTouchedElement.isEmpty()) { // 没有评论的时候
+                lastTouchedElement = element.select("span.created-time");
+            }
         }
         meta.setLastTouched(lastTouchedElement.text());
 

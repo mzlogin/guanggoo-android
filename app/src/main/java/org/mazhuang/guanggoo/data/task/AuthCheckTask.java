@@ -31,7 +31,7 @@ public class AuthCheckTask extends BaseTask<String> {
 
             Document doc = getConnection(ConstantUtil.BASE_URL).get();
             Elements elements = doc.select("div.usercard");
-            if (elements != null && !elements.isEmpty()) {
+            if (!elements.isEmpty()) {
                 Element usercardElement = elements.first();
 
                 AuthInfoManager.getInstance().setUsername(usercardElement.select("div.username").first().text());
