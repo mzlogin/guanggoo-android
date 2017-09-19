@@ -2,6 +2,7 @@ package org.mazhuang.guanggoo.topicdetail;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -75,13 +76,17 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mCommentsRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                outRect.set(0, 0, 0, 1);
+                outRect.set(0, 1, 0, 0);
             }
         });
         if (mAdapter == null) {
             mAdapter = new CommentsListAdapter(mListener);
         }
         mCommentsRecyclerView.setAdapter(mAdapter);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mCommentsRecyclerView.setNestedScrollingEnabled(false);
+        }
     }
 
     @Override

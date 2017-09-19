@@ -10,4 +10,5 @@
     <dimen name="normal_margin">16dp</dimen>
     <dimen name="inner_margin">8dp</dimen>
     <dimen name="avatar_size_small">24dp</dimen>
+    <dimen name="keep_blank">48dp</dimen>
 </resources>
