@@ -10,11 +10,15 @@ import org.mazhuang.guanggoo.data.entity.TopicDetail;
 
 public interface TopicDetailContract {
     interface Presenter extends BasePresenter {
-        void getTopicDetail(String url);
+        void getTopicDetail();
+        void getMoreComments(int page);
     }
 
     interface View extends BaseView<Presenter> {
         void onGetTopicDetailSucceed(TopicDetail topicDetail);
         void onGetTopicDetailFailed(String msg);
+
+        void onGetMoreCommentsSucceed(TopicDetail topicDetail);
+        void onGetMoreCommentsFailed(String msg);
     }
 }

@@ -3,7 +3,6 @@ package org.mazhuang.guanggoo.topiclist;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.entity.Topic;
+import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import java.util.List;
 
@@ -25,12 +25,10 @@ import java.util.List;
  */
 public class TopicListFragment extends BaseFragment<TopicListContract.Presenter> implements TopicListContract.View {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private TopicListAdapter mAdapter;
+    private boolean mLoadable = true;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -39,23 +37,9 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
     public TopicListFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static TopicListFragment newInstance(int columnCount) {
-        TopicListFragment fragment = new TopicListFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
@@ -67,11 +51,8 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
+            final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+            recyclerView.setLayoutManager(layoutManager);
             recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
                 @Override
                 public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -82,6 +63,29 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
                 mAdapter = new TopicListAdapter(mListener);
             }
             recyclerView.setAdapter(mAdapter);
+
+            // ref https://stackoverflow.com/questions/26543131/how-to-implement-endless-list-with-recyclerview
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    if(dy > 0) { //check for scroll down
+                        visibleItemCount = layoutManager.getChildCount();
+                        totalItemCount = layoutManager.getItemCount();
+                        pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
+
+                        if (mLoadable) {
+                            if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                                mLoadable = false;
+                                if (totalItemCount <= 1024) {
+                                    mPresenter.getMoreTopic(totalItemCount / ConstantUtil.TOPICS_PER_PAGE + 1);
+                                } else {
+                                    Toast.makeText(getActivity(), "1024", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         if (!mAdapter.isFiiled()) {
@@ -137,5 +141,16 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
     @Override
     public String getTitle() {
         return "主题列表";
+    }
+
+    @Override
+    public void onGetMoreTopicSucceed(List<Topic> topicList) {
+        mAdapter.addData(topicList);
+        mLoadable = true;
+    }
+
+    @Override
+    public void onGetMoreTopicFailed(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 }

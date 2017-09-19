@@ -253,14 +253,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         TopicDetailFragment fragment = new TopicDetailFragment();
-        new TopicDetailPresenter(fragment);
-
-        if (!TextUtils.isEmpty(url)) {
-            Bundle bundle = new Bundle();
-            bundle.putString(TopicDetailFragment.KEY_URL, url);
-            fragment.setArguments(bundle);
-        }
-
+        new TopicDetailPresenter(fragment, url);
         addFragmentToStack(getSupportFragmentManager(), fragment);
     }
 

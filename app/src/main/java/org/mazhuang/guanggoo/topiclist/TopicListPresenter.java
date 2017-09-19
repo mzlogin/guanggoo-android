@@ -4,6 +4,7 @@ import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.task.GetTopicListTask;
+import org.mazhuang.guanggoo.util.UrlUtil;
 
 import java.util.List;
 
@@ -34,6 +35,22 @@ public class TopicListPresenter implements TopicListContract.Presenter {
                     @Override
                     public void onFailed(String msg) {
                         mView.onGetTopicListFailed(msg);
+                    }
+                }));
+    }
+
+    @Override
+    public void getMoreTopic(int page) {
+        NetworkTaskScheduler.getInstance().execute(new GetTopicListTask(UrlUtil.appendPage(mUrl, page),
+                new OnResponseListener<List<Topic>>() {
+                    @Override
+                    public void onSucceed(List<Topic> data) {
+                        mView.onGetMoreTopicSucceed(data);
+                    }
+
+                    @Override
+                    public void onFailed(String msg) {
+                        mView.onGetMoreTopicFailed(msg);
                     }
                 }));
     }

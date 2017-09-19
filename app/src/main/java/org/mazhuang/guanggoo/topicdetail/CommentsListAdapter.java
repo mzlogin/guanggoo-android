@@ -19,6 +19,7 @@ import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import butterknife.BindView;
@@ -45,6 +46,26 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
 
         mData = data;
         notifyDataSetChanged();
+    }
+
+    public void addData(Map<Integer, Comment> data) {
+        mData.putAll(data);
+        notifyDataSetChanged();
+    }
+
+    public int getSmallestFloor() {
+        int ret = 0;
+        if (mData != null && mData.size() != 0) {
+            int count = 0;
+            for (Integer i : mData.keySet()) {
+                count++;
+                if (count == mData.keySet().size()) {
+                    ret = i;
+                    break;
+                }
+            }
+        }
+        return ret;
     }
 
     @Override

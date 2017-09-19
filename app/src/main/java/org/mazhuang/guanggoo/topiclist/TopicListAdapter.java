@@ -41,6 +41,11 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.View
         notifyDataSetChanged();
     }
 
+    public void addData(List<Topic> data) {
+        mData.addAll(data);
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())

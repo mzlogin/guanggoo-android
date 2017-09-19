@@ -13,10 +13,14 @@ import java.util.List;
 public interface TopicListContract {
     interface Presenter extends BasePresenter {
         void getTopicList();
+        void getMoreTopic(int page);
     }
 
     interface View extends BaseView<Presenter> {
         void onGetTopicListSucceed(List<Topic> topicList);
         void onGetTopicListFailed(String msg);
+
+        void onGetMoreTopicSucceed(List<Topic> topicList);
+        void onGetMoreTopicFailed(String msg);
     }
 }

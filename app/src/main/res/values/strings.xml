@@ -26,4 +26,5 @@
         completions."
     </string>
     <string name="back_to_quit">连按两次返回键退出</string>
+    <string name="load_more_comments">加载更多评论</string>
 </resources>

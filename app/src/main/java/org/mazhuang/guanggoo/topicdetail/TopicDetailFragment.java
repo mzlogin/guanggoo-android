@@ -24,9 +24,11 @@ import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.entity.Comment;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
+import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by mazhuang on 2017/9/17.
@@ -34,9 +36,6 @@ import butterknife.ButterKnife;
 
 public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presenter> implements TopicDetailContract.View {
 
-    public static final String KEY_URL = "url";
-
-    private String mUrl;
     private TopicDetail mTopicDetail;
     private CommentsListAdapter mAdapter;
 
@@ -52,6 +51,8 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
     @BindView(R.id.comments) RecyclerView mCommentsRecyclerView;
 
+    @BindView(R.id.load_more) TextView mLoadMoreTextView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,24 +60,42 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
         ButterKnife.bind(this, root);
 
-        initParams();
-
         initWebView();
 
         initRecyclerView();
 
-        mPresenter.getTopicDetail(mUrl);
+        mPresenter.getTopicDetail();
 
         return root;
     }
 
+    @OnClick({R.id.load_more})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.load_more: {
+                mLoadMoreTextView.setEnabled(false);
+                int page = (mAdapter.getSmallestFloor() - 1) /ConstantUtil.COMMENTS_PER_PAGE;
+                if (page == 0) {
+                    mLoadMoreTextView.setVisibility(View.GONE);
+                    return;
+                }
+                mPresenter.getMoreComments(page);
+            }
+                break;
+
+            default:
+                break;
+        }
+    }
+
     private void initRecyclerView() {
-        mCommentsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        mCommentsRecyclerView.setLayoutManager(layoutManager);
 
         mCommentsRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                outRect.set(0, 1, 0, 0);
+                outRect.set(0, 0, 0, 1);
             }
         });
         if (mAdapter == null) {
@@ -107,13 +126,6 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mContentWebView.getSettings().setJavaScriptEnabled(true);
     }
 
-    private void initParams() {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            mUrl = bundle.getString(KEY_URL);
-        }
-    }
-
     @Override
     public void onGetTopicDetailSucceed(TopicDetail topicDetail) {
         mTopicDetail = topicDetail;
@@ -132,11 +144,32 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mContentWebView.loadDataWithBaseURL(null, topicDetail.getContent() + "<style>img{display:inline; height:auto; max-width:100%;} a{word-break:break-all; word-wrap:break-word;} pre, code, pre code{word-wrap:normal; overflow:auto;} pre{padding:16px; bordor-radius:3px; border:1px solid #ccc;}</style>", "text/html", "UTF-8", null);
 
         mAdapter.setData(mTopicDetail.getComments());
+
+        if (mAdapter.getSmallestFloor() > 1) {
+            mLoadMoreTextView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void onGetTopicDetailFailed(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onGetMoreCommentsSucceed(TopicDetail topicDetail) {
+        mAdapter.addData(topicDetail.getComments());
+        int page = (mAdapter.getSmallestFloor() - 1) /ConstantUtil.COMMENTS_PER_PAGE;
+        if (page == 0) {
+            mLoadMoreTextView.setVisibility(View.GONE);
+        } else {
+            mLoadMoreTextView.setEnabled(true);
+        }
+    }
+
+    @Override
+    public void onGetMoreCommentsFailed(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+        mLoadMoreTextView.setEnabled(true);
     }
 
     @Override
