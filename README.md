@@ -14,7 +14,7 @@
 
 ## 屏幕截图
 
-<img width="360" src="./screenshots/homepage.png" />
+<img width="360" src="./screenshots/topic-list.png" align=center /> <img width="360" src="./screenshots/topic-detail.png" align=center />
 
 ## 功能列表
 
