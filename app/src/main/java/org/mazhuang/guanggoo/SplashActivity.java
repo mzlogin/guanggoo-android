@@ -1,13 +1,12 @@
 package org.mazhuang.guanggoo;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.task.AuthCheckTask;
-import org.mazhuang.guanggoo.login.LoginContract;
 
 public class SplashActivity extends AppCompatActivity {
 
