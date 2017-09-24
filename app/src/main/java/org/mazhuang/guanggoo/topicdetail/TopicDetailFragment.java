@@ -1,7 +1,9 @@
 package org.mazhuang.guanggoo.topicdetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -122,7 +124,13 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mContentWebView.getSettings().setLoadWithOverviewMode(true);
         mContentWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
         mContentWebView.setWebChromeClient(new WebChromeClient());
-        mContentWebView.setWebViewClient(new WebViewClient());
+        mContentWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                return true;
+            }
+        });
         mContentWebView.getSettings().setJavaScriptEnabled(true);
     }
 
