@@ -100,11 +100,11 @@ public class GetTopicListTask extends BaseTask<List<Topic>> implements Runnable 
         Elements lastTouchedElement = element.select("span.last-touched"); // 主题列表页
         if (lastTouchedElement.isEmpty()) {
             lastTouchedElement = element.select("span.last-reply-time"); // 主题详情页
-            if (lastTouchedElement.isEmpty()) { // 没有评论的时候
-                lastTouchedElement = element.select("span.created-time");
-            }
         }
         meta.setLastTouched(lastTouchedElement.text());
+
+        Elements createdTimeElement = element.select("span.created-time");
+        meta.setCreatedTime(createdTimeElement.text());
 
         Element lastReplyUserElement = element.select("span.last-reply-username").select("a").first();
         if (lastReplyUserElement != null) {

@@ -50,4 +50,12 @@ public class Topic {
     public void setCount(int count) {
         this.count = count;
     }
+
+    public String getLastReplyUserName() {
+        if (meta != null && meta.getLastReplyUser() != null) {
+            return meta.getLastReplyUser().getUsername();
+        }
+
+        return null;
+    }
 }

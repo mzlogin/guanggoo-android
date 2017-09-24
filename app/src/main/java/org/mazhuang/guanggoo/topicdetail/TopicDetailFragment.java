@@ -43,7 +43,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
     @BindView(R.id.title) TextView mTitleTextView;
     @BindView(R.id.avatar) ImageView mAvatarImageView;
-    @BindView(R.id.last_touched) TextView mLastTouchedTextView;
+    @BindView(R.id.created_time) TextView mCreatedTimeTExtView;
     @BindView(R.id.author) TextView mAuthorTextView;
     @BindView(R.id.node) TextView mNodeTextView;
 
@@ -136,7 +136,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
                 .centerCrop()
                 .crossFade()
                 .into(mAvatarImageView);
-        mLastTouchedTextView.setText(topicDetail.getTopic().getMeta().getLastTouched());
+        mCreatedTimeTExtView.setText(topicDetail.getTopic().getMeta().getCreatedTime());
         mAuthorTextView.setText(topicDetail.getTopic().getMeta().getAuthor().getUsername());
         mNodeTextView.setText(topicDetail.getTopic().getMeta().getNode().getTitle());
 

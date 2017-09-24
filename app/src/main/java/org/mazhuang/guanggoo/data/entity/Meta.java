@@ -8,6 +8,7 @@ public class Meta {
     private Node node;
     private User author;
     private String lastTouched;
+    private String createdTime;
     private User lastReplyUser;
 
     public Node getNode() {
@@ -40,5 +41,13 @@ public class Meta {
 
     public void setLastReplyUser(User lastReplyUser) {
         this.lastReplyUser = lastReplyUser;
+    }
+
+    public String getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(String createdTime) {
+        this.createdTime = createdTime;
     }
 }

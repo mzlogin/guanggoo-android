@@ -65,6 +65,8 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.View
         holder.mLastTouchedTextView.setText(holder.mItem.getMeta().getLastTouched());
         holder.mAuthorTextView.setText(holder.mItem.getMeta().getAuthor().getUsername());
         holder.mNodeTextView.setText(holder.mItem.getMeta().getNode().getTitle());
+        holder.mCountTextView.setText(String.valueOf(holder.mItem.getCount()));
+        holder.mLastReplyUserTextView.setText(holder.mItem.getLastReplyUserName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +96,8 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.View
         @BindView(R.id.last_touched) TextView mLastTouchedTextView;
         @BindView(R.id.author) TextView mAuthorTextView;
         @BindView(R.id.node) TextView mNodeTextView;
+        @BindView(R.id.last_reply_user) TextView mLastReplyUserTextView;
+        @BindView(R.id.count) TextView mCountTextView;
         public Topic mItem;
 
         public ViewHolder(View view) {

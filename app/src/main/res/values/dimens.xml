@@ -9,6 +9,8 @@
     <dimen name="avatar_size">64dp</dimen>
     <dimen name="normal_margin">16dp</dimen>
     <dimen name="inner_margin">8dp</dimen>
+    <dimen name="avatar_size_middle">36dp</dimen>
     <dimen name="avatar_size_small">24dp</dimen>
     <dimen name="keep_blank">48dp</dimen>
+    <dimen name="titleText">16sp</dimen>
 </resources>

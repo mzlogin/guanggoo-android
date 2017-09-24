@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:paddingBottom="@dimen/keep_blank">
 
-        <include layout="@layout/item_topic_list" />
+        <include layout="@layout/topic_header" />
 
         <WebView
             android:id="@+id/content"

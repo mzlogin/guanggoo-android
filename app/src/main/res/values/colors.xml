@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#e3e3e3</color>
-    <color name="colorPrimaryDark">#e3e3e3</color>
-    <color name="colorAccent">#f3f3f3</color>
+    <color name="colorPrimary">#E3E3E3</color>
+    <color name="colorPrimaryDark">#E3E3E3</color>
+    <color name="colorAccent">#F3F3F3</color>
     <color name="defaultFontColor">#838383</color>
-    <color name="node_background">#e3e3e3</color>
-    <color name="listBackground">#cdcdcd</color>
-    <color name="emphasizeFontColor">#666666</color>
+    <color name="nodeBackground">#F5F5F5</color>
+    <color name="listBackground">#CDCDCD</color>
+    <color name="emphasizeFontColor">#696969</color>
+    <color name="countBackground">#AAB1C7</color>
+    <color name="countText">#FDFDFD</color>
+    <color name="titleColor">#676767</color>
+    <color name="metaColor">#9D9D9D</color>
+    <color name="nodeBackgroundDark">#E3E3E3</color>
 </resources>
