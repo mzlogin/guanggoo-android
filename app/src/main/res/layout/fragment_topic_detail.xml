@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/normal_margin"
-            android:textColor="@android:color/holo_blue_light"
+            android:textColor="@color/enable_text"
             android:text="@string/load_more_comments"
             android:visibility="gone"/>
 
