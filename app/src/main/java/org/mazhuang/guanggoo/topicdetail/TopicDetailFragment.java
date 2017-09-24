@@ -128,6 +128,11 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
     @Override
     public void onGetTopicDetailSucceed(TopicDetail topicDetail) {
+
+        if (getContext() == null) {
+            return;
+        }
+
         mTopicDetail = topicDetail;
 
         mTitleTextView.setText(topicDetail.getTopic().getTitle());

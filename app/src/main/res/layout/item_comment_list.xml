@@ -33,12 +33,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/normal_margin"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="@color/metaColor"/>
             <TextView
                 android:id="@+id/floor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/inner_margin"/>
+                android:layout_marginLeft="@dimen/inner_margin"
+                android:textColor="@color/metaColor"/>
         </LinearLayout>
 
         <org.sufficientlysecure.htmltextview.HtmlTextView
