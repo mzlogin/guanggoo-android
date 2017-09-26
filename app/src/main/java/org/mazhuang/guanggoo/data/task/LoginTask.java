@@ -37,12 +37,12 @@ public class LoginTask extends BaseTask<String> {
         Map<String, String> headers = new HashMap<>();
         headers.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
         headers.put("Content-Type", "application/x-www-form-urlencoded");
-        headers.put("cookie", "_xsrf=" + xsrf);
+        headers.put(ConstantUtil.KEY_COOKIE, "_xsrf=" + xsrf);
 
         Map<String, String> datas = new HashMap<>();
         datas.put("email", mEmail);
         datas.put("password", mPassword);
-        datas.put("_xsrf", xsrf);
+        datas.put(ConstantUtil.KEY_XSRF, xsrf);
         try {
             Connection.Response res = Jsoup.connect(ConstantUtil.LOGIN_URL).data(datas).headers(headers).method(Connection.Method.POST).execute();
 
@@ -53,7 +53,8 @@ public class LoginTask extends BaseTask<String> {
                     for (String key : cookies.keySet()) {
                         jsonObject.put(key, cookies.get(key));
                     }
-                    PrefsUtil.putString(App.getInstance(), PrefsUtil.KEY_COOKIE, jsonObject.toString());
+                    PrefsUtil.putString(App.getInstance(), ConstantUtil.KEY_COOKIE, jsonObject.toString());
+                    PrefsUtil.putString(App.getInstance(), ConstantUtil.KEY_XSRF, xsrf);
 
                     NetworkTaskScheduler.getInstance().execute(new AuthCheckTask(new OnResponseListener<String>() {
                         @Override

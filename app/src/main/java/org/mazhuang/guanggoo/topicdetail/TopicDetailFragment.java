@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +38,7 @@ import butterknife.OnClick;
  * Created by mazhuang on 2017/9/17.
  */
 
-public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presenter> implements TopicDetailContract.View {
+public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presenter> implements TopicDetailContract.View, Commentable {
 
     private TopicDetail mTopicDetail;
     private CommentsListAdapter mAdapter;
@@ -55,6 +57,9 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
     @BindView(R.id.load_more) TextView mLoadMoreTextView;
 
+    @BindView(R.id.comment_view) View mCommentsView;
+    @BindView(R.id.comment) EditText mCommentEditText;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,7 +76,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         return root;
     }
 
-    @OnClick({R.id.load_more})
+    @OnClick({R.id.load_more, R.id.submit, R.id.cancel})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.load_more: {
@@ -83,6 +88,18 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
                 }
                 mPresenter.getMoreComments(page);
             }
+                break;
+
+            case R.id.submit:
+                if (TextUtils.isEmpty(mCommentEditText.getText())) {
+                    Toast.makeText(getContext(), R.string.please_input_content, Toast.LENGTH_SHORT).show();
+                } else {
+                    mPresenter.comment(mCommentEditText.getText().toString());
+                }
+                break;
+
+            case R.id.cancel:
+                mCommentsView.setVisibility(View.GONE);
                 break;
 
             default:
@@ -211,5 +228,23 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(Comment item);
+    }
+
+    @Override
+    public void onCommentSucceed() {
+        mCommentEditText.setText("");
+        mCommentsView.setVisibility(View.GONE);
+        mPresenter.getTopicDetail();
+    }
+
+    @Override
+    public void onCommentFailed(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showCommentView() {
+        mCommentsView.setVisibility(View.VISIBLE);
+        mCommentEditText.requestFocus();
     }
 }

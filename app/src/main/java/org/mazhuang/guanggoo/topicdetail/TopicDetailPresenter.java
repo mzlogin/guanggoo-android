@@ -3,6 +3,7 @@ package org.mazhuang.guanggoo.topicdetail;
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
+import org.mazhuang.guanggoo.data.task.CommentTask;
 import org.mazhuang.guanggoo.data.task.GetTopicDetailTask;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
@@ -18,7 +19,7 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
 
     public TopicDetailPresenter(TopicDetailContract.View view, String url) {
         mView = view;
-        mUrl = url;
+        mUrl = url.replaceAll("#reply\\d+", "");
         mView.setPresenter(this);
     }
 
@@ -39,8 +40,7 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
 
     @Override
     public void getMoreComments(int page) {
-        String url = mUrl.replaceAll("#reply\\d+", "");
-        NetworkTaskScheduler.getInstance().execute(new GetTopicDetailTask(UrlUtil.appendPage(url, page), new OnResponseListener<TopicDetail>() {
+        NetworkTaskScheduler.getInstance().execute(new GetTopicDetailTask(UrlUtil.appendPage(mUrl, page), new OnResponseListener<TopicDetail>() {
             @Override
             public void onSucceed(TopicDetail data) {
                 mView.onGetMoreCommentsSucceed(data);
@@ -49,6 +49,21 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
             @Override
             public void onFailed(String msg) {
                 mView.onGetMoreCommentsFailed(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void comment(String content) {
+        NetworkTaskScheduler.getInstance().execute(new CommentTask(mUrl, content, new OnResponseListener<String>() {
+            @Override
+            public void onSucceed(String data) {
+                mView.onCommentSucceed();
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                mView.onCommentFailed(msg);
             }
         }));
     }

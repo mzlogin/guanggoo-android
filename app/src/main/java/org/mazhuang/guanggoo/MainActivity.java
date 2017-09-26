@@ -29,7 +29,7 @@ import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.task.AuthCheckTask;
 import org.mazhuang.guanggoo.login.LoginFragment;
 import org.mazhuang.guanggoo.login.LoginPresenter;
-import org.mazhuang.guanggoo.topicdetail.TopicDetailContract;
+import org.mazhuang.guanggoo.topicdetail.Commentable;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailFragment;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailPresenter;
 import org.mazhuang.guanggoo.topiclist.TopicListFragment;
@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity
 
     private ImageView mAvatarImageView;
     private TextView mUsernameTextView;
+
+    private Menu mMenu;
+    private MenuItem mCommentMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +134,10 @@ public class MainActivity extends AppCompatActivity
                         toolbar.setNavigationIcon(R.drawable.ic_menu);
                         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                     }
-                    // TODO: 2017/9/18 处理 Toolbar 右侧菜单
+
+                    if (mCommentMenuItem != null) {
+                        mCommentMenuItem.setVisible(fragment instanceof Commentable);
+                    }
                 }
             }
         });
@@ -183,6 +189,8 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        mMenu = menu;
+        mCommentMenuItem = mMenu.findItem(R.id.action_comment);
         return true;
     }
 
@@ -190,7 +198,11 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_comment) {
+            Fragment fragment = getCurrentFragment();
+            if (fragment instanceof Commentable) {
+                ((Commentable) fragment).showCommentView();
+            }
             return true;
         }
 

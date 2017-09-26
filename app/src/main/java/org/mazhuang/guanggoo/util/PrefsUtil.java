@@ -10,8 +10,6 @@ import android.content.SharedPreferences;
 public class PrefsUtil {
     private static final String CONFIG_FILE_NAME = "app_config";
 
-    public static final String KEY_COOKIE = "cookie";
-
     public static boolean getBoolean(Context context, String key, boolean defaultValue) {
         return getPreferences(context).getBoolean(key, defaultValue);
     }

@@ -71,8 +71,6 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
     }
 
     private void attemptLogin() {
-        Toast.makeText(getActivity(), "登录", Toast.LENGTH_SHORT).show();
-
         // Reset errors.
         mEmailEdit.setError(null);
         mPasswordEdit.setError(null);

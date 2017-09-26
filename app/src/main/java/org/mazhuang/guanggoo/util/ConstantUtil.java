@@ -11,4 +11,7 @@ public abstract class ConstantUtil {
 
     public static final int TOPICS_PER_PAGE = 36;
     public static final int COMMENTS_PER_PAGE = 106;
+
+    public static final String KEY_COOKIE = "cookie";
+    public static final String KEY_XSRF = "_xsrf";
 }

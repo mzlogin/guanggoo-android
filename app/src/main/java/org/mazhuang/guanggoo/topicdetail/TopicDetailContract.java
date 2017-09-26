@@ -12,6 +12,8 @@ public interface TopicDetailContract {
     interface Presenter extends BasePresenter {
         void getTopicDetail();
         void getMoreComments(int page);
+
+        void comment(String content);
     }
 
     interface View extends BaseView<Presenter> {
@@ -20,5 +22,8 @@ public interface TopicDetailContract {
 
         void onGetMoreCommentsSucceed(TopicDetail topicDetail);
         void onGetMoreCommentsFailed(String msg);
+
+        void onCommentSucceed();
+        void onCommentFailed(String msg);
     }
 }

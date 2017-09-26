@@ -1,40 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fadingEdge="vertical"
-    android:scrollbars="vertical">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/keep_blank">
+        android:fadingEdge="vertical"
+        android:scrollbars="vertical">
 
-        <include layout="@layout/topic_header" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/keep_blank">
 
-        <WebView
-            android:id="@+id/content"
+            <include layout="@layout/topic_header" />
+
+            <WebView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/normal_margin"
+                android:textColorLink="@color/defaultFontColor" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/listBackground" />
+
+            <TextView
+                android:id="@+id/load_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/normal_margin"
+                android:text="@string/load_more_comments"
+                android:textColor="@color/enable_text"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/comment_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/normal_margin"
-            android:textColorLink="@color/defaultFontColor"/>
+            android:background="@drawable/edittext_background"
+            android:layout_margin="@dimen/inner_margin"
+            android:padding="@dimen/inner_margin"
+            android:textCursorDrawable="@drawable/edittext_cursor"
+            android:hint="@string/add_comment"
+            android:inputType="text" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/comments"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/listBackground"/>
-
-        <TextView
-            android:id="@+id/load_more"
+        <Button
+            android:id="@+id/submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/normal_margin"
-            android:textColor="@color/enable_text"
-            android:text="@string/load_more_comments"
-            android:visibility="gone"/>
+            android:layout_below="@id/comment"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:text="@string/comment"/>
 
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/comment"
+            android:layout_toLeftOf="@id/submit"
+            android:background="@null"
+            android:text="@string/cancel"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

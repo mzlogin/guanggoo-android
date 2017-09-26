@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_comment">评论</string>
     <string name="not_logged_in">未登录</string>
     <string name="nodes_list">节点列表</string>
     <string name="home">首页</string>
@@ -24,4 +24,8 @@
     <string name="back_to_quit">连按两次返回键退出</string>
     <string name="load_more_comments">加载更多评论</string>
     <string name="beginner_guide">新手指南</string>
+    <string name="comment">评论</string>
+    <string name="cancel">取消</string>
+    <string name="please_input_content">评论内容不能为空</string>
+    <string name="add_comment">请输入评论内容</string>
 </resources>

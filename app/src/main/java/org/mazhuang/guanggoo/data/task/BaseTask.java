@@ -10,6 +10,7 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.mazhuang.guanggoo.App;
 import org.mazhuang.guanggoo.data.OnResponseListener;
+import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.PrefsUtil;
 
 import java.util.HashMap;
@@ -53,10 +54,18 @@ public abstract class BaseTask<T> implements Runnable {
     protected Connection getConnection(String url) {
         Connection connection = Jsoup.connect(url);
 
-        String cookieString = PrefsUtil.getString(App.getInstance(), PrefsUtil.KEY_COOKIE, "");
-        if (!TextUtils.isEmpty(cookieString)) {
+        Map<String, String> cookies = getCookies();
+        if (cookies.size() > 0) {
+            connection.cookies(cookies);
+        }
 
-            Map<String, String> cookies = new HashMap<>();
+        return connection;
+    }
+
+    protected Map<String, String> getCookies() {
+        Map<String, String> cookies = new HashMap<>();
+        String cookieString = PrefsUtil.getString(App.getInstance(), ConstantUtil.KEY_COOKIE, "");
+        if (!TextUtils.isEmpty(cookieString)) {
 
             try {
                 JSONObject jsonObject = new JSONObject(cookieString);
@@ -69,12 +78,17 @@ public abstract class BaseTask<T> implements Runnable {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-            if (cookies.size() > 0) {
-                connection.cookies(cookies);
-            }
         }
 
-        return connection;
+        return cookies;
+    }
+
+    protected String getCookieValue(String key) {
+        Map<String, String> cookies = getCookies();
+        return cookies.get(key);
+    }
+
+    protected String getXsrf() {
+        return PrefsUtil.getString(App.getInstance(), ConstantUtil.KEY_XSRF, "");
     }
 }
