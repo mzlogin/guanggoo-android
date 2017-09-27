@@ -12,4 +12,5 @@
     <color name="titleColor">#676767</color>
     <color name="metaColor">#9D9D9D</color>
     <color name="nodeBackgroundDark">#E3E3E3</color>
+    <color name="wechat_green">#1AAD19</color>
 </resources>

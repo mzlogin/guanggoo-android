@@ -23,7 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/normal_margin"
-                android:textColorLink="@color/defaultFontColor" />
+                android:textColorLink="@color/defaultFontColor"
+                android:focusableInTouchMode="false" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/comments"
@@ -53,46 +54,38 @@
         app:cardElevation="8dp"
         app:cardBackgroundColor="@color/colorAccent">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/comment"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@drawable/edittext_background"
-                android:layout_marginTop="@dimen/inner_margin"
-                android:layout_marginLeft="@dimen/inner_margin"
-                android:layout_marginRight="@dimen/inner_margin"
-                android:layout_marginBottom="0dp"
+                android:layout_margin="@dimen/inner_margin"
                 android:padding="@dimen/inner_margin"
                 android:textCursorDrawable="@drawable/edittext_cursor"
                 android:hint="@string/add_comment"
-                android:inputType="text" />
+                android:inputType="textMultiLine" />
 
             <Button
                 android:id="@+id/submit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/comment"
-                android:layout_alignParentRight="true"
-                android:background="@null"
-                android:padding="0dp"
+                android:layout_width="@dimen/comment_button_width"
+                android:layout_height="@dimen/button_height"
+                android:layout_gravity="bottom"
+                android:background="@drawable/green_button"
+                android:paddingLeft="@dimen/inner_margin"
+                android:paddingRight="@dimen/inner_margin"
+                android:layout_marginRight="@dimen/inner_margin"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:enabled="false"
+                android:textColor="@color/green_button"
                 android:text="@string/comment"/>
 
-            <Button
-                android:id="@+id/cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/comment"
-                android:layout_toLeftOf="@id/submit"
-                android:background="@null"
-                android:padding="0dp"
-                android:layout_marginLeft="@dimen/normal_margin"
-                android:text="@string/cancel"/>
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 

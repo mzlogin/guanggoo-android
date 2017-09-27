@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -59,6 +62,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
     @BindView(R.id.comment_view) View mCommentsView;
     @BindView(R.id.comment) EditText mCommentEditText;
+    @BindView(R.id.submit) Button mSubmitButton;
 
     @Nullable
     @Override
@@ -67,16 +71,36 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
         ButterKnife.bind(this, root);
 
-        initWebView();
-
-        initRecyclerView();
+        initViews();
 
         mPresenter.getTopicDetail();
 
         return root;
     }
 
-    @OnClick({R.id.load_more, R.id.submit, R.id.cancel})
+    private void initViews() {
+        initWebView();
+        initRecyclerView();
+
+        mCommentEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                mSubmitButton.setEnabled(!TextUtils.isEmpty(editable));
+            }
+        });
+    }
+
+    @OnClick({R.id.load_more, R.id.submit})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.load_more: {
@@ -96,10 +120,6 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
                 } else {
                     mPresenter.comment(mCommentEditText.getText().toString());
                 }
-                break;
-
-            case R.id.cancel:
-                mCommentsView.setVisibility(View.GONE);
                 break;
 
             default:
