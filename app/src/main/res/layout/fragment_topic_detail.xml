@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -43,43 +44,56 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
         android:id="@+id/comment_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/white"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/colorAccent">
 
-        <EditText
-            android:id="@+id/comment"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_background"
-            android:layout_margin="@dimen/inner_margin"
-            android:padding="@dimen/inner_margin"
-            android:textCursorDrawable="@drawable/edittext_cursor"
-            android:hint="@string/add_comment"
-            android:inputType="text" />
+            android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/comment"
-            android:layout_alignParentRight="true"
-            android:background="@null"
-            android:text="@string/comment"/>
+            <EditText
+                android:id="@+id/comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:layout_marginTop="@dimen/inner_margin"
+                android:layout_marginLeft="@dimen/inner_margin"
+                android:layout_marginRight="@dimen/inner_margin"
+                android:layout_marginBottom="0dp"
+                android:padding="@dimen/inner_margin"
+                android:textCursorDrawable="@drawable/edittext_cursor"
+                android:hint="@string/add_comment"
+                android:inputType="text" />
 
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/comment"
-            android:layout_toLeftOf="@id/submit"
-            android:background="@null"
-            android:text="@string/cancel"/>
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/comment"
+                android:layout_alignParentRight="true"
+                android:background="@null"
+                android:padding="0dp"
+                android:text="@string/comment"/>
 
-    </RelativeLayout>
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/comment"
+                android:layout_toLeftOf="@id/submit"
+                android:background="@null"
+                android:padding="0dp"
+                android:layout_marginLeft="@dimen/normal_margin"
+                android:text="@string/cancel"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>

@@ -247,4 +247,14 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mCommentsView.setVisibility(View.VISIBLE);
         mCommentEditText.requestFocus();
     }
+
+    @Override
+    public boolean onBackPressed() {
+        if (mCommentsView.getVisibility() == View.VISIBLE) {
+            mCommentsView.setVisibility(View.GONE);
+            return true;
+        }
+
+        return super.onBackPressed();
+    }
 }
