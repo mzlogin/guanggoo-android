@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,35 +18,18 @@ import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
 public class TopicListFragment extends BaseFragment<TopicListContract.Presenter> implements TopicListContract.View {
 
-    private OnListFragmentInteractionListener mListener;
     private TopicListAdapter mAdapter;
     private boolean mLoadable = true;
-    int pastVisiblesItems, visibleItemCount, totalItemCount;
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public TopicListFragment() {
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    int pastVisibleItems, visibleItemCount, totalItemCount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_topic_list, container, false);
+
+        initParams();
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -71,10 +55,10 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
                     if(dy > 0) { //check for scroll down
                         visibleItemCount = layoutManager.getChildCount();
                         totalItemCount = layoutManager.getItemCount();
-                        pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
+                        pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
 
                         if (mLoadable) {
-                            if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            if ( (visibleItemCount + pastVisibleItems) >= totalItemCount) {
                                 mLoadable = false;
                                 if (totalItemCount <= 1024) {
                                     mPresenter.getMoreTopic(totalItemCount / ConstantUtil.TOPICS_PER_PAGE + 1);
@@ -88,29 +72,11 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
             });
         }
 
-        if (!mAdapter.isFiiled()) {
+        if (!mAdapter.isFilled()) {
             mPresenter.getTopicList();
         }
 
         return view;
-    }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     @Override
@@ -123,24 +89,13 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(Topic item);
-    }
-
     @Override
     public String getTitle() {
-        return "主题列表";
+        if (TextUtils.isEmpty(mTitle)) {
+            return getString(R.string.topic_list);
+        } else {
+            return mTitle;
+        }
     }
 
     @Override

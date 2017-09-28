@@ -10,6 +10,8 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import org.mazhuang.guanggoo.R;
+import org.mazhuang.guanggoo.base.FragmentCallBack;
+import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.NodeCategory;
 
 import java.util.List;
@@ -25,9 +27,9 @@ public class NodesCloudAdapter extends RecyclerView.Adapter<NodesCloudAdapter.Vi
 
     private List<NodeCategory> mData;
 
-    private NodesCloudFragment.OnFragmentInteractionListener mListener;
+    private FragmentCallBack mListener;
 
-    public NodesCloudAdapter(NodesCloudFragment.OnFragmentInteractionListener listener) {
+    public NodesCloudAdapter(FragmentCallBack listener) {
         mListener = listener;
     }
 
@@ -85,7 +87,8 @@ public class NodesCloudAdapter extends RecyclerView.Adapter<NodesCloudAdapter.Vi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (mListener != null) {
-                    mListener.onFragmentInteraction(category.getNodes().get(position));
+                    Node node = category.getNodes().get(position);
+                    mListener.openPage(node.getUrl(), node.getTitle());
                 }
             }
         });

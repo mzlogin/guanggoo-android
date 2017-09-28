@@ -1,6 +1,5 @@
 package org.mazhuang.guanggoo.topicdetail;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -29,7 +28,6 @@ import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
-import org.mazhuang.guanggoo.data.entity.Comment;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
@@ -45,8 +43,6 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
     private TopicDetail mTopicDetail;
     private CommentsListAdapter mAdapter;
-
-    private OnListFragmentInteractionListener mListener;
 
     @BindView(R.id.title) TextView mTitleTextView;
     @BindView(R.id.avatar) ImageView mAvatarImageView;
@@ -70,6 +66,8 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         View root = inflater.inflate(R.layout.fragment_topic_detail, container, false);
 
         ButterKnife.bind(this, root);
+
+        initParams();
 
         initViews();
 
@@ -224,30 +222,11 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
     @Override
     public String getTitle() {
-        return "主题详情";
-    }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (TextUtils.isEmpty(mTitle)) {
+            return getString(R.string.topic_detail);
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+            return mTitle;
         }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(Comment item);
     }
 
     @Override

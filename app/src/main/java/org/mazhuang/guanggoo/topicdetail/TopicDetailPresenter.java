@@ -15,17 +15,14 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
 
     private TopicDetailContract.View mView;
 
-    private String mUrl;
-
-    public TopicDetailPresenter(TopicDetailContract.View view, String url) {
+    public TopicDetailPresenter(TopicDetailContract.View view) {
         mView = view;
-        mUrl = url.replaceAll("#reply\\d+", "");
         mView.setPresenter(this);
     }
 
     @Override
     public void getTopicDetail() {
-        NetworkTaskScheduler.getInstance().execute(new GetTopicDetailTask(mUrl, new OnResponseListener<TopicDetail>() {
+        NetworkTaskScheduler.getInstance().execute(new GetTopicDetailTask(getUrl(), new OnResponseListener<TopicDetail>() {
             @Override
             public void onSucceed(TopicDetail data) {
                 mView.onGetTopicDetailSucceed(data);
@@ -40,7 +37,7 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
 
     @Override
     public void getMoreComments(int page) {
-        NetworkTaskScheduler.getInstance().execute(new GetTopicDetailTask(UrlUtil.appendPage(mUrl, page), new OnResponseListener<TopicDetail>() {
+        NetworkTaskScheduler.getInstance().execute(new GetTopicDetailTask(UrlUtil.appendPage(getUrl(), page), new OnResponseListener<TopicDetail>() {
             @Override
             public void onSucceed(TopicDetail data) {
                 mView.onGetMoreCommentsSucceed(data);
@@ -55,7 +52,7 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
 
     @Override
     public void comment(String content) {
-        NetworkTaskScheduler.getInstance().execute(new CommentTask(mUrl, content, new OnResponseListener<String>() {
+        NetworkTaskScheduler.getInstance().execute(new CommentTask(getUrl(), content, new OnResponseListener<String>() {
             @Override
             public void onSucceed(String data) {
                 mView.onCommentSucceed();
@@ -66,5 +63,9 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
                 mView.onCommentFailed(msg);
             }
         }));
+    }
+
+    private String getUrl() {
+        return mView.getUrl().replaceAll("#reply\\d+", "");
     }
 }

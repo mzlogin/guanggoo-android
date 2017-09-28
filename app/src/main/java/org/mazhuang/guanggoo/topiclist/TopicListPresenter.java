@@ -15,17 +15,15 @@ import java.util.List;
 public class TopicListPresenter implements TopicListContract.Presenter {
 
     private TopicListContract.View mView;
-    private String mUrl;
 
-    public TopicListPresenter(TopicListContract.View view, String url) {
+    public TopicListPresenter(TopicListContract.View view) {
         mView = view;
-        mUrl = url;
         view.setPresenter(this);
     }
 
     @Override
     public void getTopicList() {
-        NetworkTaskScheduler.getInstance().execute(new GetTopicListTask(mUrl,
+        NetworkTaskScheduler.getInstance().execute(new GetTopicListTask(mView.getUrl(),
                 new OnResponseListener<List<Topic>>() {
                     @Override
                     public void onSucceed(List<Topic> data) {
@@ -41,7 +39,7 @@ public class TopicListPresenter implements TopicListContract.Presenter {
 
     @Override
     public void getMoreTopic(int page) {
-        NetworkTaskScheduler.getInstance().execute(new GetTopicListTask(UrlUtil.appendPage(mUrl, page),
+        NetworkTaskScheduler.getInstance().execute(new GetTopicListTask(UrlUtil.appendPage(mView.getUrl(), page),
                 new OnResponseListener<List<Topic>>() {
                     @Override
                     public void onSucceed(List<Topic> data) {

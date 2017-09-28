@@ -10,25 +10,20 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.R;
+import org.mazhuang.guanggoo.base.FragmentCallBack;
 import org.mazhuang.guanggoo.data.entity.Topic;
-import org.mazhuang.guanggoo.topiclist.TopicListFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link Topic} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.ViewHolder> {
 
     private List<Topic> mData;
-    private final OnListFragmentInteractionListener mListener;
+    private final FragmentCallBack mListener;
 
-    public TopicListAdapter(OnListFragmentInteractionListener listener) {
+    public TopicListAdapter(FragmentCallBack listener) {
         mListener = listener;
     }
 
@@ -72,9 +67,7 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.View
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.openPage(holder.mItem.getUrl(), holder.mItem.getTitle());
                 }
             }
         });
@@ -85,7 +78,7 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.View
         return mData == null ? 0 : mData.size();
     }
 
-    public boolean isFiiled() {
+    public boolean isFilled() {
         return (mData != null && mData.size() > 0);
     }
 

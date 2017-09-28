@@ -4,6 +4,7 @@
 
 * [登录](#登录)
 * [获取主题列表](#获取主题列表)
+* [主题详情](#主题详情)
 * [获取节点列表](#获取节点列表)
 * [评论](#评论)
 
@@ -12,6 +13,18 @@
 ## 登录
 
 ## 获取主题列表
+
+默认排序：<http://www.guanggoo.com/>
+
+最新话题：<http://www.guanggoo.com/?tab=latest>
+
+精华主题：<http://www.guanggoo.com/?tab=elite>
+
+节点主题列表：<http://www.guanggoo.com/node/xxxxx>
+
+## 主题详情
+
+URL：<http://www.guanggoo.com/t/25804>
 
 ## 获取节点列表
 

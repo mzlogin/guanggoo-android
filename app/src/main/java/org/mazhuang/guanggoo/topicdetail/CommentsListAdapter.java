@@ -1,7 +1,6 @@
 package org.mazhuang.guanggoo.topicdetail;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,31 +10,22 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.R;
+import org.mazhuang.guanggoo.base.FragmentCallBack;
 import org.mazhuang.guanggoo.data.entity.Comment;
-import org.mazhuang.guanggoo.data.entity.Topic;
-import org.mazhuang.guanggoo.topicdetail.TopicDetailFragment.OnListFragmentInteractionListener;
 import org.sufficientlysecure.htmltextview.HtmlHttpImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link Topic} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapter.ViewHolder> {
 
     private Map<Integer, Comment> mData;
-    private final OnListFragmentInteractionListener mListener;
+    private final FragmentCallBack mListener;
 
-    public CommentsListAdapter(OnListFragmentInteractionListener listener) {
+    public CommentsListAdapter(FragmentCallBack listener) {
         mListener = listener;
     }
 
@@ -105,9 +95,7 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    // nothing to do now
                 }
             }
         });

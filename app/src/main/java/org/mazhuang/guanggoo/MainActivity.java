@@ -10,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,30 +20,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.base.BaseFragment;
+import org.mazhuang.guanggoo.base.FragmentCallBack;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
-import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
-import org.mazhuang.guanggoo.data.OnResponseListener;
-import org.mazhuang.guanggoo.data.entity.Comment;
-import org.mazhuang.guanggoo.data.entity.Node;
-import org.mazhuang.guanggoo.data.entity.Topic;
-import org.mazhuang.guanggoo.data.task.AuthCheckTask;
-import org.mazhuang.guanggoo.login.LoginFragment;
-import org.mazhuang.guanggoo.login.LoginPresenter;
-import org.mazhuang.guanggoo.nodescloud.NodesCloudFragment;
-import org.mazhuang.guanggoo.nodescloud.NodesCloudPresenter;
 import org.mazhuang.guanggoo.topicdetail.Commentable;
-import org.mazhuang.guanggoo.topicdetail.TopicDetailFragment;
-import org.mazhuang.guanggoo.topicdetail.TopicDetailPresenter;
-import org.mazhuang.guanggoo.topiclist.TopicListFragment;
-import org.mazhuang.guanggoo.topiclist.TopicListPresenter;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        TopicListFragment.OnListFragmentInteractionListener,
-        LoginFragment.OnFragmentInteractionListener,
-        TopicDetailFragment.OnListFragmentInteractionListener,
-        NodesCloudFragment.OnFragmentInteractionListener {
+        implements FragmentCallBack, NavigationView.OnNavigationItemSelectedListener {
 
     private static String sStackName = MainActivity.class.getName();
 
@@ -95,18 +77,19 @@ public class MainActivity extends AppCompatActivity
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // openPage(ConstantUtil.PROFILE_URL, getString(R.string.profile));
                 if (AuthInfoManager.getInstance().isLoginedIn()) {
                     // TODO: 2017/9/17 跳转到个人页面
                 } else {
                     drawer.closeDrawer(GravityCompat.START);
-                    gotoLoginPage(null);
+                    openPage(ConstantUtil.LOGIN_URL, getString(R.string.login));
                 }
             }
         };
         mAvatarImageView.setOnClickListener(listener);
         mUsernameTextView.setOnClickListener(listener);
 
-        gotoTopicListPage(ConstantUtil.BASE_URL, true);
+        openPage(ConstantUtil.BASE_URL, getString(R.string.default_order));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,15 +209,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_home) {
-            gotoTopicListPage(ConstantUtil.BASE_URL, true);
+            openPage(ConstantUtil.BASE_URL, getString(R.string.default_order));
         } else if (id == R.id.nav_nodes) {
-            gotoNodesCloudPage();
+            openPage(ConstantUtil.NODES_CLOUD_URL, getString(R.string.nodes_list));
         } else if (id == R.id.beginner_guide) {
-            if (AuthInfoManager.getInstance().isLoginedIn()) {
-                gotoTopicDetailPage(ConstantUtil.BEGINNER_GUIDE_URL);
-            } else {
-                gotoLoginPage(ConstantUtil.BEGINNER_GUIDE_URL);
-            }
+            openPage(ConstantUtil.BEGINNER_GUIDE_URL, getString(R.string.beginner_guide));
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -245,88 +224,21 @@ public class MainActivity extends AppCompatActivity
         return getSupportFragmentManager().findFragmentById(R.id.fragment_container);
     }
 
-    private void gotoNodesCloudPage() {
-        if (getCurrentFragment() instanceof NodesCloudFragment) {
+    @Override
+    public void openPage(String url, String title) {
+        BaseFragment fragment = FragmentFactory.getFragmentByUrl(url);
+        if (fragment == null) {
+            Toast.makeText(this, getString(R.string.error_happened), Toast.LENGTH_SHORT).show();
             return;
         }
-
-        NodesCloudFragment fragment = new NodesCloudFragment();
-        new NodesCloudPresenter(fragment);
-
-        addFragmentToStack(getSupportFragmentManager(), fragment);
-    }
-
-    private void gotoLoginPage(String url) {
-        if (getCurrentFragment() instanceof LoginFragment) {
-            return;
-        }
-
-        LoginFragment fragment = new LoginFragment();
-        new LoginPresenter(fragment);
-
-        if (!TextUtils.isEmpty(url)) {
-            Bundle bundle = new Bundle();
-            bundle.putString(LoginFragment.KEY_REFERER, url);
-            fragment.setArguments(bundle);
-        }
-
-        addFragmentToStack(getSupportFragmentManager(), fragment);
-    }
-
-    private void gotoTopicDetailPage(String url) {
-        if (getCurrentFragment() instanceof TopicDetailFragment) {
-            return;
-        }
-
-        TopicDetailFragment fragment = new TopicDetailFragment();
-        new TopicDetailPresenter(fragment, url);
-        addFragmentToStack(getSupportFragmentManager(), fragment);
-    }
-
-    private void gotoTopicListPage(String url, boolean isHome) {
-        TopicListFragment fragment = new TopicListFragment();
-        new TopicListPresenter(fragment, url);
-        if (isHome) {
+        Bundle bundle = new Bundle();
+        bundle.putString(BaseFragment.KEY_URL, url);
+        bundle.putString(BaseFragment.KEY_TITLE, title);
+        fragment.setArguments(bundle);
+        if (fragment.isClearTop()) {
             setOnlyFragmentToStack(getSupportFragmentManager(), fragment);
         } else {
             addFragmentToStack(getSupportFragmentManager(), fragment);
         }
-    }
-
-    @Override
-    public void onListFragmentInteraction(final Topic item) {
-        NetworkTaskScheduler.getInstance().execute(new AuthCheckTask(new OnResponseListener<String>() {
-            @Override
-            public void onSucceed(String url) {
-                gotoTopicDetailPage(item.getUrl());
-            }
-
-            @Override
-            public void onFailed(String msg) {
-                Toast.makeText(MainActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
-                gotoLoginPage(item.getUrl());
-            }
-        }));
-    }
-
-    @Override
-    public void onFragmentInteraction(String refererUrl) {
-        initLoginedInUserInfo();
-
-        // 根据触发登录的类型和页面，这里设置跳转，目前只有从主题列表跳转到主题详情
-        if (!TextUtils.isEmpty(refererUrl)) {
-            gotoTopicDetailPage(refererUrl);
-        }
-    }
-
-    @Override
-    public void onListFragmentInteraction(Comment item) {
-
-    }
-
-    @Override
-    public void onFragmentInteraction(Node node) {
-        // 节点列表点击事件
-        gotoTopicListPage(node.getUrl(), false);
     }
 }
