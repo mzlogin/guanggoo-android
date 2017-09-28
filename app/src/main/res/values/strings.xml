@@ -28,4 +28,7 @@
     <string name="cancel">取消</string>
     <string name="please_input_content">评论内容不能为空</string>
     <string name="add_comment">请输入评论内容</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

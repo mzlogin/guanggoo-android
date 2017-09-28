@@ -1,6 +1,7 @@
 # 光谷社区 API 列表
 
 <!-- vim-markdown-toc GFM -->
+
 * [登录](#登录)
 * [获取主题列表](#获取主题列表)
 * [获取节点列表](#获取节点列表)
@@ -13,6 +14,25 @@
 ## 获取主题列表
 
 ## 获取节点列表
+
+使用 GET 方法访问 <http://www.guanggoo.com/nodes>。
+
+```html
+<div class="nodes-cloud ...">
+...
+    <ul>
+        <li>
+            <label for>生活百科</label>
+            <span class="nodes">
+                <a href="/node/house">楼市房产</a>
+                ...
+            </span>
+        </li>
+        ...
+    </ul>
+...
+</div>
+```
 
 ## 评论
 

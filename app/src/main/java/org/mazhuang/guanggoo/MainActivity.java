@@ -25,10 +25,13 @@ import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Comment;
+import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.task.AuthCheckTask;
 import org.mazhuang.guanggoo.login.LoginFragment;
 import org.mazhuang.guanggoo.login.LoginPresenter;
+import org.mazhuang.guanggoo.nodescloud.NodesCloudFragment;
+import org.mazhuang.guanggoo.nodescloud.NodesCloudPresenter;
 import org.mazhuang.guanggoo.topicdetail.Commentable;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailFragment;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailPresenter;
@@ -40,7 +43,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         TopicListFragment.OnListFragmentInteractionListener,
         LoginFragment.OnFragmentInteractionListener,
-        TopicDetailFragment.OnListFragmentInteractionListener {
+        TopicDetailFragment.OnListFragmentInteractionListener,
+        NodesCloudFragment.OnFragmentInteractionListener {
 
     private static String sStackName = MainActivity.class.getName();
 
@@ -86,8 +90,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        mAvatarImageView = navigationView.getHeaderView(0).findViewById(R.id.avatar);
-        mUsernameTextView = navigationView.getHeaderView(0).findViewById(R.id.username);
+        mAvatarImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.avatar);
+        mUsernameTextView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.username);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,10 +106,7 @@ public class MainActivity extends AppCompatActivity
         mAvatarImageView.setOnClickListener(listener);
         mUsernameTextView.setOnClickListener(listener);
 
-        TopicListFragment fragment = new TopicListFragment();
-        new TopicListPresenter(fragment, ConstantUtil.BASE_URL);
-
-        addFragmentToStack(getSupportFragmentManager(), fragment);
+        gotoTopicListPage(ConstantUtil.BASE_URL, true);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,14 +226,14 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_home) {
-
+            gotoTopicListPage(ConstantUtil.BASE_URL, true);
         } else if (id == R.id.nav_nodes) {
-
+            gotoNodesCloudPage();
         } else if (id == R.id.beginner_guide) {
             if (AuthInfoManager.getInstance().isLoginedIn()) {
                 gotoTopicDetailPage(ConstantUtil.BEGINNER_GUIDE_URL);
             } else {
-                gotoLoginPage(ConstantUtil.LOGIN_URL);
+                gotoLoginPage(ConstantUtil.BEGINNER_GUIDE_URL);
             }
         }
 
@@ -242,6 +243,17 @@ public class MainActivity extends AppCompatActivity
 
     private Fragment getCurrentFragment() {
         return getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+    }
+
+    private void gotoNodesCloudPage() {
+        if (getCurrentFragment() instanceof NodesCloudFragment) {
+            return;
+        }
+
+        NodesCloudFragment fragment = new NodesCloudFragment();
+        new NodesCloudPresenter(fragment);
+
+        addFragmentToStack(getSupportFragmentManager(), fragment);
     }
 
     private void gotoLoginPage(String url) {
@@ -269,6 +281,16 @@ public class MainActivity extends AppCompatActivity
         TopicDetailFragment fragment = new TopicDetailFragment();
         new TopicDetailPresenter(fragment, url);
         addFragmentToStack(getSupportFragmentManager(), fragment);
+    }
+
+    private void gotoTopicListPage(String url, boolean isHome) {
+        TopicListFragment fragment = new TopicListFragment();
+        new TopicListPresenter(fragment, url);
+        if (isHome) {
+            setOnlyFragmentToStack(getSupportFragmentManager(), fragment);
+        } else {
+            addFragmentToStack(getSupportFragmentManager(), fragment);
+        }
     }
 
     @Override
@@ -300,5 +322,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(Comment item) {
 
+    }
+
+    @Override
+    public void onFragmentInteraction(Node node) {
+        // 节点列表点击事件
+        gotoTopicListPage(node.getUrl(), false);
     }
 }

@@ -30,7 +30,7 @@
                 android:id="@+id/comments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/listBackground" />
+                android:background="@color/listBackground"/>
 
             <TextView
                 android:id="@+id/load_more"

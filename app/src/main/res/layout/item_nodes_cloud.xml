@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/normal_margin"
+        android:layout_gravity="center_horizontal"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <org.mazhuang.guanggoo.ui.widget.ScenesGridView
+        android:id="@+id/nodes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="@dimen/normal_margin"
+        android:verticalSpacing="@dimen/inner_margin"
+        android:numColumns="3"/>
+
+</LinearLayout>
