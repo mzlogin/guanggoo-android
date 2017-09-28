@@ -49,6 +49,7 @@ public abstract class FragmentFactory {
                 fragment = new TopicListFragment();
                 new TopicListPresenter((TopicListFragment)fragment);
                 fragment.setClearTop(true);
+                fragment.setIsHome(true);
                 break;
 
             case NODE_TOPIC_LIST:

@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,10 +46,10 @@ public class MainActivity extends AppCompatActivity
 
         initViews();
 
-        initLoginedInUserInfo();
+        initLoginInUserInfo();
     }
 
-    private void initLoginedInUserInfo() {
+    private void initLoginInUserInfo() {
         if (AuthInfoManager.getInstance().isLoginedIn()) {
             Glide.with(this)
                     .load(AuthInfoManager.getInstance().getAvatar())
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity
         mAvatarImageView.setOnClickListener(listener);
         mUsernameTextView.setOnClickListener(listener);
 
-        openPage(ConstantUtil.BASE_URL, getString(R.string.default_order));
+        openPage(ConstantUtil.BASE_URL, getString(R.string.default_order_topics));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,8 +120,9 @@ public class MainActivity extends AppCompatActivity
                         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                     }
 
-                    if (mCommentMenuItem != null) {
+                    if (mMenu != null) {
                         mCommentMenuItem.setVisible(fragment instanceof Commentable);
+                        mMenu.setGroupVisible(R.id.menu_category_home, ((BaseFragment) fragment).isHome());
                     }
                 }
             }
@@ -171,23 +173,39 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         mMenu = menu;
-        mCommentMenuItem = mMenu.findItem(R.id.action_comment);
+        mCommentMenuItem = menu.findItem(R.id.action_comment);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.action_comment:
+                Fragment fragment = getCurrentFragment();
+                if (fragment instanceof Commentable) {
+                    ((Commentable) fragment).showCommentView();
+                }
+                return true;
 
-        if (id == R.id.action_comment) {
-            Fragment fragment = getCurrentFragment();
-            if (fragment instanceof Commentable) {
-                ((Commentable) fragment).showCommentView();
-            }
-            return true;
+            case R.id.action_default_order:
+                openPage(ConstantUtil.BASE_URL, getString(R.string.default_order_topics));
+                item.setChecked(true);
+                break;
+
+            case R.id.action_latest:
+                openPage(ConstantUtil.LATEST_URL, getString(R.string.latest_topics));
+                item.setChecked(true);
+                break;
+
+            case R.id.action_elite:
+                openPage(ConstantUtil.ELITE_URL, getString(R.string.elite_topics));
+                item.setChecked(true);
+                break;
+
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -196,20 +214,12 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_home) {
-            openPage(ConstantUtil.BASE_URL, getString(R.string.default_order));
+        if (id == R.id.nav_home) {
+            openPage(ConstantUtil.BASE_URL, getString(R.string.default_order_topics));
+            mMenu.findItem(R.id.action_default_order).setChecked(true);
         } else if (id == R.id.nav_nodes) {
             openPage(ConstantUtil.NODES_CLOUD_URL, getString(R.string.nodes_list));
         } else if (id == R.id.beginner_guide) {
@@ -226,6 +236,15 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void openPage(String url, String title) {
+        if (!TextUtils.isEmpty(url)) {
+            Fragment fragment = getCurrentFragment();
+            if (fragment instanceof BaseFragment) {
+                if (url.equals(((BaseFragment) fragment).getUrl())) {
+                    return;
+                }
+            }
+        }
+
         BaseFragment fragment = FragmentFactory.getFragmentByUrl(url);
         if (fragment == null) {
             Toast.makeText(this, getString(R.string.error_happened), Toast.LENGTH_SHORT).show();

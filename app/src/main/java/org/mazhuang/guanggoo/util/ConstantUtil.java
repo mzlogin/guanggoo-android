@@ -9,6 +9,8 @@ public abstract class ConstantUtil {
     public static final String LOGIN_URL = BASE_URL + "/login";
     public static final String BEGINNER_GUIDE_URL = BASE_URL + "/t/2657";
     public static final String NODES_CLOUD_URL = BASE_URL + "/nodes";
+    public static final String LATEST_URL = BASE_URL + "/?tab=latest";
+    public static final String ELITE_URL = BASE_URL + "/?tab=elite";
 
     public static final int TOPICS_PER_PAGE = 36;
     public static final int COMMENTS_PER_PAGE = 106;

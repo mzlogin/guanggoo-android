@@ -19,6 +19,7 @@ public abstract class BaseFragment<T> extends Fragment {
     protected String mTitle;
 
     protected boolean mClearTop = false;
+    protected boolean mIsHome = false;
 
     public void setPresenter(T presenter) {
         mPresenter = presenter;
@@ -59,8 +60,16 @@ public abstract class BaseFragment<T> extends Fragment {
         return mClearTop;
     }
 
-    public void setClearTop(boolean mClearTop) {
-        this.mClearTop = mClearTop;
+    public void setClearTop(boolean clearTop) {
+        this.mClearTop = clearTop;
+    }
+
+    public boolean isHome() {
+        return mIsHome;
+    }
+
+    public void setIsHome(boolean isHome) {
+        mIsHome = isHome;
     }
 
     public String getUrl() {
