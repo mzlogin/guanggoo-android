@@ -21,7 +21,17 @@
         <item name="android:textColor">@color/defaultFontColor</item>
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="LinearClickableItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/linear_item_height</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginTop">@dimen/normal_margin</item>
+        <item name="android:paddingLeft">@dimen/normal_margin</item>
+        <item name="android:paddingRight">@dimen/normal_margin</item>
+        <item name="android:background">@color/colorAccent</item>
     </style>
 
 </resources>

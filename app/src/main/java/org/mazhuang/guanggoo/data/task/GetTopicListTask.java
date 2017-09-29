@@ -30,6 +30,7 @@ public class GetTopicListTask extends BaseTask<List<Topic>> implements Runnable 
     public void run() {
         List<Topic> topics = new ArrayList<>();
 
+        boolean succeed = false;
         try {
             Document doc = getConnection(mUrl).get();
 
@@ -40,12 +41,17 @@ public class GetTopicListTask extends BaseTask<List<Topic>> implements Runnable 
                 topics.add(topic);
             }
 
+            succeed = true;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if (topics.size() > 0) {
-            successOnUI(topics);
+        if (succeed) {
+            if (topics.size() > 0) {
+                successOnUI(topics);
+            } else {
+                failedOnUI("暂无内容");
+            }
         } else {
             failedOnUI("获取主题列表失败");
         }

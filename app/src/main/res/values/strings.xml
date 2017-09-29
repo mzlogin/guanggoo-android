@@ -46,4 +46,5 @@
     <string name="personal_center">个人中心</string>
     <string name="notifications">消息提醒</string>
     <string name="my_favors">我的收藏</string>
+    <string name="user_favors">TA 的收藏</string>
 </resources>

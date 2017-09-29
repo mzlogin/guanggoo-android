@@ -15,11 +15,15 @@ import com.bumptech.glide.Glide;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.entity.UserProfile;
+import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class UserProfileFragment extends BaseFragment<UserProfileContract.Presenter> implements UserProfileContract.View {
+
+    private UserProfile mUserProfile;
 
     @BindView(R.id.avatar) ImageView mAvatarImageView;
     @BindView(R.id.username) TextView mUsernameTextView;
@@ -42,6 +46,7 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
 
     @Override
     public void onGetUserProfileSucceed(UserProfile userProfile) {
+        mUserProfile = userProfile;
         mUsernameTextView.setText(userProfile.getUsername());
         Glide.with(getContext())
                 .load(userProfile.getAvatar())
@@ -63,6 +68,21 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
             return mTitle;
         } else {
             return getString(R.string.profile);
+        }
+    }
+
+    @OnClick({R.id.user_favors})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.user_favors:
+                if (mListener != null) {
+                    mListener.openPage(String.format(ConstantUtil.USER_FAVORS_BASE_URL, mUserProfile.getUsername()),
+                            getString(R.string.user_favors));
+                }
+                break;
+
+            default:
+                break;
         }
     }
 }

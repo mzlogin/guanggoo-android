@@ -47,14 +47,25 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/linear_item_height"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginTop="@dimen/normal_margin"
-        android:paddingLeft="@dimen/normal_margin"
-        android:paddingRight="@dimen/normal_margin"
-        android:background="@color/colorAccent">
+        android:id="@+id/user_favors"
+        style="@style/LinearClickableItem">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/user_favors"
+            android:textSize="@dimen/linear_item_font_size"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_right_arrow"
+            android:tint="@color/defaultFontColor"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/user_topics"
+        style="@style/LinearClickableItem"
+        android:visibility="gone">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -69,14 +80,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/linear_item_height"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginTop="@dimen/normal_margin"
-        android:paddingLeft="@dimen/normal_margin"
-        android:paddingRight="@dimen/normal_margin"
-        android:background="@color/colorAccent">
+        android:id="@+id/user_replies"
+        style="@style/LinearClickableItem"
+        android:visibility="gone">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"

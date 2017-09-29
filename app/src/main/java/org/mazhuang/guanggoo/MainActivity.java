@@ -2,6 +2,7 @@ package org.mazhuang.guanggoo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -126,8 +127,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void openUserProfile() {
-        openPage(ConstantUtil.USER_PROFILE_BASE_URL +
-                AuthInfoManager.getInstance().getUsername(), getString(R.string.profile));
+        openPage(String.format(ConstantUtil.USER_PROFILE_BASE_URL,
+                AuthInfoManager.getInstance().getUsername()), getString(R.string.profile));
     }
 
     public static void addFragmentToStack(FragmentManager fm, Fragment fragment) {
@@ -241,16 +242,28 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        if (id == R.id.nav_user_profile) {
-            openUserProfile();
-        } else if (id == R.id.nav_nodes) {
-            openPage(ConstantUtil.NODES_CLOUD_URL, getString(R.string.nodes_list));
-        } else if (id == R.id.nav_beginner_guide) {
-            openPage(ConstantUtil.BEGINNER_GUIDE_URL, getString(R.string.beginner_guide));
+        switch (item.getItemId()) {
+            case R.id.nav_user_profile:
+                openUserProfile();
+                break;
+
+            case R.id.nav_favors:
+                openPage(String.format(ConstantUtil.USER_FAVORS_BASE_URL, AuthInfoManager.getInstance().getUsername()), getString(R.string.my_favors));
+                break;
+
+            case R.id.nav_nodes:
+                openPage(ConstantUtil.NODES_CLOUD_URL, getString(R.string.nodes_list));
+                break;
+
+            case R.id.nav_beginner_guide:
+                openPage(ConstantUtil.BEGINNER_GUIDE_URL, getString(R.string.beginner_guide));
+                break;
+
+            default:
+                break;
         }
 
         drawer.closeDrawer(GravityCompat.START);

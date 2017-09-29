@@ -30,6 +30,7 @@ public abstract class FragmentFactory {
         NODE_TOPIC_LIST, // 节点主题列表
         LOGIN, // 登录
         USER_PROFILE, // 个人资料页
+        USER_FAVORS, // 个人收藏页
     }
 
     public static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("http://www.guanggoo.com[/]?$");
@@ -38,6 +39,7 @@ public abstract class FragmentFactory {
     public static final Pattern NODE_TOPIC_LIST_PATTERN = Pattern.compile("http://www.guanggoo.com/node/[^/]+$");
     public static final Pattern LOGIN_PATTERN = Pattern.compile("http://www.guanggoo.com/login$");
     public static final Pattern USER_PROFILE_PATTERN = Pattern.compile("http://www.guanggoo.com/u/\\w+$");
+    public static final Pattern USER_FAVORS_PATTERN = Pattern.compile("http://www.guanggoo.com/u/\\w+/favorites$");
 
 
     public static BaseFragment getFragmentByUrl(String url) {
@@ -57,6 +59,7 @@ public abstract class FragmentFactory {
                 break;
 
             case NODE_TOPIC_LIST:
+            case USER_FAVORS:
                 fragment = new TopicListFragment();
                 new TopicListPresenter((TopicListFragment)fragment);
                 break;
@@ -117,6 +120,10 @@ public abstract class FragmentFactory {
 
         if (USER_PROFILE_PATTERN.matcher(url).find()) {
             return PageType.USER_PROFILE;
+        }
+
+        if (USER_FAVORS_PATTERN.matcher(url).find()) {
+            return PageType.USER_FAVORS;
         }
 
         return PageType.NONE;

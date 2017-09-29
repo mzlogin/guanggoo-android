@@ -11,7 +11,8 @@ public abstract class ConstantUtil {
     public static final String NODES_CLOUD_URL = BASE_URL + "/nodes";
     public static final String LATEST_URL = BASE_URL + "/?tab=latest";
     public static final String ELITE_URL = BASE_URL + "/?tab=elite";
-    public static final String USER_PROFILE_BASE_URL = BASE_URL + "/u/";
+    public static final String USER_PROFILE_BASE_URL = BASE_URL + "/u/%s";
+    public static final String USER_FAVORS_BASE_URL = BASE_URL + "/u/%s/favorites";
 
     public static final int TOPICS_PER_PAGE = 36;
     public static final int COMMENTS_PER_PAGE = 106;
