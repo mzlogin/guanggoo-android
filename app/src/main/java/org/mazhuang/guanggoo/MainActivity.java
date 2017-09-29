@@ -79,8 +79,7 @@ public class MainActivity extends AppCompatActivity
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openPage(ConstantUtil.USER_PROFILE_BASE_URL +
-                        AuthInfoManager.getInstance().getUsername(), getString(R.string.profile));
+                openUserProfile();
             }
         };
         mAvatarImageView.setOnClickListener(listener);
@@ -124,6 +123,11 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+    }
+
+    private void openUserProfile() {
+        openPage(ConstantUtil.USER_PROFILE_BASE_URL +
+                AuthInfoManager.getInstance().getUsername(), getString(R.string.profile));
     }
 
     public static void addFragmentToStack(FragmentManager fm, Fragment fragment) {
@@ -241,12 +245,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        if (id == R.id.nav_home) {
-            openPage(ConstantUtil.BASE_URL, getString(R.string.default_order_topics));
-            mMenu.findItem(R.id.action_default_order).setChecked(true);
+        if (id == R.id.nav_user_profile) {
+            openUserProfile();
         } else if (id == R.id.nav_nodes) {
             openPage(ConstantUtil.NODES_CLOUD_URL, getString(R.string.nodes_list));
-        } else if (id == R.id.beginner_guide) {
+        } else if (id == R.id.nav_beginner_guide) {
             openPage(ConstantUtil.BEGINNER_GUIDE_URL, getString(R.string.beginner_guide));
         }
 

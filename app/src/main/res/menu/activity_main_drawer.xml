@@ -3,15 +3,28 @@
 
     <group>
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_home"
-            android:title="@string/home" />
+            android:id="@+id/nav_user_profile"
+            android:icon="@drawable/ic_menu_personal"
+            android:title="@string/personal_center" />
+        <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/ic_menu_notifications"
+            android:title="@string/notifications"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_favors"
+            android:icon="@drawable/ic_menu_favors"
+            android:title="@string/my_favors"
+            android:visible="false"/>
+    </group>
+
+    <group>
         <item
             android:id="@+id/nav_nodes"
             android:icon="@drawable/ic_menu_nodes"
             android:title="@string/nodes_list" />
         <item
-            android:id="@+id/beginner_guide"
+            android:id="@+id/nav_beginner_guide"
             android:icon="@drawable/ic_menu_beginner_guide"
             android:title="@string/beginner_guide" />
     </group>
