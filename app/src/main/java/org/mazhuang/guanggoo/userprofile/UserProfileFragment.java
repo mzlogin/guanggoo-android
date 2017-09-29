@@ -87,14 +87,21 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
         }
     }
 
-    @OnClick({R.id.user_favors})
+    @OnClick({R.id.user_favors, R.id.user_topics})
     public void onClick(View v) {
+        if (mListener == null) {
+            return;
+        }
+
         switch (v.getId()) {
             case R.id.user_favors:
-                if (mListener != null) {
-                    mListener.openPage(String.format(ConstantUtil.USER_FAVORS_BASE_URL, mUserProfile.getUsername()),
-                            getString(R.string.user_favors));
-                }
+                mListener.openPage(String.format(ConstantUtil.USER_FAVORS_BASE_URL, mUserProfile.getUsername()),
+                        getString(R.string.user_favors));
+                break;
+
+            case R.id.user_topics:
+                mListener.openPage(String.format(ConstantUtil.USER_TOPICS_BASE_URL, mUserProfile.getUsername()),
+                        getString(R.string.user_topics));
                 break;
 
             default:
