@@ -68,9 +68,34 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
         initViews();
 
-        mPresenter.getTopicDetail();
+        if (mTopicDetail == null) {
+            mPresenter.getTopicDetail();
+        } else {
+            setViewData(mTopicDetail);
+        }
 
         return root;
+    }
+
+    private void setViewData(TopicDetail topicDetail) {
+        mTitleTextView.setText(topicDetail.getTopic().getTitle());
+        Glide.with(getContext())
+                .load(topicDetail.getTopic().getAvatar())
+                .centerCrop()
+                .crossFade()
+                .into(mAvatarImageView);
+        mCreatedTimeTExtView.setText(topicDetail.getTopic().getMeta().getCreatedTime());
+        mAuthorTextView.setText(topicDetail.getTopic().getMeta().getAuthor().getUsername());
+        mNodeTextView.setText(topicDetail.getTopic().getMeta().getNode().getTitle());
+
+        // 相比 loadData，这个调用能解决中文乱码的问题
+        mContentWebView.loadDataWithBaseURL(null, topicDetail.getContent() + "<style>img{display:inline; height:auto; max-width:100%;} a{word-break:break-all; word-wrap:break-word;} pre, code, pre code{word-wrap:normal; overflow:auto;} pre{padding:16px; bordor-radius:3px; border:1px solid #ccc;}</style>", "text/html", "UTF-8", null);
+
+        mAdapter.setData(mTopicDetail.getComments());
+
+        if (mAdapter.getSmallestFloor() > 1) {
+            mLoadMoreTextView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initViews() {
@@ -189,28 +214,15 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
         mTopicDetail = topicDetail;
 
-        mTitleTextView.setText(topicDetail.getTopic().getTitle());
-        Glide.with(getContext())
-                .load(topicDetail.getTopic().getAvatar())
-                .centerCrop()
-                .crossFade()
-                .into(mAvatarImageView);
-        mCreatedTimeTExtView.setText(topicDetail.getTopic().getMeta().getCreatedTime());
-        mAuthorTextView.setText(topicDetail.getTopic().getMeta().getAuthor().getUsername());
-        mNodeTextView.setText(topicDetail.getTopic().getMeta().getNode().getTitle());
-
-        // 相比 loadData，这个调用能解决中文乱码的问题
-        mContentWebView.loadDataWithBaseURL(null, topicDetail.getContent() + "<style>img{display:inline; height:auto; max-width:100%;} a{word-break:break-all; word-wrap:break-word;} pre, code, pre code{word-wrap:normal; overflow:auto;} pre{padding:16px; bordor-radius:3px; border:1px solid #ccc;}</style>", "text/html", "UTF-8", null);
-
-        mAdapter.setData(mTopicDetail.getComments());
-
-        if (mAdapter.getSmallestFloor() > 1) {
-            mLoadMoreTextView.setVisibility(View.VISIBLE);
-        }
+        setViewData(mTopicDetail);
     }
 
     @Override
     public void onGetTopicDetailFailed(String msg) {
+        if (getContext() == null) {
+            return;
+        }
+
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 

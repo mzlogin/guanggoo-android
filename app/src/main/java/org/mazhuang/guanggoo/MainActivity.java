@@ -300,4 +300,14 @@ public class MainActivity extends AppCompatActivity
             addFragmentToStack(getSupportFragmentManager(), fragment);
         }
     }
+
+    @Override
+    public void onLoginStatusChanged(boolean isLogin) {
+        if (isLogin) {
+            initLoginInUserInfo();
+        } else {
+            mAvatarImageView.setImageResource(R.drawable.m_default);
+            mUsernameTextView.setText(R.string.not_logged_in);
+        }
+    }
 }

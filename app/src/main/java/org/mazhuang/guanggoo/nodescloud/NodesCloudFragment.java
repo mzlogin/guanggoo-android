@@ -50,6 +50,10 @@ public class NodesCloudFragment extends BaseFragment<NodesCloudContract.Presente
 
     @Override
     public void onGetNodesCloudSucceed(List<NodeCategory> nodesCloud) {
+        if (getContext() == null) {
+            return;
+        }
+
         mAdapter.setData(nodesCloud);
     }
 
@@ -64,6 +68,10 @@ public class NodesCloudFragment extends BaseFragment<NodesCloudContract.Presente
 
     @Override
     public void onGetNodesCloudFailed(String msg) {
+        if (getContext() == null) {
+            return;
+        }
+
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 }

@@ -39,14 +39,26 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
 
         ButterKnife.bind(this, root);
 
-        mPresenter.getUserProfile(mUrl);
+        if (mUserProfile == null) {
+            mPresenter.getUserProfile(mUrl);
+        } else {
+            setViewData(mUserProfile);
+        }
 
         return root;
     }
 
     @Override
     public void onGetUserProfileSucceed(UserProfile userProfile) {
+        if (getContext() == null) {
+            return;
+        }
+
         mUserProfile = userProfile;
+        setViewData(mUserProfile);
+    }
+
+    private void setViewData(UserProfile userProfile) {
         mUsernameTextView.setText(userProfile.getUsername());
         Glide.with(getContext())
                 .load(userProfile.getAvatar())
@@ -59,6 +71,10 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
 
     @Override
     public void onGetUserProfileFailed(String msg) {
+        if (getContext() == null) {
+            return;
+        }
+
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 

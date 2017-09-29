@@ -59,9 +59,18 @@ public abstract class FragmentFactory {
                 break;
 
             case NODE_TOPIC_LIST:
-            case USER_FAVORS:
                 fragment = new TopicListFragment();
                 new TopicListPresenter((TopicListFragment)fragment);
+                break;
+
+            case USER_FAVORS:
+                if (AuthInfoManager.getInstance().isLoginIn()) {
+                    fragment = new TopicListFragment();
+                    new TopicListPresenter((TopicListFragment) fragment);
+                } else {
+                    fragment = new LoginFragment();
+                    new LoginPresenter((LoginFragment)fragment);
+                }
                 break;
 
             case TOPIC_DETAIL:
@@ -85,8 +94,13 @@ public abstract class FragmentFactory {
                 break;
 
             case USER_PROFILE:
-                fragment = new UserProfileFragment();
-                new UserProfilePresenter((UserProfileFragment)fragment);
+                if (AuthInfoManager.getInstance().isLoginIn()) {
+                    fragment = new UserProfileFragment();
+                    new UserProfilePresenter((UserProfileFragment) fragment);
+                } else {
+                    fragment = new LoginFragment();
+                    new LoginPresenter((LoginFragment)fragment);
+                }
                 break;
 
             default:

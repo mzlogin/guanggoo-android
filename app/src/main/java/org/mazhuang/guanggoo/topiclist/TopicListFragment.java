@@ -81,11 +81,19 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
 
     @Override
     public void onGetTopicListSucceed(List<Topic> topicList) {
+        if (getContext() == null) {
+            return;
+        }
+
         mAdapter.setData(topicList);
     }
 
     @Override
     public void onGetTopicListFailed(String msg) {
+        if (getContext() == null) {
+            return;
+        }
+
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
@@ -100,12 +108,20 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
 
     @Override
     public void onGetMoreTopicSucceed(List<Topic> topicList) {
+        if (getContext() == null) {
+            return;
+        }
+
         mAdapter.addData(topicList);
         mLoadable = true;
     }
 
     @Override
     public void onGetMoreTopicFailed(String msg) {
+        if (getContext() == null) {
+            return;
+        }
+
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 }

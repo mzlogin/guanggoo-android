@@ -89,6 +89,12 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
 
     @Override
     public void onLoginSucceed(String data) {
+        if (getContext() == null) {
+            return;
+        }
+
+        mListener.onLoginStatusChanged(true);
+
         getActivity().onBackPressed();
         if (mListener != null && !ConstantUtil.LOGIN_URL.equals(mUrl)) {
             mListener.openPage(mUrl, mTitle);
@@ -97,6 +103,10 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
 
     @Override
     public void onLoginFailed(String msg) {
+        if (getContext() == null) {
+            return;
+        }
+
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
