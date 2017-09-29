@@ -41,4 +41,6 @@
     <string name="latest_topics">最新话题</string>
     <string name="share_to">分享到</string>
     <string name="cannot_share">无法分享</string>
+    <string name="user_replies">TA 的回复</string>
+    <string name="user_topics">TA 的主题</string>
 </resources>

@@ -11,12 +11,14 @@ import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.FragmentCallBack;
+import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.Topic;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.ViewHolder> {
 
@@ -97,6 +99,28 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.View
             super(view);
             mView = view;
             ButterKnife.bind(this, view);
+        }
+
+        @OnClick({R.id.avatar, R.id.author, R.id.node, R.id.last_reply_user})
+        public void onClick(View v) {
+            if (mListener == null) {
+                return;
+            }
+
+            switch (v.getId()) {
+                case R.id.avatar:
+                case R.id.author:
+                    mListener.openPage(mItem.getMeta().getAuthor().getUrl(), null);
+                    break;
+
+                case R.id.node:
+                    Node node = mItem.getMeta().getNode();
+                    mListener.openPage(node.getUrl(), node.getTitle());
+                    break;
+
+                case R.id.last_reply_user:
+                    mListener.openPage(mItem.getMeta().getLastReplyUser().getUrl(), null);
+            }
         }
     }
 }

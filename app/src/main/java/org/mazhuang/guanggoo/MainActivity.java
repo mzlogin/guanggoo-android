@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initLoginInUserInfo() {
-        if (AuthInfoManager.getInstance().isLoginedIn()) {
+        if (AuthInfoManager.getInstance().isLoginIn()) {
             Glide.with(this)
                     .load(AuthInfoManager.getInstance().getAvatar())
                     .centerCrop()
@@ -79,13 +79,8 @@ public class MainActivity extends AppCompatActivity
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // openPage(ConstantUtil.PROFILE_URL, getString(R.string.profile));
-                if (AuthInfoManager.getInstance().isLoginedIn()) {
-                    // TODO: 2017/9/17 跳转到个人页面
-                } else {
-                    drawer.closeDrawer(GravityCompat.START);
-                    openPage(ConstantUtil.LOGIN_URL, getString(R.string.login));
-                }
+                openPage(ConstantUtil.USER_PROFILE_BASE_URL +
+                        AuthInfoManager.getInstance().getUsername(), getString(R.string.profile));
             }
         };
         mAvatarImageView.setOnClickListener(listener);

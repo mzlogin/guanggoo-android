@@ -26,7 +26,7 @@ public class AuthInfoManager {
         return InstanceHolder.sInstance;
     }
 
-    public synchronized boolean isLoginedIn() {
+    public synchronized boolean isLoginIn() {
         return !TextUtils.isEmpty(username);
     }
 

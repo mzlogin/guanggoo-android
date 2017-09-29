@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
+import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
@@ -49,13 +50,9 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     @BindView(R.id.created_time) TextView mCreatedTimeTExtView;
     @BindView(R.id.author) TextView mAuthorTextView;
     @BindView(R.id.node) TextView mNodeTextView;
-
     @BindView(R.id.content) WebView mContentWebView;
-
     @BindView(R.id.comments) RecyclerView mCommentsRecyclerView;
-
     @BindView(R.id.load_more) TextView mLoadMoreTextView;
-
     @BindView(R.id.comment_view) View mCommentsView;
     @BindView(R.id.comment) EditText mCommentEditText;
     @BindView(R.id.submit) Button mSubmitButton;
@@ -98,7 +95,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         });
     }
 
-    @OnClick({R.id.load_more, R.id.submit})
+    @OnClick({R.id.load_more, R.id.submit, R.id.author, R.id.avatar, R.id.node})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.load_more: {
@@ -117,6 +114,20 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
                     Toast.makeText(getContext(), R.string.please_input_content, Toast.LENGTH_SHORT).show();
                 } else {
                     mPresenter.comment(mCommentEditText.getText().toString());
+                }
+                break;
+
+            case R.id.author:
+            case R.id.avatar:
+                if (mListener != null) {
+                    mListener.openPage(mTopicDetail.getTopic().getMeta().getAuthor().getUrl(), null);
+                }
+                break;
+
+            case R.id.node:
+                if (mListener != null) {
+                    Node node = mTopicDetail.getTopic().getMeta().getNode();
+                    mListener.openPage(node.getUrl(), node.getTitle());
                 }
                 break;
 

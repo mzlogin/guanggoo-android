@@ -7,6 +7,9 @@
 * [主题详情](#主题详情)
 * [获取节点列表](#获取节点列表)
 * [评论](#评论)
+* [个人信息页](#个人信息页)
+    * [发表过的主题列表](#发表过的主题列表)
+    * [回复列表](#回复列表)
 
 <!-- vim-markdown-toc -->
 
@@ -24,7 +27,7 @@
 
 ## 主题详情
 
-URL：<http://www.guanggoo.com/t/25804>
+URL: <http://www.guanggoo.com/t/25804>
 
 ## 获取节点列表
 
@@ -82,3 +85,78 @@ Connection: keep-alive
 Location: /t/25804#reply3
 Server: TornadoServer/3.2
 ```
+
+## 个人信息页
+
+URL: <http://www.guanggoo.com/u/mzlogin>
+
+可以从其它页面获取到。
+
+获取用户基本信息：
+
+```html
+<div class="user-page">
+    <div class="profile container-box">
+        <div class="ui-header">
+            <a href="/u/mzlogin">
+                <img src="http://cdn.guanggoo.com/static/avatar/54/m_2fad3826-a776-11e6-a0b7-00163e020f08.png" alt="" class="avatar">
+            </a>
+            <div class="username">mzlogin</div>
+            <div class="website"><a href="http://mazhuang.org">http://mazhuang.org</a></div>
+            <div class="user-number">
+                <div class="number">光谷社区第11554号成员</div>
+                <div class="since">入住于2016-11-11</div>
+            </div>
+        </div>
+        <div class="ui-content">
+            <dl>
+                <dt>ID</dt>
+                <dd>mzlogin</dd>
+            </dl>
+            <dl>
+                <dt>昵称</dt>
+                <dd>mzlogin</dd>
+            </dl>
+            <dl>
+                <dt>Email</dt>
+                <dd>mzlo***@qq.com</dd>
+            </dl>
+            <dl>
+                <dt>Blog</dt>
+                <dd><a href="http://mazhuang.org">http://mazhuang.org</a></dd>
+            </dl>
+        </div>
+    </div>
+</div>
+```
+
+获取用户活动统计：
+
+```html
+<div class="usercard container-box">
+    <div class="ui-content">
+        <div class="status status-topic">
+            <strong><a href="/u/mzlogin/topics">0</a></strong> 主题
+        </div>
+        <div class="status status-reply">
+            <strong><a href="/u/mzlogin/replies">15</a></strong> 回复
+        </div>
+        <div class="status status-favorite">
+            <strong><a href="/u/mzlogin/favorites">1</a></strong> 收藏
+        </div>
+        <div class="status status-reputation">
+            <strong>0</strong> 信用
+        </div>
+    </div>
+</div>
+```
+
+展示在用户个人信息页的基本信息这些就够了，发表过的主题列表和回复列表只显示数量，另外用页面单独列出，参考 <https://github.com/shitoudev/v2ex>。
+
+### 发表过的主题列表
+
+URL: <http://www.guanggoo.com/u/mzlogin/topics>
+
+### 回复列表
+
+URL: <http://www.guanggoo.com/u/mzlogin/replies>

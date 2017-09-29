@@ -19,6 +19,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapter.ViewHolder> {
 
@@ -119,6 +120,20 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
             super(view);
             mView = view;
             ButterKnife.bind(this, view);
+        }
+
+        @OnClick({R.id.avatar, R.id.author})
+        public void onClick(View v) {
+            if (mListener == null) {
+                return;
+            }
+
+            switch (v.getId()) {
+                case R.id.avatar:
+                case R.id.author:
+                    mListener.openPage(mItem.getMeta().getReplier().getUrl(), null);
+                    break;
+            }
         }
     }
 }
