@@ -1,5 +1,6 @@
 package org.mazhuang.guanggoo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -23,7 +24,6 @@ import com.bumptech.glide.Glide;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.base.FragmentCallBack;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
-import org.mazhuang.guanggoo.topicdetail.Commentable;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
 public class MainActivity extends AppCompatActivity
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity
 
     private Menu mMenu;
     private MenuItem mCommentMenuItem;
+    private MenuItem mShareMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +122,8 @@ public class MainActivity extends AppCompatActivity
                     }
 
                     if (mMenu != null) {
-                        mCommentMenuItem.setVisible(fragment instanceof Commentable);
+                        mCommentMenuItem.setVisible(fragment instanceof BaseFragment.Commentable);
+                        mShareMenuItem.setVisible(fragment instanceof BaseFragment.Shareable);
                         mMenu.setGroupVisible(R.id.menu_category_home, ((BaseFragment) fragment).isHome());
                     }
                 }
@@ -176,6 +178,7 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
         mMenu = menu;
         mCommentMenuItem = menu.findItem(R.id.action_comment);
+        mShareMenuItem = menu.findItem(R.id.action_share);
         return true;
     }
 
@@ -184,9 +187,13 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.action_comment:
                 Fragment fragment = getCurrentFragment();
-                if (fragment instanceof Commentable) {
-                    ((Commentable) fragment).showCommentView();
+                if (fragment instanceof BaseFragment.Commentable) {
+                    ((BaseFragment.Commentable) fragment).showCommentView();
                 }
+                return true;
+
+            case R.id.action_share:
+                shareCurrentLink();
                 return true;
 
             case R.id.action_default_order:
@@ -209,6 +216,28 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void shareCurrentLink() {
+        String url = null;
+        Fragment fragment = getCurrentFragment();
+        if (fragment instanceof BaseFragment) {
+            url = ((BaseFragment) fragment).getUrl();
+        }
+        if (TextUtils.isEmpty(url)) {
+            Toast.makeText(this, R.string.cannot_share, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+        intent.putExtra(Intent.EXTRA_TEXT, url);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(Intent.createChooser(intent, getString(R.string.share_to)));
+        } else {
+            Toast.makeText(this, R.string.cannot_share, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

@@ -39,4 +39,6 @@
     <string name="topic_detail">主题详情</string>
     <string name="elite_topics">精华主题</string>
     <string name="latest_topics">最新话题</string>
+    <string name="share_to">分享到</string>
+    <string name="cannot_share">无法分享</string>
 </resources>

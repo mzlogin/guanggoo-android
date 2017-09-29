@@ -39,7 +39,7 @@ import butterknife.OnClick;
  * Created by mazhuang on 2017/9/17.
  */
 
-public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presenter> implements TopicDetailContract.View, Commentable {
+public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presenter> implements TopicDetailContract.View, BaseFragment.Commentable, BaseFragment.Shareable {
 
     private TopicDetail mTopicDetail;
     private CommentsListAdapter mAdapter;

@@ -21,6 +21,13 @@ public abstract class BaseFragment<T> extends Fragment {
     protected boolean mClearTop = false;
     protected boolean mIsHome = false;
 
+    public interface Commentable {
+        void showCommentView();
+    }
+
+    public interface Shareable {
+    }
+
     public void setPresenter(T presenter) {
         mPresenter = presenter;
     }
