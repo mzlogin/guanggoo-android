@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
+import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.data.entity.UserProfile;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
@@ -46,6 +47,16 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
         }
 
         return root;
+    }
+
+    @Override
+    public void initParams() {
+        super.initParams();
+
+        if (ConstantUtil.USER_PROFILE_SELF_FAKE_URL.equals(mUrl)) {
+            // 处理登录后进入自己页面的情况
+            mUrl = String.format(ConstantUtil.USER_PROFILE_BASE_URL, AuthInfoManager.getInstance().getUsername());
+        }
     }
 
     @Override
@@ -89,7 +100,7 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
 
     @OnClick({R.id.user_favors, R.id.user_topics})
     public void onClick(View v) {
-        if (mListener == null) {
+        if (mListener == null || mUserProfile == null) {
             return;
         }
 

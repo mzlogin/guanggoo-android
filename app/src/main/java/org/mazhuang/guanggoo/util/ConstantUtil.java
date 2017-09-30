@@ -12,6 +12,7 @@ public abstract class ConstantUtil {
     public static final String LATEST_URL = BASE_URL + "/?tab=latest";
     public static final String ELITE_URL = BASE_URL + "/?tab=elite";
     public static final String USER_PROFILE_BASE_URL = BASE_URL + "/u/%s";
+    public static final String USER_PROFILE_SELF_FAKE_URL = BASE_URL + "/u/0";
     public static final String USER_FAVORS_BASE_URL = BASE_URL + "/u/%s/favorites";
     public static final String USER_TOPICS_BASE_URL = BASE_URL + "/u/%s/topics";
 

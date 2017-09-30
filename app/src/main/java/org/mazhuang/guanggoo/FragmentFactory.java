@@ -34,14 +34,14 @@ public abstract class FragmentFactory {
         USER_TOPICS, // 个人主题列表
     }
 
-    public static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("http://www.guanggoo.com[/]?$");
-    public static final Pattern TOPIC_DETAIL_PATTERN = Pattern.compile("http://www.guanggoo.com/t/\\d+$");
-    public static final Pattern NODES_CLOUD_PATTERN = Pattern.compile("http://www.guanggoo.com/nodes$");
-    public static final Pattern NODE_TOPIC_LIST_PATTERN = Pattern.compile("http://www.guanggoo.com/node/[^/]+$");
-    public static final Pattern LOGIN_PATTERN = Pattern.compile("http://www.guanggoo.com/login$");
-    public static final Pattern USER_PROFILE_PATTERN = Pattern.compile("http://www.guanggoo.com/u/\\w+$");
-    public static final Pattern USER_FAVORS_PATTERN = Pattern.compile("http://www.guanggoo.com/u/\\w+/favorites$");
-    public static final Pattern USER_TOPICS_PATTERN = Pattern.compile("http://www.guanggoo.com/u/\\w+/topics$");
+    public static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com[/]?$");
+    public static final Pattern TOPIC_DETAIL_PATTERN = Pattern.compile("^http://www.guanggoo.com/t/\\d+$");
+    public static final Pattern NODES_CLOUD_PATTERN = Pattern.compile("^http://www.guanggoo.com/nodes$");
+    public static final Pattern NODE_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com/node/[^/]+$");
+    public static final Pattern LOGIN_PATTERN = Pattern.compile("^http://www.guanggoo.com/login$");
+    public static final Pattern USER_PROFILE_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+$");
+    public static final Pattern USER_FAVORS_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/favorites$");
+    public static final Pattern USER_TOPICS_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/topics$");
 
 
     public static BaseFragment getFragmentByUrl(String url) {
