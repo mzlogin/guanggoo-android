@@ -7,6 +7,7 @@ import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Meta;
 import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.Topic;
+import org.mazhuang.guanggoo.data.entity.TopicList;
 import org.mazhuang.guanggoo.data.entity.User;
 
 import java.io.IOException;
@@ -17,11 +18,11 @@ import java.util.List;
  * Created by mazhuang on 2017/9/16.
  */
 
-public class GetTopicListTask extends BaseTask<List<Topic>> implements Runnable {
+public class GetTopicListTask extends BaseTask<TopicList> implements Runnable {
 
     private String mUrl;
 
-    public GetTopicListTask(String url, OnResponseListener<List<Topic>> listener) {
+    public GetTopicListTask(String url, OnResponseListener<TopicList> listener) {
         super(listener);
         mUrl = url;
     }
@@ -31,6 +32,7 @@ public class GetTopicListTask extends BaseTask<List<Topic>> implements Runnable 
         List<Topic> topics = new ArrayList<>();
 
         boolean succeed = false;
+        boolean hasMore = false;
         try {
             Document doc = getConnection(mUrl).get();
 
@@ -42,13 +44,29 @@ public class GetTopicListTask extends BaseTask<List<Topic>> implements Runnable 
             }
 
             succeed = true;
+
+            Elements paginationElements = doc.select("ul.pagination");
+            if (!paginationElements.isEmpty()) {
+                Elements disabledElements = paginationElements.select("li.disabled");
+                if (disabledElements.isEmpty()) {
+                    hasMore = true;
+                } else if (disabledElements.last() != null) {
+                    Elements disableLinkElements = disabledElements.last().select("a");
+                    if (!"下一页".equals(disableLinkElements.text())) {
+                        hasMore = true;
+                    }
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         if (succeed) {
             if (topics.size() > 0) {
-                successOnUI(topics);
+                TopicList topicList = new TopicList();
+                topicList.setTopics(topics);
+                topicList.setHasMore(hasMore);
+                successOnUI(topicList);
             } else {
                 failedOnUI("暂无内容");
             }

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.entity.Topic;
+import org.mazhuang.guanggoo.data.entity.TopicList;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
 public class TopicListFragment extends BaseFragment<TopicListContract.Presenter> implements TopicListContract.View {
 
     private TopicListAdapter mAdapter;
-    private boolean mLoadable = true;
+    private boolean mLoadable = false;
     int pastVisibleItems, visibleItemCount, totalItemCount;
 
     @Override
@@ -60,7 +61,7 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
                         if (mLoadable) {
                             if ( (visibleItemCount + pastVisibleItems) >= totalItemCount) {
                                 mLoadable = false;
-                                if (totalItemCount > ConstantUtil.TOPICS_PER_PAGE && totalItemCount <= 1024) {
+                                if (totalItemCount >= ConstantUtil.TOPICS_PER_PAGE && totalItemCount <= 1024) {
                                     mPresenter.getMoreTopic(totalItemCount / ConstantUtil.TOPICS_PER_PAGE + 1);
                                 } else {
                                     Toast.makeText(getActivity(), "1024", Toast.LENGTH_SHORT).show();
@@ -80,12 +81,14 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
     }
 
     @Override
-    public void onGetTopicListSucceed(List<Topic> topicList) {
+    public void onGetTopicListSucceed(TopicList topicList) {
         if (getContext() == null) {
             return;
         }
 
-        mAdapter.setData(topicList);
+        mLoadable = topicList.isHasMore();
+
+        mAdapter.setData(topicList.getTopics());
     }
 
     @Override
@@ -107,13 +110,14 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
     }
 
     @Override
-    public void onGetMoreTopicSucceed(List<Topic> topicList) {
+    public void onGetMoreTopicSucceed(TopicList topicList) {
         if (getContext() == null) {
             return;
         }
 
-        mAdapter.addData(topicList);
-        mLoadable = true;
+        mLoadable = topicList.isHasMore();
+
+        mAdapter.addData(topicList.getTopics());
     }
 
     @Override

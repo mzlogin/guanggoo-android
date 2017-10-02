@@ -3,6 +3,7 @@ package org.mazhuang.guanggoo.topiclist;
 import org.mazhuang.guanggoo.base.BasePresenter;
 import org.mazhuang.guanggoo.base.BaseView;
 import org.mazhuang.guanggoo.data.entity.Topic;
+import org.mazhuang.guanggoo.data.entity.TopicList;
 
 import java.util.List;
 
@@ -17,10 +18,10 @@ public interface TopicListContract {
     }
 
     interface View extends BaseView<Presenter> {
-        void onGetTopicListSucceed(List<Topic> topicList);
+        void onGetTopicListSucceed(TopicList topicList);
         void onGetTopicListFailed(String msg);
 
-        void onGetMoreTopicSucceed(List<Topic> topicList);
+        void onGetMoreTopicSucceed(TopicList topicList);
         void onGetMoreTopicFailed(String msg);
     }
 }
