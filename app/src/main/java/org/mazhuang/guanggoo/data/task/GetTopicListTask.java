@@ -62,14 +62,10 @@ public class GetTopicListTask extends BaseTask<TopicList> implements Runnable {
         }
 
         if (succeed) {
-            if (topics.size() > 0) {
-                TopicList topicList = new TopicList();
-                topicList.setTopics(topics);
-                topicList.setHasMore(hasMore);
-                successOnUI(topicList);
-            } else {
-                failedOnUI("暂无内容");
-            }
+            TopicList topicList = new TopicList();
+            topicList.setTopics(topics);
+            topicList.setHasMore(hasMore);
+            successOnUI(topicList);
         } else {
             failedOnUI("获取主题列表失败");
         }

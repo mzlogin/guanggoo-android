@@ -3,6 +3,7 @@ package org.mazhuang.guanggoo.topiclist;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -19,69 +20,98 @@ import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import java.util.List;
 
-public class TopicListFragment extends BaseFragment<TopicListContract.Presenter> implements TopicListContract.View {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class TopicListFragment extends BaseFragment<TopicListContract.Presenter> implements TopicListContract.View,
+    SwipeRefreshLayout.OnRefreshListener {
 
     private TopicListAdapter mAdapter;
     private boolean mLoadable = false;
     int pastVisibleItems, visibleItemCount, totalItemCount;
 
+    @BindView(R.id.list) RecyclerView mRecyclerView;
+    @BindView(R.id.refresh_layout) SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.empty) SwipeRefreshLayout mEmptyLayout;
+
+    private boolean mFirstFetchFinished = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_topic_list, container, false);
+        View root = inflater.inflate(R.layout.fragment_topic_list, container, false);
 
         initParams();
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-                @Override
-                public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                    outRect.set(0, 0, 0, 1);
-                }
-            });
-            if (mAdapter == null) {
-                mAdapter = new TopicListAdapter(mListener);
-            }
-            recyclerView.setAdapter(mAdapter);
+        ButterKnife.bind(this, root);
 
-            // ref https://stackoverflow.com/questions/26543131/how-to-implement-endless-list-with-recyclerview
-            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    if(dy > 0) { //check for scroll down
-                        visibleItemCount = layoutManager.getChildCount();
-                        totalItemCount = layoutManager.getItemCount();
-                        pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
-
-                        if (mLoadable) {
-                            if ( (visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                                mLoadable = false;
-                                if (totalItemCount >= ConstantUtil.TOPICS_PER_PAGE && totalItemCount <= 1024) {
-                                    mPresenter.getMoreTopic(totalItemCount / ConstantUtil.TOPICS_PER_PAGE + 1);
-                                } else {
-                                    Toast.makeText(getActivity(), "1024", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
+        initViews();
 
         if (!mAdapter.isFilled()) {
             mPresenter.getTopicList();
         }
 
-        return view;
+        return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!mFirstFetchFinished) {
+            mRefreshLayout.setRefreshing(true);
+        }
+    }
+
+    private void initViews() {
+        Context context = getContext();
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                outRect.set(0, 0, 0, 1);
+            }
+        });
+        if (mAdapter == null) {
+            mAdapter = new TopicListAdapter(mListener);
+        }
+        mRecyclerView.setAdapter(mAdapter);
+
+        // ref https://stackoverflow.com/questions/26543131/how-to-implement-endless-list-with-recyclerview
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) { //check for scroll down
+                    visibleItemCount = layoutManager.getChildCount();
+                    totalItemCount = layoutManager.getItemCount();
+                    pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
+
+                    if (mLoadable) {
+                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                            mLoadable = false;
+                            if (totalItemCount >= ConstantUtil.TOPICS_PER_PAGE && totalItemCount <= 1024) {
+                                mPresenter.getMoreTopic(totalItemCount / ConstantUtil.TOPICS_PER_PAGE + 1);
+                            } else {
+                                Toast.makeText(getActivity(), "1024", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        mRefreshLayout.setOnRefreshListener(this);
+        mEmptyLayout.setOnRefreshListener(this);
+
+        handleEmptyList();
     }
 
     @Override
     public void onGetTopicListSucceed(TopicList topicList) {
+
+        finishRefresh();
+
         if (getContext() == null) {
             return;
         }
@@ -89,15 +119,32 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
         mLoadable = topicList.isHasMore();
 
         mAdapter.setData(topicList.getTopics());
+
+        handleEmptyList();
     }
 
     @Override
     public void onGetTopicListFailed(String msg) {
+
+        finishRefresh();
+
         if (getContext() == null) {
             return;
         }
 
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+
+        handleEmptyList();
+    }
+
+    private void handleEmptyList() {
+        if (mAdapter.getItemCount() == 0) {
+            mEmptyLayout.setVisibility(View.VISIBLE);
+            mRefreshLayout.setVisibility(View.GONE);
+        } else {
+            mEmptyLayout.setVisibility(View.GONE);
+            mRefreshLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -127,5 +174,22 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
         }
 
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRefresh() {
+        if (!mFirstFetchFinished) {
+            return;
+        }
+
+        mPresenter.getTopicList();
+    }
+
+    private void finishRefresh() {
+        mRefreshLayout.setRefreshing(false);
+        mEmptyLayout.setRefreshing(false);
+        if (!mFirstFetchFinished) {
+            mFirstFetchFinished = true;
+        }
     }
 }
