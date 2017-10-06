@@ -7,6 +7,7 @@ package org.mazhuang.guanggoo.util;
 public abstract class ConstantUtil {
     public static final String BASE_URL = "http://www.guanggoo.com";
     public static final String LOGIN_URL = BASE_URL + "/login";
+    public static final String REGISTER_URL = BASE_URL + "/register";
     public static final String BEGINNER_GUIDE_URL = BASE_URL + "/t/2657";
     public static final String NODES_CLOUD_URL = BASE_URL + "/nodes";
     public static final String LATEST_URL = BASE_URL + "/?tab=latest";

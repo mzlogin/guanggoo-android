@@ -1,5 +1,7 @@
 package org.mazhuang.guanggoo.login;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -34,16 +36,25 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
         return root;
     }
 
-    @OnClick({R.id.login})
+    @OnClick({R.id.login, R.id.register})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:
                 attemptLogin();
                 break;
 
+            case R.id.register:
+                gotoRegister();
+                break;
+
             default:
                 break;
         }
+    }
+
+    private void gotoRegister() {
+        String url = ConstantUtil.REGISTER_URL;
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
 
     private void attemptLogin() {

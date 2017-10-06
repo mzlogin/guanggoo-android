@@ -48,4 +48,5 @@
     <string name="my_favors">我的收藏</string>
     <string name="user_favors">TA 的收藏</string>
     <string name="no_content">暂无内容</string>
+    <string name="action_register">注册</string>
 </resources>
