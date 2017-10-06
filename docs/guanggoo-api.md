@@ -165,6 +165,43 @@ URL: <http://www.guanggoo.com/u/mzlogin/topics>
 
 URL: <http://www.guanggoo.com/u/mzlogin/replies>
 
+```html
+<div class="replies-lists ...">
+    ...
+    <div class="ui-content">
+        <div class="reply-item">
+            <div class="main">
+                <span class="title">
+                    回复了 dc2012ms 创建的主题
+                    <a href="/t/25910">光谷是真心好！！！</a>
+                </span>
+                <div class="content">
+                    <p>这几天不知道怎么样了</p>
+                </div>
+            </div>
+        </div>
+        <div class="reply-item">
+            ...
+        </div>
+        ...
+    </div>
+
+    <div class="ui-footer">
+        ...
+        <ul class="pagination">
+            <li class="disabled">
+                <a href="/u/mzlogin/replies?p=1">上一页</a>
+            </li>
+            <li class="active">
+                <a href="javascript:;">1</a>
+            </li>
+            ...
+        </ul>
+        ...
+    </div>
+</div>
+```
+
 ### 收藏列表
 
 URL: <http://www.guanggoo.com/u/mzlogin/favorites>

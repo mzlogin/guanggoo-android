@@ -13,6 +13,8 @@ import org.mazhuang.guanggoo.topiclist.TopicListFragment;
 import org.mazhuang.guanggoo.topiclist.TopicListPresenter;
 import org.mazhuang.guanggoo.userprofile.UserProfileFragment;
 import org.mazhuang.guanggoo.userprofile.UserProfilePresenter;
+import org.mazhuang.guanggoo.userprofile.replies.ReplyListFragment;
+import org.mazhuang.guanggoo.userprofile.replies.ReplyListPresenter;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
@@ -34,6 +36,7 @@ public abstract class FragmentFactory {
         USER_PROFILE, // 个人资料页
         USER_FAVORS, // 个人收藏页
         USER_TOPICS, // 个人主题列表
+        USER_REPLIES, // 个人回复列表
         ABOUT, // 关于
     }
 
@@ -45,6 +48,7 @@ public abstract class FragmentFactory {
     public static final Pattern USER_PROFILE_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+$");
     public static final Pattern USER_FAVORS_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/favorites$");
     public static final Pattern USER_TOPICS_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/topics$");
+    public static final Pattern USER_REPLIES_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/replies$");
 
 
     public static BaseFragment getFragmentByUrl(String url) {
@@ -113,6 +117,16 @@ public abstract class FragmentFactory {
                 }
                 break;
 
+            case USER_REPLIES:
+                if (AuthInfoManager.getInstance().isLoginIn()) {
+                    fragment = new ReplyListFragment();
+                    new ReplyListPresenter((ReplyListFragment) fragment);
+                } else {
+                    fragment = new LoginFragment();
+                    new LoginPresenter((LoginFragment) fragment);
+                }
+                break;
+
             case ABOUT:
                 fragment = new AboutFragment();
                 break;
@@ -156,6 +170,10 @@ public abstract class FragmentFactory {
 
         if (USER_TOPICS_PATTERN.matcher(url).find()) {
             return PageType.USER_TOPICS;
+        }
+
+        if (USER_REPLIES_PATTERN.matcher(url).find()) {
+            return PageType.USER_REPLIES;
         }
 
         if (ConstantUtil.ABOUT_URL.equals(url)) {

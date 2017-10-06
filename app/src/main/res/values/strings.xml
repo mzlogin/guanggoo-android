@@ -60,4 +60,5 @@
     <string name="author_github">mzlogin</string>
     <string name="source_code">源代码</string>
     <string name="source_code_address">mzlogin/guanggoo-android</string>
+    <string name="reply_list">回复列表</string>
 </resources>

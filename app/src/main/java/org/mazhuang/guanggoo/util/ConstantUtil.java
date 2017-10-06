@@ -16,12 +16,16 @@ public abstract class ConstantUtil {
     public static final String USER_PROFILE_SELF_FAKE_URL = BASE_URL + "/u/0";
     public static final String USER_FAVORS_BASE_URL = BASE_URL + "/u/%s/favorites";
     public static final String USER_TOPICS_BASE_URL = BASE_URL + "/u/%s/topics";
+    public static final String USER_REPLIES_BASE_URL = BASE_URL + "/u/%s/replies";
 
     public static final String ABOUT_URL = "INNER_PAGE_ABOUT";
 
     public static final int TOPICS_PER_PAGE = 36;
 
     public static final int COMMENTS_PER_PAGE = 106;
+
+    public static final int REPLIES_PER_PAGE = 16;
+
     public static final String KEY_COOKIE = "cookie";
     public static final String KEY_XSRF = "_xsrf";
 }

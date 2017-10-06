@@ -80,8 +80,7 @@
 
     <LinearLayout
         android:id="@+id/user_replies"
-        style="@style/LinearClickableItem"
-        android:visibility="gone">
+        style="@style/LinearClickableItem">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
