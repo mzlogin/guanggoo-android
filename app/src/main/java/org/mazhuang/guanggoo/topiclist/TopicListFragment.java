@@ -58,8 +58,8 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
     public void onResume() {
         super.onResume();
 
-        if (!mFirstFetchFinished) {
-            mRefreshLayout.setRefreshing(true);
+        if (!mFirstFetchFinished && mListener != null) {
+            mListener.startLoading();
         }
     }
 
@@ -101,10 +101,19 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
             }
         });
 
-        mRefreshLayout.setOnRefreshListener(this);
-        mEmptyLayout.setOnRefreshListener(this);
+        initSwipeLayout(mRefreshLayout);
+        initSwipeLayout(mEmptyLayout);
 
         handleEmptyList();
+    }
+
+    private void initSwipeLayout(SwipeRefreshLayout swipeRefreshLayout) {
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(
+                R.color.metaColor,
+                R.color.colorAccent,
+                android.R.color.white
+        );
     }
 
     @Override
@@ -186,6 +195,11 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
     }
 
     private void finishRefresh() {
+
+        if (mListener != null && mListener.isLoading()) {
+            mListener.stopLoading();
+        }
+
         mRefreshLayout.setRefreshing(false);
         mEmptyLayout.setRefreshing(false);
         if (!mFirstFetchFinished) {

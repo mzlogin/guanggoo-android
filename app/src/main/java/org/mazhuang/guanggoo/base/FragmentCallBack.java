@@ -7,4 +7,8 @@ package org.mazhuang.guanggoo.base;
 public interface FragmentCallBack {
     void openPage(String url, String title);
     void onLoginStatusChanged(boolean isLogin);
+
+    void startLoading();
+    void stopLoading();
+    boolean isLoading();
 }

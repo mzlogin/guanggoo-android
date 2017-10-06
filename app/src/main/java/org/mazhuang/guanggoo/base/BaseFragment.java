@@ -82,4 +82,16 @@ public abstract class BaseFragment<T> extends Fragment {
     public String getUrl() {
         return mUrl;
     }
+
+    public void startLoading() {
+        if (mListener != null) {
+            mListener.startLoading();
+        }
+    }
+
+    public void stopLoading() {
+        if (mListener != null) {
+            mListener.stopLoading();
+        }
+    }
 }

@@ -22,14 +22,17 @@ public class NodesCloudPresenter implements NodesCloudContract.Presenter {
 
     @Override
     public void getNodesCloud() {
+        mView.startLoading();
         NetworkTaskScheduler.getInstance().execute(new GetNodesCloudTask(new OnResponseListener<List<NodeCategory>>() {
             @Override
             public void onSucceed(List<NodeCategory> data) {
+                mView.stopLoading();
                 mView.onGetNodesCloudSucceed(data);
             }
 
             @Override
             public void onFailed(String msg) {
+                mView.stopLoading();
                 mView.onGetNodesCloudFailed(msg);
             }
         }));

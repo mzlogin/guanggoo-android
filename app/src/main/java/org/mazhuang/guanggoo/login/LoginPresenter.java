@@ -23,14 +23,17 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void login(String email, String password) {
+        mView.startLoading();
         NetworkTaskScheduler.getInstance().execute(new LoginTask(email, password, new OnResponseListener<String>() {
             @Override
             public void onSucceed(String data) {
+                mView.stopLoading();
                 mView.onLoginSucceed(data);
             }
 
             @Override
             public void onFailed(String msg) {
+                mView.stopLoading();
                 mView.onLoginFailed(msg);
             }
         }));

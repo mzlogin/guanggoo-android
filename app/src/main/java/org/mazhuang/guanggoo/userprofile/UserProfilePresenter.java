@@ -20,14 +20,17 @@ public class UserProfilePresenter implements UserProfileContract.Presenter {
 
     @Override
     public void getUserProfile(String url) {
+        mView.startLoading();
         NetworkTaskScheduler.getInstance().execute(new GetUserProfileTask(url, new OnResponseListener<UserProfile>() {
             @Override
             public void onSucceed(UserProfile data) {
+                mView.stopLoading();
                 mView.onGetUserProfileSucceed(data);
             }
 
             @Override
             public void onFailed(String msg) {
+                mView.stopLoading();
                 mView.onGetUserProfileFailed(msg);
             }
         }));

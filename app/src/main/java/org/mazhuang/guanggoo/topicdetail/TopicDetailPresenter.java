@@ -22,14 +22,17 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
 
     @Override
     public void getTopicDetail() {
+        mView.startLoading();
         NetworkTaskScheduler.getInstance().execute(new GetTopicDetailTask(getUrl(), new OnResponseListener<TopicDetail>() {
             @Override
             public void onSucceed(TopicDetail data) {
+                mView.stopLoading();
                 mView.onGetTopicDetailSucceed(data);
             }
 
             @Override
             public void onFailed(String msg) {
+                mView.stopLoading();
                 mView.onGetTopicDetailFailed(msg);
             }
         }));
@@ -52,14 +55,17 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
 
     @Override
     public void comment(String content) {
+        mView.startLoading();
         NetworkTaskScheduler.getInstance().execute(new CommentTask(getUrl(), content, new OnResponseListener<String>() {
             @Override
             public void onSucceed(String data) {
+                mView.stopLoading();
                 mView.onCommentSucceed();
             }
 
             @Override
             public void onFailed(String msg) {
+                mView.stopLoading();
                 mView.onCommentFailed(msg);
             }
         }));

@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,9 @@ import org.mazhuang.guanggoo.base.FragmentCallBack;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity
         implements FragmentCallBack, NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity
 
     private ImageView mAvatarImageView;
     private TextView mUsernameTextView;
+    @BindView(R.id.progress) ProgressBar mProgressBar;
 
     private Menu mMenu;
     private MenuItem mCommentMenuItem;
@@ -45,6 +50,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
 
         initViews();
 
@@ -155,6 +162,12 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+
+            if (isLoading()) {
+                stopLoading();
+                return;
+            }
+
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             if (fragment instanceof BaseFragment) {
                 if (((BaseFragment) fragment).onBackPressed()) {
@@ -176,6 +189,11 @@ public class MainActivity extends AppCompatActivity
 
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean isLoading() {
+        return mProgressBar.getVisibility() == View.VISIBLE;
     }
 
     @Override
@@ -313,6 +331,22 @@ public class MainActivity extends AppCompatActivity
         } else {
             mAvatarImageView.setImageResource(R.drawable.m_default);
             mUsernameTextView.setText(R.string.not_logged_in);
+        }
+    }
+
+    @Override
+    public void startLoading() {
+        if (mProgressBar.getVisibility() != View.VISIBLE) {
+            mProgressBar.setActivated(true);
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void stopLoading() {
+        if (mProgressBar.getVisibility() != View.GONE) {
+            mProgressBar.setActivated(false);
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 }

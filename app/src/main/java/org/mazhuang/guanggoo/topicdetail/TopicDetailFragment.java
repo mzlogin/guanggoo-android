@@ -140,6 +140,10 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
                 break;
 
             case R.id.submit:
+                if (mListener != null && mListener.isLoading()) {
+                    return;
+                }
+
                 if (TextUtils.isEmpty(mCommentEditText.getText())) {
                     Toast.makeText(getContext(), R.string.please_input_content, Toast.LENGTH_SHORT).show();
                 } else {

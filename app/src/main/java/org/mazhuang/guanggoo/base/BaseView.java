@@ -7,4 +7,7 @@ package org.mazhuang.guanggoo.base;
 public interface BaseView<T> {
     void setPresenter(T presenter);
     String getUrl();
+
+    void startLoading();
+    void stopLoading();
 }
