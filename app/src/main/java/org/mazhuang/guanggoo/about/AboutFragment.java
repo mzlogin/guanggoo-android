@@ -23,14 +23,12 @@ public class AboutFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Element versionElement = new Element();
-        versionElement.setTitle(VersionUtil.getVersion(getContext()));
-
         View aboutPage = new AboutPage(getActivity())
                 .isRTL(false)
                 .setImage(R.drawable.guanggoo_new)
-                .setDescription(getString(R.string.app_description))
-                .addItem(versionElement)
+                .setDescription(getString(R.string.app_description, VersionUtil.getVersion(getContext())))
+                .addGroup(getString(R.string.source_code))
+                .addGitHub(getString(R.string.source_code_address), getString(R.string.source_code_address))
                 .addGroup(getString(R.string.contact_me))
                 .addEmail(getString(R.string.author_email), getString(R.string.author_email))
                 .addWebsite(getString(R.string.author_website), getString(R.string.author_website))
