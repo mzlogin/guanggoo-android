@@ -285,6 +285,10 @@ public class MainActivity extends AppCompatActivity
                 openPage(ConstantUtil.BEGINNER_GUIDE_URL, getString(R.string.beginner_guide));
                 break;
 
+            case R.id.nav_about:
+                openPage(ConstantUtil.ABOUT_URL, getString(R.string.about));
+                break;
+
             default:
                 break;
         }

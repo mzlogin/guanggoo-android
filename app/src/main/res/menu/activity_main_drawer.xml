@@ -28,4 +28,9 @@
             android:title="@string/beginner_guide" />
     </group>
 
+    <item
+        android:id="@+id/nav_about"
+        android:icon="@drawable/ic_menu_about"
+        android:title="@string/about"/>
+
 </menu>

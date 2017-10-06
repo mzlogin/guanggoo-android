@@ -1,5 +1,6 @@
 package org.mazhuang.guanggoo;
 
+import org.mazhuang.guanggoo.about.AboutFragment;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.login.LoginFragment;
@@ -12,6 +13,7 @@ import org.mazhuang.guanggoo.topiclist.TopicListFragment;
 import org.mazhuang.guanggoo.topiclist.TopicListPresenter;
 import org.mazhuang.guanggoo.userprofile.UserProfileFragment;
 import org.mazhuang.guanggoo.userprofile.UserProfilePresenter;
+import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
 import java.util.regex.Pattern;
@@ -32,6 +34,7 @@ public abstract class FragmentFactory {
         USER_PROFILE, // 个人资料页
         USER_FAVORS, // 个人收藏页
         USER_TOPICS, // 个人主题列表
+        ABOUT, // 关于
     }
 
     public static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com[/]?$");
@@ -110,6 +113,10 @@ public abstract class FragmentFactory {
                 }
                 break;
 
+            case ABOUT:
+                fragment = new AboutFragment();
+                break;
+
             default:
                 fragment = null;
                 break;
@@ -149,6 +156,10 @@ public abstract class FragmentFactory {
 
         if (USER_TOPICS_PATTERN.matcher(url).find()) {
             return PageType.USER_TOPICS;
+        }
+
+        if (ConstantUtil.ABOUT_URL.equals(url)) {
+            return PageType.ABOUT;
         }
 
         return PageType.NONE;
