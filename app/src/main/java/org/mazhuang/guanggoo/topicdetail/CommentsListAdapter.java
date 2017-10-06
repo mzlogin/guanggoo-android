@@ -20,13 +20,14 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapter.ViewHolder> {
 
     private Map<Integer, Comment> mData;
-    private final FragmentCallBack mListener;
+    private final CommentsActionListener mListener;
 
-    public CommentsListAdapter(FragmentCallBack listener) {
+    public CommentsListAdapter(CommentsActionListener listener) {
         mListener = listener;
     }
 
@@ -134,6 +135,22 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
                     mListener.openPage(mItem.getMeta().getReplier().getUrl(), null);
                     break;
             }
+        }
+
+        @OnLongClick({R.id.avatar, R.id.author})
+        public boolean onLongClick(View v) {
+            if (mListener == null) {
+                return false;
+            }
+
+            switch (v.getId()) {
+                case R.id.avatar:
+                case R.id.author:
+                    mListener.onAt(mItem.getMeta().getReplier().getUsername());
+                    return true;
+            }
+
+            return false;
         }
     }
 }

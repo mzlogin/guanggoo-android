@@ -35,12 +35,13 @@ import org.mazhuang.guanggoo.util.ConstantUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * Created by mazhuang on 2017/9/17.
  */
 
-public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presenter> implements TopicDetailContract.View, BaseFragment.Commentable, BaseFragment.Shareable {
+public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presenter> implements TopicDetailContract.View, BaseFragment.Commentable, BaseFragment.Shareable, CommentsActionListener {
 
     private TopicDetail mTopicDetail;
     private CommentsListAdapter mAdapter;
@@ -122,6 +123,10 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
     @OnClick({R.id.load_more, R.id.submit, R.id.author, R.id.avatar, R.id.node})
     public void onClick(View v) {
+        if (mTopicDetail == null) {
+            return;
+        }
+
         switch (v.getId()) {
             case R.id.load_more: {
                 mLoadMoreTextView.setEnabled(false);
@@ -161,6 +166,22 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         }
     }
 
+    @OnLongClick({R.id.author, R.id.avatar})
+    public boolean onLongClick(View v) {
+        if (mTopicDetail == null) {
+            return false;
+        }
+
+        switch (v.getId()) {
+            case R.id.avatar:
+            case R.id.author:
+                onAt(mTopicDetail.getTopic().getMeta().getAuthor().getUsername());
+                return true;
+        }
+
+        return false;
+    }
+
     private void initRecyclerView() {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mCommentsRecyclerView.setLayoutManager(layoutManager);
@@ -172,7 +193,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
             }
         });
         if (mAdapter == null) {
-            mAdapter = new CommentsListAdapter(mListener);
+            mAdapter = new CommentsListAdapter(this);
         }
         mCommentsRecyclerView.setAdapter(mAdapter);
 
@@ -278,5 +299,27 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         }
 
         return super.onBackPressed();
+    }
+
+    @Override
+    public void openPage(String url, String title) {
+        if (mListener != null) {
+            mListener.openPage(url, title);
+        }
+    }
+
+    @Override
+    public void onAt(String username) {
+        if (!TextUtils.isEmpty(username)) {
+            if (mCommentsView.getVisibility() != View.VISIBLE) {
+                showCommentView();
+            }
+
+            String atText = String.format(" @%s ", username);
+            if (!mCommentEditText.getText().toString().contains(atText)) {
+                mCommentEditText.setText(mCommentEditText.getText() + atText);
+            }
+            mCommentEditText.setSelection(mCommentEditText.getText().length());
+        }
     }
 }
