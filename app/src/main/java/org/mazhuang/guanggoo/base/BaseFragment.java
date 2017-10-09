@@ -3,6 +3,7 @@ package org.mazhuang.guanggoo.base;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
 import org.mazhuang.guanggoo.FragmentFactory;
 
@@ -88,5 +89,13 @@ public abstract class BaseFragment<T> extends Fragment {
         if (mListener != null) {
             mListener.stopLoading();
         }
+    }
+
+    public void toast(String msg) {
+        if (getContext() == null) {
+            return;
+        }
+
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 }

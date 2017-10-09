@@ -23,6 +23,7 @@ import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.entity.TopicList;
 import org.mazhuang.guanggoo.util.ConstantUtil;
+import org.mazhuang.guanggoo.util.UrlUtil;
 
 import java.util.List;
 
@@ -111,7 +112,12 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
                 return true;
 
             case R.id.action_new_topic:
-                // TODO: 2017/10/10 发表新主题页面
+            {
+                String nodeCode = UrlUtil.getNodeCode(mUrl);
+                if (mListener != null && !TextUtils.isEmpty(nodeCode)) {
+                    mListener.openPage(String.format(ConstantUtil.NEW_TOPIC_BASE_URL, nodeCode), getString(R.string.new_topic));
+                }
+            }
                 return true;
 
             default:

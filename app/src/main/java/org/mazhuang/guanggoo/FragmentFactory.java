@@ -5,6 +5,8 @@ import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.login.LoginFragment;
 import org.mazhuang.guanggoo.login.LoginPresenter;
+import org.mazhuang.guanggoo.newtopic.NewTopicFragment;
+import org.mazhuang.guanggoo.newtopic.NewTopicPresenter;
 import org.mazhuang.guanggoo.nodescloud.NodesCloudFragment;
 import org.mazhuang.guanggoo.nodescloud.NodesCloudPresenter;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailFragment;
@@ -38,6 +40,7 @@ public abstract class FragmentFactory {
         USER_TOPICS, // 个人主题列表
         USER_REPLIES, // 个人回复列表
         ABOUT, // 关于
+        NEW_TOPIC, // 发表新主题
     }
 
     public static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com[/]?$");
@@ -49,6 +52,7 @@ public abstract class FragmentFactory {
     public static final Pattern USER_FAVORS_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/favorites$");
     public static final Pattern USER_TOPICS_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/topics$");
     public static final Pattern USER_REPLIES_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/replies$");
+    public static final Pattern NEW_TOPIC_PATTERN = Pattern.compile("^http://www.guanggoo.com/t/create/\\w+$");
 
 
     public static BaseFragment getFragmentByUrl(String url) {
@@ -126,6 +130,16 @@ public abstract class FragmentFactory {
                 }
                 break;
 
+            case NEW_TOPIC:
+                if (AuthInfoManager.getInstance().isLoginIn()) {
+                    fragment = new NewTopicFragment();
+                    new NewTopicPresenter((NewTopicFragment) fragment);
+                } else {
+                    fragment = new LoginFragment();
+                    new LoginPresenter((LoginFragment) fragment);
+                }
+                break;
+
             case ABOUT:
                 fragment = new AboutFragment();
                 break;
@@ -177,6 +191,10 @@ public abstract class FragmentFactory {
 
         if (USER_REPLIES_PATTERN.matcher(url).find()) {
             return PageType.USER_REPLIES;
+        }
+
+        if (NEW_TOPIC_PATTERN.matcher(url).find()) {
+            return PageType.NEW_TOPIC;
         }
 
         if (ConstantUtil.ABOUT_URL.equals(url)) {

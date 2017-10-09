@@ -29,6 +29,16 @@ public abstract class UrlUtil {
         }
     }
 
+    public static String getNodeCode(String url) {
+        Pattern p = Pattern.compile("/node/(\\w+)");
+        Matcher m = p.matcher(url);
+        if (m.find()) {
+            return m.group(1);
+        } else {
+            return null;
+        }
+    }
+
     public static String removeQuery(String url) {
         if (!TextUtils.isEmpty(url)) {
             url = url.split("\\?")[0];

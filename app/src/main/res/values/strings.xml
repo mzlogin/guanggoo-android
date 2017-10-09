@@ -26,7 +26,7 @@
     <string name="beginner_guide">新手指南</string>
     <string name="comment">评论</string>
     <string name="cancel">取消</string>
-    <string name="please_input_content">评论内容不能为空</string>
+    <string name="please_input_comment_content">评论内容不能为空</string>
     <string name="add_comment">请输入评论内容</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -61,4 +61,9 @@
     <string name="source_code">源代码</string>
     <string name="source_code_address">mzlogin/guanggoo-android</string>
     <string name="reply_list">回复列表</string>
+    <string name="new_topic">发表新主题</string>
+    <string name="please_input_title">请输入标题</string>
+    <string name="please_input_content">请输入内容</string>
+    <string name="error_invalid_title">标题太短</string>
+    <string name="error_invalid_content">内容太短</string>
 </resources>

@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -196,7 +195,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
                 }
 
                 if (TextUtils.isEmpty(mCommentEditText.getText())) {
-                    Toast.makeText(getContext(), R.string.please_input_content, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.please_input_comment_content, Toast.LENGTH_SHORT).show();
                 } else {
                     mPresenter.comment(mCommentEditText.getText().toString());
                 }
