@@ -6,12 +6,16 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -41,7 +45,7 @@ import butterknife.OnLongClick;
  * Created by mazhuang on 2017/9/17.
  */
 
-public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presenter> implements TopicDetailContract.View, BaseFragment.Commentable, BaseFragment.Shareable, CommentsActionListener {
+public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presenter> implements TopicDetailContract.View, CommentsActionListener {
 
     private TopicDetail mTopicDetail;
     private CommentsListAdapter mAdapter;
@@ -76,6 +80,53 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         }
 
         return root;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.topic_detail, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_share:
+                shareCurrentLink();
+                return true;
+
+            case R.id.action_comment:
+                showCommentView();
+                return true;
+
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void shareCurrentLink() {
+        if (TextUtils.isEmpty(mUrl)) {
+            Toast.makeText(getContext(), R.string.cannot_share, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+        intent.putExtra(Intent.EXTRA_TEXT, mUrl);
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(Intent.createChooser(intent, getString(R.string.share_to)));
+        } else {
+            Toast.makeText(getContext(), R.string.cannot_share, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setViewData(TopicDetail topicDetail) {
@@ -289,7 +340,6 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
     public void showCommentView() {
         mCommentsView.setVisibility(View.VISIBLE);
         mCommentEditText.requestFocus();

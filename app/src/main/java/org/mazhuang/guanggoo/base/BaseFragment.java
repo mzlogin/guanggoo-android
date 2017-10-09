@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import org.mazhuang.guanggoo.FragmentFactory;
+
 /**
  * Created by mazhuang on 2017/9/16.
  */
@@ -19,14 +21,7 @@ public abstract class BaseFragment<T> extends Fragment {
     protected String mTitle;
 
     protected boolean mClearTop = false;
-    protected boolean mIsHome = false;
-
-    public interface Commentable {
-        void showCommentView();
-    }
-
-    public interface Shareable {
-    }
+    protected FragmentFactory.PageType mPageType;
 
     public void setPresenter(T presenter) {
         mPresenter = presenter;
@@ -71,16 +66,16 @@ public abstract class BaseFragment<T> extends Fragment {
         this.mClearTop = clearTop;
     }
 
-    public boolean isHome() {
-        return mIsHome;
-    }
-
-    public void setIsHome(boolean isHome) {
-        mIsHome = isHome;
-    }
-
     public String getUrl() {
         return mUrl;
+    }
+
+    public FragmentFactory.PageType getPageType() {
+        return mPageType;
+    }
+
+    public void setPageType(FragmentFactory.PageType pageType) {
+        this.mPageType = pageType;
     }
 
     public void startLoading() {

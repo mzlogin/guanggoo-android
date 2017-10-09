@@ -42,10 +42,6 @@ public class MainActivity extends AppCompatActivity
     private TextView mUsernameTextView;
     @BindView(R.id.progress) ProgressBar mProgressBar;
 
-    private Menu mMenu;
-    private MenuItem mCommentMenuItem;
-    private MenuItem mShareMenuItem;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,12 +118,6 @@ public class MainActivity extends AppCompatActivity
                         toolbar.setNavigationIcon(R.drawable.ic_menu);
                         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                     }
-
-                    if (mMenu != null) {
-                        mCommentMenuItem.setVisible(fragment instanceof BaseFragment.Commentable);
-                        mShareMenuItem.setVisible(fragment instanceof BaseFragment.Shareable);
-                        mMenu.setGroupVisible(R.id.menu_category_home, ((BaseFragment) fragment).isHome());
-                    }
                 }
             }
         });
@@ -194,73 +184,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean isLoading() {
         return mProgressBar.getVisibility() == View.VISIBLE;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        mMenu = menu;
-        mCommentMenuItem = menu.findItem(R.id.action_comment);
-        mShareMenuItem = menu.findItem(R.id.action_share);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_comment:
-                Fragment fragment = getCurrentFragment();
-                if (fragment instanceof BaseFragment.Commentable) {
-                    ((BaseFragment.Commentable) fragment).showCommentView();
-                }
-                return true;
-
-            case R.id.action_share:
-                shareCurrentLink();
-                return true;
-
-            case R.id.action_default_order:
-                openPage(ConstantUtil.BASE_URL, getString(R.string.default_order_topics));
-                item.setChecked(true);
-                break;
-
-            case R.id.action_latest:
-                openPage(ConstantUtil.LATEST_URL, getString(R.string.latest_topics));
-                item.setChecked(true);
-                break;
-
-            case R.id.action_elite:
-                openPage(ConstantUtil.ELITE_URL, getString(R.string.elite_topics));
-                item.setChecked(true);
-                break;
-
-            default:
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void shareCurrentLink() {
-        String url = null;
-        Fragment fragment = getCurrentFragment();
-        if (fragment instanceof BaseFragment) {
-            url = ((BaseFragment) fragment).getUrl();
-        }
-        if (TextUtils.isEmpty(url)) {
-            Toast.makeText(this, R.string.cannot_share, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-        intent.putExtra(Intent.EXTRA_TEXT, url);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(Intent.createChooser(intent, getString(R.string.share_to)));
-        } else {
-            Toast.makeText(this, R.string.cannot_share, Toast.LENGTH_SHORT).show();
-        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

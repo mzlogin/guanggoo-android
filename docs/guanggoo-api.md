@@ -14,6 +14,7 @@
 * [收藏](#收藏)
     * [收藏主题](#收藏主题)
     * [取消收藏](#取消收藏)
+* [发表新主题](#发表新主题)
 
 <!-- vim-markdown-toc -->
 
@@ -269,4 +270,41 @@ Connection: keep-alive
 Server: TornadoServer/3.2
 
 <html><title>500: Internal Server Error</title><body>500: Internal Server Error</body></html>
+```
+
+## 发表新主题
+
+**Request**
+
+比如向「汤逊湖」节点发表新主题：
+
+```
+POST /t/create/water HTTP/1.1
+Host: www.guanggoo.com
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-cn
+Content-Type: application/x-www-form-urlencoded
+Origin: http://www.guanggoo.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Safari/604.1.38
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+Referer: http://www.guanggoo.com/t/create/water
+Content-Length: 392
+Cookie: session_id="ZWY4NjQ5ZWIyZDYxNmMwYmJlYThhYjc4N2U3NTg0MDJjM2Y5MDgyNzFiNjgyNDAzZmUyOTYyZDQ5ZWFiOTMwOQ==|1507450364|cfc142508ad48aa5d8a30f0024bf3cb9183a2a56"; user="MjI3OTk=|1507450364|916f75319cd3777a44262f6ce288a9eadb506120"; verification="Y2VkZGU3MGExZTEzNDM4M2RlMTEwM2QyNWU4NmZjMzRiZTk0MGVkMzY1ODVlOTcxMjVhMDg0YjgxYjNlMTdhNg==|1507450364|8d10c5e88e426f98f8fcf43073e1169fce22e229"; _xsrf=5f4c4ebdf42d423fa296649d83d3560e; Hm_lpvt_fc1abeddfec5c3ea88cf6cdae32cdde7=1507450519; Hm_lvt_fc1abeddfec5c3ea88cf6cdae32cdde7=1506702379,1507085489,1507176778,1507275950; _ga=GA1.2.497625709.1478803477; _gid=GA1.2.652948611.1507390198
+
+title=%E5%81%87%E6%9C%9F%E8%BF%9B%E5%BA%A6%E6%9D%A1%E5%90%9B%E5%B0%B1%E8%A6%81%E9%98%B5%E4%BA%A1%E4%BA%86%EF%BC%8C%E5%A4%A7%E5%AE%B6%E4%BC%99%E8%BF%99%E4%BC%9A%E5%84%BF%E5%BF%83%E6%83%85%E5%A6%82%E4%BD%95%EF%BC%9F&content=RT%EF%BC%8C%0D%0A%0D%0A%E5%8F%8D%E6%AD%A3%E6%88%91%E7%9C%9F%E7%9A%84%E5%A5%BD%E6%83%B3%E5%86%8D%E7%98%AB%E5%87%A0%E5%A4%A9%E3%80%82&_xsrf=5f4c4ebdf42d423fa296649d83d3560e
+```
+
+**Response**
+
+```
+HTTP/1.1 302 Found
+Date: Sun, 08 Oct 2017 08:16:34 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+Location: /
+Server: TornadoServer/3.2
+
 ```

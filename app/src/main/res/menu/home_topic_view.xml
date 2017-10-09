@@ -2,20 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_share"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_menu_share"
-        app:showAsAction="ifRoom"
-        android:visible="false"/>
-
-    <item
-        android:id="@+id/action_comment"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_menu_comment"
-        app:showAsAction="ifRoom"
-        android:visible="false"/>
-
     <group
         android:id="@+id/menu_category_home"
         android:checkableBehavior="single"

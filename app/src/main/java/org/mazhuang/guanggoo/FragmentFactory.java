@@ -64,7 +64,6 @@ public abstract class FragmentFactory {
                 fragment = new TopicListFragment();
                 new TopicListPresenter((TopicListFragment)fragment);
                 fragment.setClearTop(true);
-                fragment.setIsHome(true);
                 break;
 
             case NODE_TOPIC_LIST:
@@ -134,6 +133,10 @@ public abstract class FragmentFactory {
             default:
                 fragment = null;
                 break;
+        }
+
+        if (fragment != null) {
+            fragment.setPageType(type);
         }
 
         return fragment;

@@ -3,15 +3,21 @@ package org.mazhuang.guanggoo.topiclist;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.mazhuang.guanggoo.FragmentFactory;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.entity.Topic;
@@ -36,12 +42,12 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
 
     private boolean mFirstFetchFinished = false;
 
+    private Integer mSelectedMenuResId;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_topic_list, container, false);
-
-        initParams();
 
         ButterKnife.bind(this, root);
 
@@ -52,6 +58,75 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
         }
 
         return root;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        initParams();
+
+        if (mPageType == FragmentFactory.PageType.HOME_TOPIC_LIST ||
+                mPageType == FragmentFactory.PageType.NODE_TOPIC_LIST) {
+            setHasOptionsMenu(true);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if (mPageType == FragmentFactory.PageType.HOME_TOPIC_LIST) {
+            inflater.inflate(R.menu.home_topic_view, menu);
+            if (mSelectedMenuResId != null) {
+                menu.findItem(mSelectedMenuResId).setChecked(true);
+            }
+        } else if (mPageType == FragmentFactory.PageType.NODE_TOPIC_LIST) {
+            inflater.inflate(R.menu.node_topic_list, menu);
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mSelectedMenuResId != null && mSelectedMenuResId == item.getItemId()) {
+            return true;
+        }
+
+        switch (item.getItemId()) {
+            case R.id.action_default_order:
+                changeDataSource(ConstantUtil.BASE_URL, getString(R.string.default_order_topics));
+                mSelectedMenuResId = item.getItemId();
+                item.setChecked(true);
+                return true;
+
+            case R.id.action_latest:
+                changeDataSource(ConstantUtil.LATEST_URL, getString(R.string.latest_topics));
+                item.setChecked(true);
+                mSelectedMenuResId = item.getItemId();
+                return true;
+
+            case R.id.action_elite:
+                changeDataSource(ConstantUtil.ELITE_URL, getString(R.string.elite_topics));
+                item.setChecked(true);
+                mSelectedMenuResId = item.getItemId();
+                return true;
+
+            case R.id.action_new_topic:
+                // TODO: 2017/10/10 发表新主题页面
+                return true;
+
+            default:
+                break;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void changeDataSource(String url, String title) {
+        mUrl = url;
+        mTitle = title;
+        mPresenter.getTopicList();
+        getActivity().setTitle(title);
     }
 
     @Override
