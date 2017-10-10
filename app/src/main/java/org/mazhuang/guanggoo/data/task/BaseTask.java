@@ -25,12 +25,22 @@ public abstract class BaseTask<T> implements Runnable {
     protected Handler mHandler = new Handler(Looper.getMainLooper());
     protected OnResponseListener<T> mListener;
 
+    protected boolean mIsCanceled = false;
+
     BaseTask(OnResponseListener<T> listener) {
         mListener = listener;
     }
 
+    public void cancel() {
+        mIsCanceled = true;
+    }
+
+    public boolean isCanceled() {
+        return mIsCanceled;
+    }
+
     protected void successOnUI(final T data) {
-        if (mListener != null) {
+        if (!mIsCanceled && mListener != null) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -41,7 +51,7 @@ public abstract class BaseTask<T> implements Runnable {
     }
 
     protected void failedOnUI(final String msg) {
-        if (mListener != null) {
+        if (!mIsCanceled && mListener != null) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
