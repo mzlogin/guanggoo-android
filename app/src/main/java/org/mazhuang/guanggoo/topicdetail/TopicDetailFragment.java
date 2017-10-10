@@ -146,6 +146,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
         if (mAdapter.getSmallestFloor() > 1) {
             mLoadMoreTextView.setVisibility(View.VISIBLE);
+            mLoadMoreTextView.setEnabled(true);
         }
     }
 
