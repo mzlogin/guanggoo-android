@@ -57,4 +57,5 @@ bugly/
 *.swp
 
 # keystore
-/config
+/config/*.jks
+/config/signing.properties
