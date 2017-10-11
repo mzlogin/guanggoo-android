@@ -55,3 +55,6 @@ fabric.properties
 bugly/
 
 *.swp
+
+# keystore
+/config

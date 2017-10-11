@@ -11,12 +11,51 @@ android {
         versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        debug {
+
+        }
+        release {
+            def Properties signingProps = getSignProperties()
+            if (signingProps != null) {
+                storeFile file(signingProps['STORE_FILE'])
+                storePassword signingProps['STORE_PASSWORD']
+                keyAlias signingProps['KEY_ALIAS']
+                keyPassword signingProps['KEY_PASSWORD']
+            }
+        }
+    }
+
     buildTypes {
+        debug {
+
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (getSignProperties() != null) {
+                signingConfig signingConfigs.release
+            } else {
+                signingConfig signingConfigs.debug
+            }
         }
     }
+}
+
+def getSignProperties() {
+    File signingPropertiesFile = file('../config/signing.properties')
+    if (signingPropertiesFile.exists()) {
+        def Properties signingProperties = new Properties()
+        signingProperties.load(new FileInputStream(signingPropertiesFile))
+        if (signingProperties.containsKey('STORE_FILE') &&
+            signingProperties.containsKey('STORE_PASSWORD') &&
+            signingProperties.containsKey('KEY_ALIAS') &&
+            signingProperties.containsKey('KEY_PASSWORD')) {
+            return signingProperties
+        }
+    }
+    return null
 }
 
 dependencies {
