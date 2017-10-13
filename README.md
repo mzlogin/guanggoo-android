@@ -16,9 +16,9 @@
 
 ## 屏幕截图
 
-<img width="360" src="./screenshots/topic-list.png" align=center /> <img width="360" src="./screenshots/topic-detail.png" align=center />
+<img width="360" src="http://mazhuang.org/guanggoo-android/screenshots/topic-list.png" align=center /> <img width="360" src="http://mazhuang.org/guanggoo-android/screenshots/topic-detail.png" align=center />
 
-<img width="360" src="./screenshots/nodes-list.png" align=center /> <img width="360" src="./screenshots/drawer.png" align=center />
+<img width="360" src="http://mazhuang.org/guanggoo-android/screenshots/nodes-list.png" align=center /> <img width="360" src="http://mazhuang.org/guanggoo-android/screenshots/drawer.png" align=center />
 
 ## 功能列表
 
