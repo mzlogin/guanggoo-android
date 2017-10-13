@@ -33,7 +33,7 @@ public class GetReplyListTask extends BaseTask<ReplyList> {
         boolean hasMore = false;
 
         try {
-            Document doc = getConnection(mUrl).get();
+            Document doc = get(mUrl);
 
             Elements elements = doc.select("div.reply-item");
 

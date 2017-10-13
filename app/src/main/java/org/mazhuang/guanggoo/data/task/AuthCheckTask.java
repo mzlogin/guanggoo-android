@@ -29,7 +29,7 @@ public class AuthCheckTask extends BaseTask<String> {
                 return;
             }
 
-            Document doc = getConnection(ConstantUtil.BASE_URL).get();
+            Document doc = get(ConstantUtil.BASE_URL);
             Elements elements = doc.select("div.usercard");
             if (!elements.isEmpty()) {
                 Element usercardElement = elements.first();

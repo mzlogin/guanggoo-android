@@ -28,9 +28,8 @@ public class GetCommentsTask extends BaseTask<Map<Integer, Comment>> {
 
     @Override
     public void run() {
-        Connection connection = getConnection(mUrl);
         try {
-            Document doc = connection.get();
+            Document doc = get(mUrl);
             Map<Integer, Comment> comments = getCommentsFromElements(doc.select("div.topic-reply"));
             successOnUI(comments);
         } catch (IOException e) {

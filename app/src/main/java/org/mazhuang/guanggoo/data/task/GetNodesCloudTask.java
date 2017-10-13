@@ -26,7 +26,7 @@ public class GetNodesCloudTask extends BaseTask<List<NodeCategory>> {
         Document doc;
 
         try {
-            doc = getConnection(ConstantUtil.NODES_CLOUD_URL).get();
+            doc = get(ConstantUtil.NODES_CLOUD_URL);
         } catch (IOException e) {
             e.printStackTrace();
             failedOnUI(e.getMessage());

@@ -1,11 +1,13 @@
 package org.mazhuang.guanggoo.data.task;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Comment;
 import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
+import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -32,7 +34,7 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
         Document doc;
 
         try {
-            doc = getConnection(mUrl).get();
+            doc = get(mUrl);
         } catch (IOException e) {
             e.printStackTrace();
             failedOnUI(e.getMessage());

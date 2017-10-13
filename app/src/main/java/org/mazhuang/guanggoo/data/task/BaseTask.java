@@ -2,17 +2,22 @@ package org.mazhuang.guanggoo.data.task;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.sax.EndElementListener;
 import android.text.TextUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.mazhuang.guanggoo.App;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.PrefsUtil;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -72,6 +77,11 @@ public abstract class BaseTask<T> implements Runnable {
         return connection;
     }
 
+    protected Document get(String url) throws IOException {
+        Document doc = getConnection(url).get();
+        return fixLink(doc);
+    }
+
     protected Map<String, String> getCookies() {
         Map<String, String> cookies = new HashMap<>();
         String cookieString = PrefsUtil.getString(App.getInstance(), ConstantUtil.KEY_COOKIE, "");
@@ -100,5 +110,29 @@ public abstract class BaseTask<T> implements Runnable {
 
     protected String getXsrf() {
         return PrefsUtil.getString(App.getInstance(), ConstantUtil.KEY_XSRF, "");
+    }
+
+    protected <T extends Element> T fixLink(T element) {
+        Elements links = element.select("[href]");
+        for (Element link : links) {
+            String href = link.attr("href");
+            if (!TextUtils.isEmpty(href)) {
+                if (href.toLowerCase().startsWith("http")) {
+                    continue;
+                }
+                link.attr("href", link.absUrl("href"));
+            }
+        }
+        links = element.select("[src]");
+        for (Element link : links) {
+            String src = link.attr("src");
+            if (!TextUtils.isEmpty(src)) {
+                if (src.toLowerCase().startsWith("http")) {
+                    continue;
+                }
+                link.attr("src", link.absUrl("src"));
+            }
+        }
+        return element;
     }
 }

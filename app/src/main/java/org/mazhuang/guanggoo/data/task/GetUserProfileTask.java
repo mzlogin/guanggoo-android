@@ -24,7 +24,7 @@ public class GetUserProfileTask extends BaseTask<UserProfile> {
         Document doc;
 
         try {
-            doc = getConnection(mUrl).get();
+            doc = get(mUrl);
         } catch (IOException e) {
             e.printStackTrace();
             failedOnUI(e.getMessage());

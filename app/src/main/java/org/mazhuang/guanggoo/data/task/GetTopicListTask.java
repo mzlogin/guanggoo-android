@@ -34,7 +34,7 @@ public class GetTopicListTask extends BaseTask<TopicList> implements Runnable {
         boolean succeed = false;
         boolean hasMore = false;
         try {
-            Document doc = getConnection(mUrl).get();
+            Document doc = get(mUrl);
 
             Elements elements = doc.select("div.topic-item");
 
