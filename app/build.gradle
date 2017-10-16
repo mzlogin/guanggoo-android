@@ -25,6 +25,7 @@ android {
     productFlavors {
         playstore {}
         github {}
+        coolapk {}
     }
 
     productFlavors.all {
