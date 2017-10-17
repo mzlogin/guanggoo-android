@@ -5,6 +5,7 @@
 **目录**
 <!-- vim-markdown-toc GFM -->
 
+* [下载地址](#下载地址)
 * [屏幕截图](#屏幕截图)
 * [功能列表](#功能列表)
 * [界面特性](#界面特性)
@@ -13,6 +14,12 @@
 * [License](#license)
 
 <!-- vim-markdown-toc -->
+
+## 下载地址
+
+APK 下载：<https://github.com/mzlogin/guanggoo-android/releases>
+
+<a href="https://play.google.com/store/apps/details?id=org.mazhuang.guanggoo" target="_blank"><img alt="Google Play" width="183px" height="39px" src="./assets/image/play-store.png"/></a>
 
 ## 屏幕截图
 
