@@ -14,6 +14,8 @@ public interface TopicDetailContract {
         void getMoreComments(int page);
 
         void comment(String content);
+
+        void favourite(String state);
     }
 
     interface View extends BaseView<Presenter> {
@@ -25,5 +27,9 @@ public interface TopicDetailContract {
 
         void onCommentSucceed();
         void onCommentFailed(String msg);
+
+        void favouriteSuccess(String msg, String nextState);
+
+        void favouriteFail(String msg);
     }
 }

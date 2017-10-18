@@ -6,6 +6,8 @@ package org.mazhuang.guanggoo.util;
 
 public abstract class ConstantUtil {
     public static final String BASE_URL = "http://www.guanggoo.com";
+    public static final String FAVORITE_URL = BASE_URL + "/favorite";
+    public static final String UN_FAVORITE_URL = BASE_URL + "/unfavorite";
     public static final String LOGIN_URL = BASE_URL + "/login";
     public static final String REGISTER_URL = BASE_URL + "/register";
     public static final String BEGINNER_GUIDE_URL = BASE_URL + "/t/2657";

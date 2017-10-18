@@ -1,20 +1,15 @@
 package org.mazhuang.guanggoo.data.task;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Comment;
+import org.mazhuang.guanggoo.data.entity.Favorite;
 import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
-import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created by mazhuang on 2017/9/17.
@@ -41,6 +36,9 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
             return;
         }
 
+
+
+
         Elements topicDetailElements = doc.select("div.topic-detail");
 
         if (topicDetailElements.isEmpty()) {
@@ -60,6 +58,20 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
         Topic topic = GetTopicListTask.createTopicFromElement(elements.first());
 
         topicDetail.setTopic(topic);
+        // 解析收藏
+        Elements favouriteElement = doc.select(".J_topicFavorite");
+        if(favouriteElement!=null){
+            String hrefUrl = favouriteElement.attr("href");
+            String dataType = favouriteElement.attr("data-type");
+            String text = favouriteElement.text();
+            Favorite favorite = new Favorite();
+            favorite.setUrl(hrefUrl);
+            favorite.setDataType(dataType);
+            favorite.setText(text);
+            topicDetail.setFavorite(favorite);
+        }
+
+
 
         elements = topicDetailElements.select("div.ui-content");
 

@@ -31,6 +31,7 @@ import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
+import org.mazhuang.guanggoo.data.entity.Favorite;
 import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.util.ConstantUtil;
@@ -60,6 +61,8 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     @BindView(R.id.comment_view) View mCommentsView;
     @BindView(R.id.comment) EditText mCommentEditText;
     @BindView(R.id.submit) Button mSubmitButton;
+    @BindView(R.id.btnFavourite) Button mFavouriteButton;
+
 
     @Nullable
     @Override
@@ -129,6 +132,15 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     }
 
     private void setViewData(TopicDetail topicDetail) {
+        Favorite favorite = topicDetail.getFavorite();
+        if(favorite !=null){
+            mFavouriteButton.setVisibility(View.VISIBLE);
+            if("favorite".equals(favorite.getDataType())){
+                mFavouriteButton.setText("收藏");
+            } else if ("unfavorite".equals(favorite.getDataType())){
+                mFavouriteButton.setText("取消收藏");
+            }
+        }
         mTitleTextView.setText(topicDetail.getTopic().getTitle());
         Glide.with(getContext())
                 .load(topicDetail.getTopic().getAvatar())
@@ -172,13 +184,16 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         });
     }
 
-    @OnClick({R.id.load_more, R.id.submit, R.id.author, R.id.avatar, R.id.node})
+    @OnClick({R.id.load_more, R.id.submit, R.id.author, R.id.avatar, R.id.node,R.id.btnFavourite})
     public void onClick(View v) {
         if (mTopicDetail == null) {
             return;
         }
 
         switch (v.getId()) {
+            case R.id.btnFavourite:
+                mPresenter.favourite(mFavouriteButton.getText().toString());
+                break;
             case R.id.load_more: {
                 mLoadMoreTextView.setEnabled(false);
                 int page = (mAdapter.getSmallestFloor() - 1) /ConstantUtil.COMMENTS_PER_PAGE;
@@ -337,6 +352,17 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
     @Override
     public void onCommentFailed(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void favouriteSuccess(String msg, String nextState) {
+        mFavouriteButton.setText(nextState);
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void favouriteFail(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 

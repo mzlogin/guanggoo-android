@@ -1,13 +1,15 @@
 package org.mazhuang.guanggoo.data.entity;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created by mazhuang on 2017/9/17.
  */
 
 public class TopicDetail {
+
+
+    private Favorite favorite;
     private Topic topic;
     private String content;
     private Map<Integer, Comment> comments;
@@ -34,5 +36,12 @@ public class TopicDetail {
 
     public void setTopic(Topic topic) {
         this.topic = topic;
+    }
+    public Favorite getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Favorite favorite) {
+        this.favorite = favorite;
     }
 }
