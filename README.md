@@ -50,7 +50,7 @@ APK 下载：<https://github.com/mzlogin/guanggoo-android/releases>
     - [x] 个人主题列表
     - [x] 其它用户信息
 - [ ] 消息提醒
-- [ ] 收藏
+- [x] 收藏
 - [x] 收藏的主题列表
 - [x] 发表新主题
 - [ ] 登出
