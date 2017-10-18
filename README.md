@@ -11,6 +11,7 @@
 * [界面特性](#界面特性)
 * [优化](#优化)
 * [API](#api)
+* [参与贡献](#参与贡献)
 * [License](#license)
 
 <!-- vim-markdown-toc -->
@@ -84,6 +85,10 @@ APK 下载：<https://github.com/mzlogin/guanggoo-android/releases>
 [docs/guanggoo-api.md](./docs/guanggoo-api.md)
 
 因为光谷社区并未提供 API，所以是基于 DOM 解析获取数据。网站的前端界面改动有可能导致数据不可用，可以考虑做一个 API 监控脚本，定期测试 API 的可用性。
+
+## 参与贡献
+
+请参考 [如何参与贡献](./CONTRIBUTING.md)
 
 ## License
 
