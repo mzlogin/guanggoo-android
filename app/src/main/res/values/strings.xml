@@ -66,4 +66,7 @@
     <string name="please_input_content">请输入内容</string>
     <string name="error_invalid_title">标题太短</string>
     <string name="error_invalid_content">内容太短</string>
+    <string name="feedback">建议与反馈</string>
+    <string name="issue_address">https://github.com/mzlogin/guanggoo-android/issues</string>
+    <string name="check_updates">检查新版本</string>
 </resources>

@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.tencent.bugly.beta.Beta;
+
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.util.VersionUtil;
@@ -23,12 +25,24 @@ public class AboutFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        Element checkUpdateElement = new Element();
+        checkUpdateElement.setTitle(getString(R.string.check_updates))
+                .setIconDrawable(R.drawable.ic_update)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Beta.checkUpgrade(true, false);
+                    }
+                });
+
         View aboutPage = new AboutPage(getActivity())
                 .isRTL(false)
                 .setImage(R.drawable.guanggoo_new)
                 .setDescription(getString(R.string.app_description, VersionUtil.getVersion(getContext())))
-                .addGroup(getString(R.string.source_code))
-                .addGitHub(getString(R.string.source_code_address), getString(R.string.source_code_address))
+                .addWebsite(getString(R.string.issue_address), getString(R.string.feedback))
+                .addItem(checkUpdateElement)
+                .addGitHub(getString(R.string.source_code_address), getString(R.string.source_code))
                 .addGroup(getString(R.string.contact_me))
                 .addEmail(getString(R.string.author_email), getString(R.string.author_email))
                 .addWebsite(getString(R.string.author_website), getString(R.string.author_website))
