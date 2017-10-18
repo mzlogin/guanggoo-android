@@ -81,8 +81,14 @@ def getVersionProperties() {
     return versionProps
 }
 
-def getVersionCode() {
-    return Integer.valueOf('git rev-list HEAD --count '.execute().text.trim())
+static def getVersionCode() {
+    try {
+        String output = 'git rev-list HEAD --count '.execute().text.trim()
+        return Integer.valueOf(output);
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+    }
+    return 1;
 }
 
 def getSignProperties() {
