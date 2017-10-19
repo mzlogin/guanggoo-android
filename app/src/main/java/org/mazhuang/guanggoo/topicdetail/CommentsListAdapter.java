@@ -10,9 +10,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.R;
-import org.mazhuang.guanggoo.base.FragmentCallBack;
 import org.mazhuang.guanggoo.data.entity.Comment;
-import org.sufficientlysecure.htmltextview.HtmlHttpImageGetter;
+import org.mazhuang.guanggoo.util.MyHtmlHttpImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.Map;
@@ -91,7 +90,9 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
                 .into(holder.mAvatarImageView);
         holder.mAuthorTextView.setText(holder.mItem.getMeta().getReplier().getUsername());
         holder.mFloorTextView.setText("#" + holder.mItem.getMeta().getFloor());
-        holder.mContentTextView.setHtml(holder.mItem.getContent(), new HtmlHttpImageGetter(holder.mContentTextView));
+        MyHtmlHttpImageGetter imageGetter = new MyHtmlHttpImageGetter(holder.mContentTextView);
+        imageGetter.enableCompressImage(true, 30);
+        holder.mContentTextView.setHtml(holder.mItem.getContent(), imageGetter);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
