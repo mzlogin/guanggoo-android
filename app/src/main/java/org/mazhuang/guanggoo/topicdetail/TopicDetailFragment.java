@@ -61,8 +61,8 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     @BindView(R.id.comment_view) View mCommentsView;
     @BindView(R.id.comment) EditText mCommentEditText;
     @BindView(R.id.submit) Button mSubmitButton;
-    @BindView(R.id.btnFavourite) Button mFavouriteButton;
 
+    private MenuItem mFavoriteMenuItem;
 
     @Nullable
     @Override
@@ -94,6 +94,8 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.topic_detail, menu);
         super.onCreateOptionsMenu(menu, inflater);
+
+        mFavoriteMenuItem = menu.findItem(R.id.action_favorite);
     }
 
     @Override
@@ -106,6 +108,10 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
             case R.id.action_comment:
                 showCommentView();
                 return true;
+
+            case R.id.action_favorite:
+                mPresenter.favourite(mFavoriteMenuItem.getTitle().toString());
+                break;
 
             default:
                 break;
@@ -133,12 +139,11 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
     private void setViewData(TopicDetail topicDetail) {
         Favorite favorite = topicDetail.getFavorite();
-        if(favorite !=null){
-            mFavouriteButton.setVisibility(View.VISIBLE);
-            if("favorite".equals(favorite.getDataType())){
-                mFavouriteButton.setText("收藏");
-            } else if ("unfavorite".equals(favorite.getDataType())){
-                mFavouriteButton.setText("取消收藏");
+        if (favorite != null) {
+            if ("favorite".equals(favorite.getDataType())) {
+                setFavoriteItemState(Favorite.STATE_FAVORITE);
+            } else {
+                setFavoriteItemState(Favorite.STATE_UNFAVORITE);
             }
         }
         mTitleTextView.setText(topicDetail.getTopic().getTitle());
@@ -184,16 +189,13 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         });
     }
 
-    @OnClick({R.id.load_more, R.id.submit, R.id.author, R.id.avatar, R.id.node,R.id.btnFavourite})
+    @OnClick({R.id.load_more, R.id.submit, R.id.author, R.id.avatar, R.id.node})
     public void onClick(View v) {
         if (mTopicDetail == null) {
             return;
         }
 
         switch (v.getId()) {
-            case R.id.btnFavourite:
-                mPresenter.favourite(mFavouriteButton.getText().toString());
-                break;
             case R.id.load_more: {
                 mLoadMoreTextView.setEnabled(false);
                 int page = (mAdapter.getSmallestFloor() - 1) /ConstantUtil.COMMENTS_PER_PAGE;
@@ -357,8 +359,20 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
     @Override
     public void favouriteSuccess(String msg, String nextState) {
-        mFavouriteButton.setText(nextState);
+        setFavoriteItemState(nextState);
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    private void setFavoriteItemState(String state) {
+        if (mFavoriteMenuItem != null) {
+            if (Favorite.STATE_FAVORITE.equals(state)) {
+                mFavoriteMenuItem.setIcon(R.drawable.ic_menu_favorite);
+                mFavoriteMenuItem.setTitle(R.string.favorite);
+            } else {
+                mFavoriteMenuItem.setIcon(R.drawable.ic_menu_favorite_border);
+                mFavoriteMenuItem.setTitle(R.string.cancel_favorite);
+            }
+        }
     }
 
     @Override
