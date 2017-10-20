@@ -10,6 +10,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/edittext_background"
         android:textCursorDrawable="@drawable/edittext_cursor"
+        android:paddingTop="@dimen/inner_margin"
+        android:paddingBottom="@dimen/inner_margin"
         android:textStyle="bold"
         android:textSize="20sp"
         android:maxLength="64"
@@ -19,7 +21,8 @@
     <EditText
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="top"
         android:layout_marginTop="@dimen/normal_margin"
         android:background="@null"
