@@ -128,4 +128,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.github.medyo:android-about-page:1.2.1'
+    compile 'com.vdurmont:emoji-java:4.0.0'
 }

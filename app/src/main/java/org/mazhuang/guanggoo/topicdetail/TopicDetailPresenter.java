@@ -1,5 +1,7 @@
 package org.mazhuang.guanggoo.topicdetail;
 
+import com.vdurmont.emoji.EmojiParser;
+
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Favorite;
@@ -59,6 +61,7 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
     @Override
     public void comment(String content) {
         mView.startLoading();
+        content = EmojiParser.parseToAliases(content);
         NetworkTaskScheduler.getInstance().execute(new CommentTask(getUrl(), content, new OnResponseListener<String>() {
             @Override
             public void onSucceed(String data) {

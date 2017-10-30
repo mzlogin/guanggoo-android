@@ -38,9 +38,9 @@ APK 下载：<https://github.com/mzlogin/guanggoo-android/releases>
     - [x] 评论列表
 - [x] 节点列表
 - [x] 节点主题列表
-- [ ] 评论
+- [x] 评论
     - [x] 文字评论
-    - [ ] emoji
+    - [x] emoji
     - [x] 艾特
         目前仅支持长按头像或用户名
 - [x] 分享主题链接

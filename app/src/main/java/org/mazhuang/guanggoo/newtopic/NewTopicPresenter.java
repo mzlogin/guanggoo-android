@@ -1,5 +1,7 @@
 package org.mazhuang.guanggoo.newtopic;
 
+import com.vdurmont.emoji.EmojiParser;
+
 import org.mazhuang.guanggoo.base.BasePresenter;
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
@@ -21,6 +23,10 @@ public class NewTopicPresenter implements NewTopicContract.Presenter {
     @Override
     public void newTopic(String title, String content) {
         mView.startLoading();
+
+        title = EmojiParser.parseToAliases(title);
+        content = EmojiParser.parseToAliases(content);
+
         NetworkTaskScheduler.getInstance().execute(new NewTopicTask(mView.getUrl(),
                 title,
                 content,
