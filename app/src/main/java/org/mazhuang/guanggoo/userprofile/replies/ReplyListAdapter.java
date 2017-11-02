@@ -4,17 +4,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.FragmentCallBack;
-import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.Reply;
-import org.mazhuang.guanggoo.data.entity.Topic;
-import org.sufficientlysecure.htmltextview.HtmlHttpImageGetter;
+import org.mazhuang.guanggoo.util.MyHtmlHttpImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.List;
@@ -57,7 +52,9 @@ public class ReplyListAdapter extends RecyclerView.Adapter<ReplyListAdapter.View
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mData.get(position);
         holder.mTitleTextView.setText(mData.get(position).getTopic().getTitle());
-        holder.mContentTextView.setHtml(holder.mItem.getContent(), new HtmlHttpImageGetter(holder.mContentTextView));
+        MyHtmlHttpImageGetter imageGetter = new MyHtmlHttpImageGetter(holder.mContentTextView);
+        imageGetter.enableCompressImage(true, 30);
+        holder.mContentTextView.setHtml(holder.mItem.getContent(), imageGetter);
     }
 
     @Override
