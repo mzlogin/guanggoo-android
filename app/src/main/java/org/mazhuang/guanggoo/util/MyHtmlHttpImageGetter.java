@@ -167,7 +167,7 @@ public class MyHtmlHttpImageGetter implements ImageGetter {
             try {
                 InputStream is = fetch(urlString);
                 Drawable drawable = new BitmapDrawable(res, is);
-                scale = getScale(drawable);
+                scale = getScale(drawable.getIntrinsicWidth());
                 drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * scale), (int) (drawable.getIntrinsicHeight() * scale));
                 return drawable;
             } catch (Exception e) {
@@ -184,8 +184,9 @@ public class MyHtmlHttpImageGetter implements ImageGetter {
                 Bitmap original = new BitmapDrawable(res, is).getBitmap();
 
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
-                Bitmap.CompressFormat compressFormat = (urlString.endsWith(".png") || urlString.endsWith(".PNG")) ?
-                        Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG;
+                Bitmap.CompressFormat compressFormat = (urlString.endsWith(".png") || urlString.endsWith(".PNG"))
+                        ? Bitmap.CompressFormat.PNG
+                        : Bitmap.CompressFormat.JPEG;
                 original.compress(compressFormat, qualityImage, out);
                 original.recycle();
                 is.close();
@@ -193,7 +194,7 @@ public class MyHtmlHttpImageGetter implements ImageGetter {
                 Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
                 out.close();
 
-                scale = getScale(decoded);
+                scale = getScale(decoded.getWidth());
                 BitmapDrawable b = new BitmapDrawable(res, decoded);
 
                 b.setBounds(0, 0, (int) (b.getIntrinsicWidth() * scale), (int) (b.getIntrinsicHeight() * scale));
@@ -203,28 +204,19 @@ public class MyHtmlHttpImageGetter implements ImageGetter {
             }
         }
 
-        private float getScale(Bitmap bitmap) {
+        private float getScale(float originalDrawableWidth) {
             View container = containerReference.get();
-            if (!matchParentWidth || container == null) {
+            if (container == null) {
                 return 1f;
             }
 
-            float maxWidth = container.getWidth();
-            float originalDrawableWidth = bitmap.getWidth();
+            float maxWidth = container.getWidth() - container.getPaddingLeft() - container.getPaddingRight();
 
-            return maxWidth / originalDrawableWidth;
-        }
-
-        private float getScale(Drawable drawable) {
-            View container = containerReference.get();
-            if (!matchParentWidth || container == null) {
-                return 1f;
+            if (matchParentWidth) {
+                return maxWidth / originalDrawableWidth;
+            } else {
+                return Math.min(maxWidth, originalDrawableWidth) / originalDrawableWidth;
             }
-
-            float maxWidth = container.getWidth();
-            float originalDrawableWidth = drawable.getIntrinsicWidth();
-
-            return maxWidth / originalDrawableWidth;
         }
 
         private InputStream fetch(String urlString) throws IOException {
