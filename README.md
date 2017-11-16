@@ -18,12 +18,9 @@
 
 ## 下载地址
 
-| #            | 下载地址                                                                                                                                                                                   |
-|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| GitHub       | [Releases](https://github.com/mzlogin/guanggoo-android/releases)                                                                                                                           |
-| Google Play  | <a href="https://play.google.com/store/apps/details?id=org.mazhuang.guanggoo" target="_blank"><img alt="Google Play" width="183px" height="39px" src="./assets/image/play-store.png"/></a> |
-| 酷安         | <a href="https://www.coolapk.com/apk/org.mazhuang.guanggoo" target="_blank"><img alt="酷安" height="39px" src="./assets/image/coolapk.png"/></a>                                           |
-| 小米应用商店 | <a href="http://app.mi.com/details?id=org.mazhuang.guanggoo" target="_blank"><img alt="小米应用商店" height="39px" src="./assets/image/xiaomi-market.png"/></a>                            |
+| Google Play                                                                                                                                                                                | 小米应用商店                                                                                                                                                    | 酷安                                                                                                                                             | GitHub                                                           |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------|
+| <a href="https://play.google.com/store/apps/details?id=org.mazhuang.guanggoo" target="_blank"><img alt="Google Play" width="183px" height="39px" src="./assets/image/play-store.png"/></a> | <a href="http://app.mi.com/details?id=org.mazhuang.guanggoo" target="_blank"><img alt="小米应用商店" height="39px" src="./assets/image/xiaomi-market.png"/></a> | <a href="https://www.coolapk.com/apk/org.mazhuang.guanggoo" target="_blank"><img alt="酷安" height="39px" src="./assets/image/coolapk.png"/></a> | [Releases](https://github.com/mzlogin/guanggoo-android/releases) |
 
 ## 屏幕截图
 
