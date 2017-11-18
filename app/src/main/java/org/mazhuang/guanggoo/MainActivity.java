@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity
 
     private ImageView mAvatarImageView;
     private TextView mUsernameTextView;
+    private ImageView mLogoutImageView;
     @BindView(R.id.progress) ProgressBar mProgressBar;
 
     @Override
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity
                     .into(mAvatarImageView);
 
             mUsernameTextView.setText(AuthInfoManager.getInstance().getUsername());
+            mLogoutImageView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         mAvatarImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.avatar);
         mUsernameTextView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.username);
+        mLogoutImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.logout);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,6 +91,12 @@ public class MainActivity extends AppCompatActivity
         };
         mAvatarImageView.setOnClickListener(listener);
         mUsernameTextView.setOnClickListener(listener);
+        mLogoutImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLoginStatusChanged(false);
+            }
+        });
 
         openPage(ConstantUtil.BASE_URL, getString(R.string.default_order_topics));
 
@@ -260,8 +269,10 @@ public class MainActivity extends AppCompatActivity
         if (isLogin) {
             initLoginInUserInfo();
         } else {
+            AuthInfoManager.getInstance().clearAuthInfo();
             mAvatarImageView.setImageResource(R.drawable.m_default);
             mUsernameTextView.setText(R.string.not_logged_in);
+            mLogoutImageView.setVisibility(View.GONE);
         }
     }
 

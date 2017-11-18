@@ -2,6 +2,10 @@ package org.mazhuang.guanggoo.data;
 
 import android.text.TextUtils;
 
+import org.mazhuang.guanggoo.App;
+import org.mazhuang.guanggoo.util.ConstantUtil;
+import org.mazhuang.guanggoo.util.PrefsUtil;
+
 import java.util.Map;
 
 /**
@@ -9,8 +13,6 @@ import java.util.Map;
  */
 
 public class AuthInfoManager {
-
-    private Map<String, String> cookie;
 
     private String username;
 
@@ -44,5 +46,12 @@ public class AuthInfoManager {
 
     public synchronized void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public synchronized void clearAuthInfo() {
+        PrefsUtil.putString(App.getInstance(), ConstantUtil.KEY_COOKIE, "");
+        PrefsUtil.putString(App.getInstance(), ConstantUtil.KEY_XSRF, "");
+        username = null;
+        avatar = null;
     }
 }
