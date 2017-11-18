@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
-import org.mazhuang.guanggoo.FragmentFactory;
+import org.mazhuang.guanggoo.router.FragmentFactory;
 
 /**
  * Created by mazhuang on 2017/9/16.
@@ -22,6 +22,7 @@ public abstract class BaseFragment<T> extends Fragment {
     protected String mTitle;
 
     protected boolean mClearTop = false;
+
     protected FragmentFactory.PageType mPageType;
 
     public void setPresenter(T presenter) {

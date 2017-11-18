@@ -1,4 +1,4 @@
-package org.mazhuang.guanggoo;
+package org.mazhuang.guanggoo.router;
 
 import org.mazhuang.guanggoo.about.AboutFragment;
 import org.mazhuang.guanggoo.base.BaseFragment;
@@ -7,6 +7,7 @@ import org.mazhuang.guanggoo.login.LoginFragment;
 import org.mazhuang.guanggoo.login.LoginPresenter;
 import org.mazhuang.guanggoo.newtopic.NewTopicFragment;
 import org.mazhuang.guanggoo.newtopic.NewTopicPresenter;
+import org.mazhuang.guanggoo.newtopic.SelectNodeFragment;
 import org.mazhuang.guanggoo.nodescloud.NodesCloudFragment;
 import org.mazhuang.guanggoo.nodescloud.NodesCloudPresenter;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailFragment;
@@ -33,6 +34,7 @@ public abstract class FragmentFactory {
         HOME_TOPIC_LIST, // 首页主题列表
         TOPIC_DETAIL, // 主题详情
         NODES_CLOUD, // 节点列表
+        SELECT_NODE, // 发表新主题时选择节点
         NODE_TOPIC_LIST, // 节点主题列表
         LOGIN, // 登录
         USER_PROFILE, // 个人资料页
@@ -46,6 +48,7 @@ public abstract class FragmentFactory {
     public static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com[/]?$");
     public static final Pattern TOPIC_DETAIL_PATTERN = Pattern.compile("^http://www.guanggoo.com/t/\\d+$");
     public static final Pattern NODES_CLOUD_PATTERN = Pattern.compile("^http://www.guanggoo.com/nodes$");
+    public static final Pattern SELECT_NODE_PATTERN = Pattern.compile("^http://www.guanggoo.com/nodes $");
     public static final Pattern NODE_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com/node/[^/]+$");
     public static final Pattern LOGIN_PATTERN = Pattern.compile("^http://www.guanggoo.com/login$");
     public static final Pattern USER_PROFILE_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+$");
@@ -103,6 +106,11 @@ public abstract class FragmentFactory {
             case NODES_CLOUD:
                 fragment = new NodesCloudFragment();
                 new NodesCloudPresenter((NodesCloudFragment)fragment);
+                break;
+
+            case SELECT_NODE:
+                fragment = new SelectNodeFragment();
+                new NodesCloudPresenter((SelectNodeFragment)fragment);
                 break;
 
             case LOGIN:
@@ -167,6 +175,10 @@ public abstract class FragmentFactory {
 
         if (NODES_CLOUD_PATTERN.matcher(url).find()) {
             return PageType.NODES_CLOUD;
+        }
+
+        if (SELECT_NODE_PATTERN.matcher(url).find()) {
+            return PageType.SELECT_NODE;
         }
 
         if (NODE_TOPIC_LIST_PATTERN.matcher(url).find()) {

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,15 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import org.mazhuang.guanggoo.FragmentFactory;
+import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
-import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.entity.TopicList;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -112,10 +108,14 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
                 return true;
 
             case R.id.action_new_topic:
-            {
-                String nodeCode = UrlUtil.getNodeCode(mUrl);
-                if (mListener != null && !TextUtils.isEmpty(nodeCode)) {
-                    mListener.openPage(String.format(ConstantUtil.NEW_TOPIC_BASE_URL, nodeCode), getString(R.string.new_topic));
+                if (mPageType == FragmentFactory.PageType.HOME_TOPIC_LIST) {
+                    if (mListener != null) {
+                        mListener.openPage(ConstantUtil.SELECT_NODE_URL, getString(R.string.select_node_to_new_topic));
+                    }
+                } else if (mPageType == FragmentFactory.PageType.NODE_TOPIC_LIST) {
+                    String nodeCode = UrlUtil.getNodeCode(mUrl);
+                    if (mListener != null && !TextUtils.isEmpty(nodeCode)) {
+                        mListener.openPage(String.format(ConstantUtil.NEW_TOPIC_BASE_URL, nodeCode), getString(R.string.new_topic));
                 }
             }
                 return true;

@@ -12,6 +12,7 @@ public abstract class ConstantUtil {
     public static final String REGISTER_URL = BASE_URL + "/register";
     public static final String BEGINNER_GUIDE_URL = BASE_URL + "/t/2657";
     public static final String NODES_CLOUD_URL = BASE_URL + "/nodes";
+    public static final String SELECT_NODE_URL = NODES_CLOUD_URL + " ";
     public static final String LATEST_URL = BASE_URL + "/?tab=latest";
     public static final String ELITE_URL = BASE_URL + "/?tab=elite";
     public static final String USER_PROFILE_BASE_URL = BASE_URL + "/u/%s";

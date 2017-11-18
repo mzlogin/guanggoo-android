@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
+import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.NodeCategory;
 
 import java.util.List;
@@ -17,7 +18,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NodesCloudFragment extends BaseFragment<NodesCloudContract.Presenter> implements NodesCloudContract.View {
+public class NodesCloudFragment extends BaseFragment<NodesCloudContract.Presenter>
+        implements NodesCloudContract.View, OnNodeClickListener {
 
     @BindView(R.id.nodes_cloud) RecyclerView mNodesCloudListView;
 
@@ -43,7 +45,7 @@ public class NodesCloudFragment extends BaseFragment<NodesCloudContract.Presente
 
     private void initViews() {
         if (mAdapter == null) {
-            mAdapter = new NodesCloudAdapter(mListener);
+            mAdapter = new NodesCloudAdapter(mListener, this);
         }
         mNodesCloudListView.setAdapter(mAdapter);
     }
@@ -73,5 +75,12 @@ public class NodesCloudFragment extends BaseFragment<NodesCloudContract.Presente
         }
 
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNodeClick(Node node) {
+        if (mListener != null) {
+            mListener.openPage(node.getUrl(), node.getTitle());
+        }
     }
 }

@@ -29,8 +29,11 @@ public class NodesCloudAdapter extends RecyclerView.Adapter<NodesCloudAdapter.Vi
 
     private FragmentCallBack mListener;
 
-    public NodesCloudAdapter(FragmentCallBack listener) {
+    private OnNodeClickListener mNodeClickListener;
+
+    public NodesCloudAdapter(FragmentCallBack listener, OnNodeClickListener nodeClickListener) {
         mListener = listener;
+        mNodeClickListener = nodeClickListener;
     }
 
     public void setData(List<NodeCategory> data) {
@@ -88,7 +91,11 @@ public class NodesCloudAdapter extends RecyclerView.Adapter<NodesCloudAdapter.Vi
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (mListener != null) {
                     Node node = category.getNodes().get(position);
-                    mListener.openPage(node.getUrl(), node.getTitle());
+                    if (mNodeClickListener != null) {
+                        mNodeClickListener.onNodeClick(node);
+                    } else {
+                        mListener.openPage(node.getUrl(), node.getTitle());
+                    }
                 }
             }
         });

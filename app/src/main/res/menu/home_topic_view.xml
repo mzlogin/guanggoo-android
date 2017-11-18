@@ -2,6 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item
+        android:id="@+id/action_new_topic"
+        android:orderInCategory="100"
+        android:title="@null"
+        android:icon="@drawable/ic_menu_add"
+        app:showAsAction="ifRoom"/>
+
     <group
         android:id="@+id/menu_category_home"
         android:checkableBehavior="single"
