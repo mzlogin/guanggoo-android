@@ -34,6 +34,7 @@ import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.entity.Favorite;
 import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
+import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import butterknife.BindView;
@@ -291,6 +292,12 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mContentWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                FragmentFactory.PageType pageType = FragmentFactory.getPageTypeByUrl(url);
+                if (mListener != null && pageType == FragmentFactory.PageType.VIEW_IMAGE) {
+                    mListener.openPage(url, getString(R.string.view_image));
+                    return true;
+                }
+
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                 return true;
             }

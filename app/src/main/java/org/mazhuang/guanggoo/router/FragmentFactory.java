@@ -12,6 +12,8 @@ import org.mazhuang.guanggoo.nodescloud.NodesCloudFragment;
 import org.mazhuang.guanggoo.nodescloud.NodesCloudPresenter;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailFragment;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailPresenter;
+import org.mazhuang.guanggoo.topicdetail.viewimage.ViewImageFragment;
+import org.mazhuang.guanggoo.topicdetail.viewimage.ViewImagePresenter;
 import org.mazhuang.guanggoo.topiclist.TopicListFragment;
 import org.mazhuang.guanggoo.topiclist.TopicListPresenter;
 import org.mazhuang.guanggoo.userprofile.UserProfileFragment;
@@ -21,6 +23,7 @@ import org.mazhuang.guanggoo.userprofile.replies.ReplyListPresenter;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
+import java.util.PriorityQueue;
 import java.util.regex.Pattern;
 
 /**
@@ -43,6 +46,7 @@ public abstract class FragmentFactory {
         USER_REPLIES, // 个人回复列表
         ABOUT, // 关于
         NEW_TOPIC, // 发表新主题
+        VIEW_IMAGE, // 查看图片
     }
 
     public static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com[/]?$");
@@ -56,6 +60,7 @@ public abstract class FragmentFactory {
     public static final Pattern USER_TOPICS_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/topics$");
     public static final Pattern USER_REPLIES_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/replies$");
     public static final Pattern NEW_TOPIC_PATTERN = Pattern.compile("^http://www.guanggoo.com/t/create/\\w+$");
+    public static final Pattern VIEW_IMAGE_PATTERN = Pattern.compile("^http[s]?://.+\\.(png|jpg|jpeg)$");
 
 
     public static BaseFragment getFragmentByUrl(String url) {
@@ -148,6 +153,11 @@ public abstract class FragmentFactory {
                 }
                 break;
 
+            case VIEW_IMAGE:
+                fragment = new ViewImageFragment();
+                new ViewImagePresenter((ViewImageFragment) fragment);
+                break;
+
             case ABOUT:
                 fragment = new AboutFragment();
                 break;
@@ -207,6 +217,10 @@ public abstract class FragmentFactory {
 
         if (NEW_TOPIC_PATTERN.matcher(url).find()) {
             return PageType.NEW_TOPIC;
+        }
+
+        if (VIEW_IMAGE_PATTERN.matcher(url).find()) {
+            return PageType.VIEW_IMAGE;
         }
 
         if (ConstantUtil.ABOUT_URL.equals(url)) {

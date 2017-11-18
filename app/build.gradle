@@ -129,4 +129,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.github.medyo:android-about-page:1.2.1'
     compile 'com.vdurmont:emoji-java:4.0.0'
+    compile 'com.bm.photoview:library:1.4.1'
 }
