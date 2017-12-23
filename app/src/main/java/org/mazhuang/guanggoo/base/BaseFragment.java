@@ -21,8 +21,6 @@ public abstract class BaseFragment<T> extends Fragment {
     protected String mUrl;
     protected String mTitle;
 
-    protected boolean mClearTop = false;
-
     protected FragmentFactory.PageType mPageType;
 
     public void setPresenter(T presenter) {
@@ -58,15 +56,11 @@ public abstract class BaseFragment<T> extends Fragment {
         mListener = null;
     }
 
+    /**
+     * 用于 Activity 的标题
+     * @return 标题
+     */
     public abstract String getTitle();
-
-    public boolean isClearTop() {
-        return mClearTop;
-    }
-
-    public void setClearTop(boolean clearTop) {
-        this.mClearTop = clearTop;
-    }
 
     public String getUrl() {
         return mUrl;

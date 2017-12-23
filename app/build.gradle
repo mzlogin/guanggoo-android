@@ -32,9 +32,10 @@ android {
     }
 
     productFlavors.all {
-        flavor -> flavor.manifestPlaceholders = [
-                appChannel : name
-        ]
+        flavor ->
+            flavor.manifestPlaceholders = [
+                    appChannel: name
+            ]
     }
 
     signingConfigs {
@@ -100,9 +101,9 @@ def getSignProperties() {
         def Properties signingProperties = new Properties()
         signingProperties.load(new FileInputStream(signingPropertiesFile))
         if (signingProperties.containsKey('STORE_FILE') &&
-            signingProperties.containsKey('STORE_PASSWORD') &&
-            signingProperties.containsKey('KEY_ALIAS') &&
-            signingProperties.containsKey('KEY_PASSWORD')) {
+                signingProperties.containsKey('STORE_PASSWORD') &&
+                signingProperties.containsKey('KEY_ALIAS') &&
+                signingProperties.containsKey('KEY_PASSWORD')) {
             return signingProperties
         }
     }
@@ -128,6 +129,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.github.medyo:android-about-page:1.2.1'
-    compile 'com.vdurmont:emoji-java:4.0.0'
+    compile('com.vdurmont:emoji-java:4.0.0') { exclude group: 'org.json', module: 'json' }
     compile 'com.bm.photoview:library:1.4.1'
 }

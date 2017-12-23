@@ -17,7 +17,7 @@
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light">
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark">
         <item name="android:textColor">@color/defaultFontColor</item>
     </style>
 
@@ -34,4 +34,7 @@
         <item name="android:background">@color/colorAccent</item>
     </style>
 
+    <style name="ToolbarTheme">
+        <item name="colorControlNormal">@color/white</item>
+    </style>
 </resources>

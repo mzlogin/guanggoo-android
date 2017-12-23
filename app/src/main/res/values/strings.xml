@@ -72,7 +72,13 @@
     <string name="share_link">分享链接</string>
     <string name="favorite">收藏</string>
     <string name="cancel_favorite">取消收藏</string>
-    <string name="select_node_to_new_topic">选择节点</string>
+    <string name="select_node_to_new_topic">选择发贴节点</string>
     <string name="view_image">查看图片</string>
     <string name="save">保存</string>
+
+    <string-array name="home_tab_names">
+        <item>@string/default_order_topics</item>
+        <item>@string/latest_topics</item>
+        <item>@string/elite_topics</item>
+    </string-array>
 </resources>

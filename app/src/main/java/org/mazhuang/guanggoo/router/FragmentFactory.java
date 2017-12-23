@@ -3,6 +3,7 @@ package org.mazhuang.guanggoo.router;
 import org.mazhuang.guanggoo.about.AboutFragment;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
+import org.mazhuang.guanggoo.home.HomeFragment;
 import org.mazhuang.guanggoo.login.LoginFragment;
 import org.mazhuang.guanggoo.login.LoginPresenter;
 import org.mazhuang.guanggoo.newtopic.NewTopicFragment;
@@ -23,7 +24,6 @@ import org.mazhuang.guanggoo.userprofile.replies.ReplyListPresenter;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
-import java.util.PriorityQueue;
 import java.util.regex.Pattern;
 
 /**
@@ -34,19 +34,34 @@ public abstract class FragmentFactory {
 
     public enum PageType {
         NONE,
-        HOME_TOPIC_LIST, // 首页主题列表
-        TOPIC_DETAIL, // 主题详情
-        NODES_CLOUD, // 节点列表
-        SELECT_NODE, // 发表新主题时选择节点
-        NODE_TOPIC_LIST, // 节点主题列表
-        LOGIN, // 登录
-        USER_PROFILE, // 个人资料页
-        USER_FAVORS, // 个人收藏页
-        USER_TOPICS, // 个人主题列表
-        USER_REPLIES, // 个人回复列表
-        ABOUT, // 关于
-        NEW_TOPIC, // 发表新主题
-        VIEW_IMAGE, // 查看图片
+        // 首页
+        HOME,
+        // 首页主题列表
+        HOME_TOPIC_LIST,
+        // 主题详情
+        TOPIC_DETAIL,
+        // 节点列表
+        NODES_CLOUD,
+        // 发表新主题时选择节点
+        SELECT_NODE,
+        // 节点主题列表
+        NODE_TOPIC_LIST,
+        // 登录
+        LOGIN,
+        // 个人资料页
+        USER_PROFILE,
+        // 个人收藏页
+        USER_FAVORS,
+        // 个人主题列表
+        USER_TOPICS,
+        // 个人回复列表
+        USER_REPLIES,
+        // 关于
+        ABOUT,
+        // 发表新主题
+        NEW_TOPIC,
+        // 查看图片
+        VIEW_IMAGE,
     }
 
     public static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com[/]?$");
@@ -72,10 +87,14 @@ public abstract class FragmentFactory {
 
         BaseFragment fragment;
         switch (type) {
+
+            case HOME:
+                fragment = new HomeFragment();
+                break;
+
             case HOME_TOPIC_LIST:
                 fragment = new TopicListFragment();
                 new TopicListPresenter((TopicListFragment)fragment);
-                fragment.setClearTop(true);
                 break;
 
             case NODE_TOPIC_LIST:
@@ -221,6 +240,10 @@ public abstract class FragmentFactory {
 
         if (VIEW_IMAGE_PATTERN.matcher(url).find()) {
             return PageType.VIEW_IMAGE;
+        }
+
+        if (ConstantUtil.HOME_URL.equals(url)) {
+            return PageType.HOME;
         }
 
         if (ConstantUtil.ABOUT_URL.equals(url)) {

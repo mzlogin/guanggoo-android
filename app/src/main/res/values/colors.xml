@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#E3E3E3</color>
-    <color name="colorPrimaryDark">#E3E3E3</color>
+    <color name="colorPrimary">@color/main</color>
+    <color name="colorPrimaryDark">@color/main</color>
     <color name="colorAccent">#F3F3F3</color>
     <color name="defaultFontColor">#838383</color>
     <color name="nodeBackground">#F5F5F5</color>
@@ -13,4 +13,21 @@
     <color name="metaColor">#9D9D9D</color>
     <color name="nodeBackgroundDark">#E3E3E3</color>
     <color name="wechatGreen">#1AAD19</color>
+
+    <!-- UI 规范用色，主题基准 begin -->
+    <color name="main">#258DF5</color>
+    <color name="banner">#222222</color>
+    <color name="major">#444444</color>
+    <color name="minor">#666666</color>
+    <color name="assist">#999999</color>
+    <color name="advance">#BBBBBB</color>
+    <color name="disable">#DBDBDB</color>
+    <color name="split">#E6E6E6</color>
+    <color name="background">#FFFFFF</color>
+    <color name="alert">#FF674C</color>
+    <color name="tab_selected_text">#FFFFFFFF</color>
+    <color name="tab_text">#B3FFFFFF</color>
+    <!-- UI 规范用色，主题基准 end -->
+
+    <color name="white">#FFFFFF</color>
 </resources>

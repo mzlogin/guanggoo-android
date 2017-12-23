@@ -5,6 +5,7 @@ package org.mazhuang.guanggoo.util;
  */
 
 public abstract class ConstantUtil {
+    public static final String HOME_URL = "HOME_PAGE";
     public static final String BASE_URL = "http://www.guanggoo.com";
     public static final String FAVORITE_URL = BASE_URL + "/favorite";
     public static final String UN_FAVORITE_URL = BASE_URL + "/unfavorite";

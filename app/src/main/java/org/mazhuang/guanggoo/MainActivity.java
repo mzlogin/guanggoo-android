@@ -1,7 +1,11 @@
 package org.mazhuang.guanggoo;
 
+import android.animation.ObjectAnimator;
+import android.animation.StateListAnimator;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,12 +30,17 @@ import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.base.FragmentCallBack;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.router.FragmentFactory;
+import org.mazhuang.guanggoo.router.annotations.ClearTop;
 import org.mazhuang.guanggoo.router.annotations.FinishWhenCovered;
+import org.mazhuang.guanggoo.router.annotations.StartsWithAppBar;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author mazhuang
+ */
 public class MainActivity extends AppCompatActivity
         implements FragmentCallBack, NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,6 +52,7 @@ public class MainActivity extends AppCompatActivity
     private TextView mUsernameTextView;
     private ImageView mLogoutImageView;
     @BindView(R.id.progress) ProgressBar mProgressBar;
+    @BindView(R.id.main_appbar) AppBarLayout mMainAppBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +109,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        openPage(ConstantUtil.BASE_URL, getString(R.string.default_order_topics));
+        openPage(ConstantUtil.HOME_URL, getString(R.string.app_name));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +137,18 @@ public class MainActivity extends AppCompatActivity
                     } else {
                         toolbar.setNavigationIcon(R.drawable.ic_menu);
                         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    }
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        StateListAnimator stateListAnimator = new StateListAnimator();
+                        float elevation = 0;
+                        if (!baseFragment.getClass().isAnnotationPresent(StartsWithAppBar.class)) {
+                            DisplayMetrics dm = new DisplayMetrics();
+                            getWindowManager().getDefaultDisplay().getMetrics(dm);
+                            elevation = dm.density * 5;
+                        }
+                        stateListAnimator.addState(new int[0], ObjectAnimator.ofFloat(mMainAppBar, "elevation", elevation));
+                        mMainAppBar.setStateListAnimator(stateListAnimator);
                     }
                 }
             }
@@ -257,7 +280,7 @@ public class MainActivity extends AppCompatActivity
         bundle.putString(BaseFragment.KEY_URL, url);
         bundle.putString(BaseFragment.KEY_TITLE, title);
         fragment.setArguments(bundle);
-        if (fragment.isClearTop()) {
+        if (fragment.getClass().isAnnotationPresent(ClearTop.class)) {
             setOnlyFragmentToStack(getSupportFragmentManager(), fragment);
         } else {
             addFragmentToStack(getSupportFragmentManager(), fragment);

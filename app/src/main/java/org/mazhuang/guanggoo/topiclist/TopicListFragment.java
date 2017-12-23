@@ -26,6 +26,9 @@ import org.mazhuang.guanggoo.util.UrlUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author mazhuang
+ */
 public class TopicListFragment extends BaseFragment<TopicListContract.Presenter> implements TopicListContract.View,
     SwipeRefreshLayout.OnRefreshListener {
 
@@ -62,77 +65,6 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
         super.onCreate(savedInstanceState);
 
         initParams();
-
-        if (mPageType == FragmentFactory.PageType.HOME_TOPIC_LIST ||
-                mPageType == FragmentFactory.PageType.NODE_TOPIC_LIST) {
-            setHasOptionsMenu(true);
-        }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (mPageType == FragmentFactory.PageType.HOME_TOPIC_LIST) {
-            inflater.inflate(R.menu.home_topic_view, menu);
-            if (mSelectedMenuResId != null) {
-                menu.findItem(mSelectedMenuResId).setChecked(true);
-            }
-        } else if (mPageType == FragmentFactory.PageType.NODE_TOPIC_LIST) {
-            inflater.inflate(R.menu.node_topic_list, menu);
-        }
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (mSelectedMenuResId != null && mSelectedMenuResId == item.getItemId()) {
-            return true;
-        }
-
-        switch (item.getItemId()) {
-            case R.id.action_default_order:
-                changeDataSource(ConstantUtil.BASE_URL, getString(R.string.default_order_topics));
-                mSelectedMenuResId = item.getItemId();
-                item.setChecked(true);
-                return true;
-
-            case R.id.action_latest:
-                changeDataSource(ConstantUtil.LATEST_URL, getString(R.string.latest_topics));
-                item.setChecked(true);
-                mSelectedMenuResId = item.getItemId();
-                return true;
-
-            case R.id.action_elite:
-                changeDataSource(ConstantUtil.ELITE_URL, getString(R.string.elite_topics));
-                item.setChecked(true);
-                mSelectedMenuResId = item.getItemId();
-                return true;
-
-            case R.id.action_new_topic:
-                if (mPageType == FragmentFactory.PageType.HOME_TOPIC_LIST) {
-                    if (mListener != null) {
-                        mListener.openPage(ConstantUtil.SELECT_NODE_URL, getString(R.string.select_node_to_new_topic));
-                    }
-                } else if (mPageType == FragmentFactory.PageType.NODE_TOPIC_LIST) {
-                    String nodeCode = UrlUtil.getNodeCode(mUrl);
-                    if (mListener != null && !TextUtils.isEmpty(nodeCode)) {
-                        mListener.openPage(String.format(ConstantUtil.NEW_TOPIC_BASE_URL, nodeCode), getString(R.string.new_topic));
-                }
-            }
-                return true;
-
-            default:
-                break;
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void changeDataSource(String url, String title) {
-        mUrl = url;
-        mTitle = title;
-        mPresenter.getTopicList();
-        getActivity().setTitle(title);
     }
 
     @Override
