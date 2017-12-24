@@ -2,69 +2,61 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:padding="@dimen/normal_margin">
+    android:background="@color/white"
+    android:paddingTop="@dimen/normal_margin"
+    android:paddingLeft="@dimen/normal_margin"
+    android:paddingRight="@dimen/normal_margin">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar"
-        android:layout_width="@dimen/avatar_size_middle"
-        android:layout_height="@dimen/avatar_size_middle"
+        android:layout_width="@dimen/avatar_size_small"
+        android:layout_height="@dimen/avatar_size_small"
         android:layout_gravity="center_vertical"
         android:src="@drawable/m_default"/>
-
-    <TextView
-        android:id="@+id/count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/gray_circle"
-        android:textColor="@color/countText"/>
-
-    <TextView
-        android:id="@+id/node"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/avatar"
-        android:background="@color/nodeBackground"
-        android:textColor="@color/metaColor"
-        android:layout_marginLeft="@dimen/normal_margin"/>
 
     <TextView
         android:id="@+id/author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/node"
+        android:layout_toRightOf="@id/avatar"
+        android:layout_marginLeft="@dimen/inner_margin"
+        android:layout_alignBaseline="@id/avatar"
+        android:textColor="@color/advance"
+        android:textSize="@dimen/font_normal"/>
+
+    <TextView
+        android:id="@+id/node"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_marginLeft="@dimen/normal_margin"
-        android:textColor="@color/emphasizeFontColor"/>
+        android:layout_alignBaseline="@id/avatar"
+        android:textColor="@color/advance"
+        android:textSize="@dimen/font_small"/>
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/avatar"
-        android:layout_below="@id/node"
-        android:layout_marginLeft="@dimen/normal_margin"
-        android:layout_marginTop="@dimen/normal_margin"
+        android:layout_below="@id/avatar"
+        android:layout_marginTop="@dimen/middle_margin"
         android:layout_marginBottom="@dimen/normal_margin"
-        android:textColor="@color/titleColor"
-        android:textSize="@dimen/titleText"/>
+        android:textColor="@color/major"
+        android:textSize="@dimen/font_normal"/>
 
     <TextView
-        android:id="@+id/last_touched"
+        android:id="@+id/comments_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/avatar"
-        android:layout_marginLeft="@dimen/normal_margin"
         android:layout_below="@id/title"
-        android:textColor="@color/metaColor"/>
+        android:textColor="@color/advance"
+        android:textSize="@dimen/font_small"/>
 
-    <TextView
-        android:id="@+id/last_reply_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/last_touched"
-        android:layout_marginLeft="@dimen/normal_margin"
-        android:layout_below="@id/title"
-        android:textColor="@color/metaColor"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/comments_info"
+        android:layout_marginTop="@dimen/normal_margin"
+        android:background="@color/split" />
 
 </RelativeLayout>

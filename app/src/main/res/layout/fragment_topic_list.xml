@@ -15,7 +15,7 @@
             android:name="org.mazhuang.guanggoo.topiclist.TopicListFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/listBackground"
+            android:background="@color/split"
             app:layoutManager="LinearLayoutManager"
             tools:context="org.mazhuang.guanggoo.topiclist.TopicListFragment"
             tools:listitem="@layout/item_topic_list" />

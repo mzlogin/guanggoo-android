@@ -1,5 +1,7 @@
 package org.mazhuang.guanggoo.data.entity;
 
+import android.content.Context;
+
 /**
  * Created by mazhuang on 2017/9/16.
  */

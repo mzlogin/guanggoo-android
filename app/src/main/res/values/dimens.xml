@@ -8,6 +8,7 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="avatar_size">64dp</dimen>
     <dimen name="normal_margin">16dp</dimen>
+    <dimen name="middle_margin">12dp</dimen>
     <dimen name="inner_margin">8dp</dimen>
     <dimen name="avatar_size_middle">36dp</dimen>
     <dimen name="avatar_size_small">24dp</dimen>
@@ -20,4 +21,8 @@
     <dimen name="linear_item_height">48dp</dimen>
     <dimen name="linear_item_font_size">16sp</dimen>
     <dimen name="tab_height">40dp</dimen>
+
+    <dimen name="font_normal">16sp</dimen>
+    <dimen name="font_small">14sp</dimen>
+    <dimen name="small_padding">4dp</dimen>
 </resources>

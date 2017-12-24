@@ -131,4 +131,5 @@ dependencies {
     compile 'com.github.medyo:android-about-page:1.2.1'
     compile('com.vdurmont:emoji-java:4.0.0') { exclude group: 'org.json', module: 'json' }
     compile 'com.bm.photoview:library:1.4.1'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 }

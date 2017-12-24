@@ -6,13 +6,16 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/main">
         <android.support.design.widget.TabLayout
             android:id="@+id/tab"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_height"
-            android:background="@color/main"
+            android:layout_marginLeft="@dimen/normal_margin"
+            android:layout_marginRight="@dimen/normal_margin"
+            android:paddingBottom="@dimen/small_padding"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/tab_selected_text"
             app:tabSelectedTextColor="@color/tab_selected_text"
@@ -23,7 +26,6 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="5dp"/>
+        android:layout_weight="1"/>
 
 </LinearLayout>

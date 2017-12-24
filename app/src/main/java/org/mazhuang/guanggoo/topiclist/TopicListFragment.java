@@ -21,6 +21,7 @@ import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.entity.TopicList;
 import org.mazhuang.guanggoo.util.ConstantUtil;
+import org.mazhuang.guanggoo.util.DimensUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
 import butterknife.BindView;
@@ -41,8 +42,6 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
     @BindView(R.id.empty) SwipeRefreshLayout mEmptyLayout;
 
     private boolean mFirstFetchFinished = false;
-
-    private Integer mSelectedMenuResId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,12 +79,6 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
         Context context = getContext();
         final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                outRect.set(0, 0, 0, 1);
-            }
-        });
         if (mAdapter == null) {
             mAdapter = new TopicListAdapter(mListener);
         }

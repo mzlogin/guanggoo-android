@@ -34,6 +34,7 @@ import org.mazhuang.guanggoo.router.annotations.ClearTop;
 import org.mazhuang.guanggoo.router.annotations.FinishWhenCovered;
 import org.mazhuang.guanggoo.router.annotations.StartsWithAppBar;
 import org.mazhuang.guanggoo.util.ConstantUtil;
+import org.mazhuang.guanggoo.util.DimensUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -143,9 +144,7 @@ public class MainActivity extends AppCompatActivity
                         StateListAnimator stateListAnimator = new StateListAnimator();
                         float elevation = 0;
                         if (!baseFragment.getClass().isAnnotationPresent(StartsWithAppBar.class)) {
-                            DisplayMetrics dm = new DisplayMetrics();
-                            getWindowManager().getDefaultDisplay().getMetrics(dm);
-                            elevation = dm.density * 5;
+                            elevation = DimensUtil.getDensity(getWindowManager()) * 5;
                         }
                         stateListAnimator.addState(new int[0], ObjectAnimator.ofFloat(mMainAppBar, "elevation", elevation));
                         mMainAppBar.setStateListAnimator(stateListAnimator);

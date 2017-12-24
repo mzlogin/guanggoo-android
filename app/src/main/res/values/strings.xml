@@ -75,6 +75,8 @@
     <string name="select_node_to_new_topic">选择发贴节点</string>
     <string name="view_image">查看图片</string>
     <string name="save">保存</string>
+    <string name="comments_info_short">%1$s 评论 · %2$s</string>
+    <string name="comments_info_long">%1$s 评论 · 最新回复 %2$s · %3$s</string>
 
     <string-array name="home_tab_names">
         <item>@string/default_order_topics</item>
