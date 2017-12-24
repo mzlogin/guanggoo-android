@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.mazhuang.guanggoo.router.FragmentFactory;
@@ -27,6 +28,7 @@ import org.mazhuang.guanggoo.util.UrlUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author mazhuang
@@ -89,7 +91,8 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0) { //check for scroll down
+                //check for scroll down
+                if (dy > 0) {
                     visibleItemCount = layoutManager.getChildCount();
                     totalItemCount = layoutManager.getItemCount();
                     pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
@@ -121,6 +124,31 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
                 R.color.colorAccent,
                 android.R.color.white
         );
+    }
+
+    @OnClick({R.id.fab})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fab:
+                onNewTopic();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void onNewTopic() {
+        if (mPageType == FragmentFactory.PageType.HOME_TOPIC_LIST) {
+            if (mListener != null) {
+                mListener.openPage(ConstantUtil.SELECT_NODE_URL, getString(R.string.select_node_to_new_topic));
+            }
+        } else if (mPageType == FragmentFactory.PageType.NODE_TOPIC_LIST) {
+            String nodeCode = UrlUtil.getNodeCode(mUrl);
+            if (mListener != null && !TextUtils.isEmpty(nodeCode)) {
+                mListener.openPage(String.format(ConstantUtil.NEW_TOPIC_BASE_URL, nodeCode), getString(R.string.new_topic));
+            }
+        }
     }
 
     @Override
