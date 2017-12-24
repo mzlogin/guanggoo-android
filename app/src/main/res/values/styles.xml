@@ -37,4 +37,8 @@
     <style name="ToolbarTheme">
         <item name="colorControlNormal">@color/white</item>
     </style>
+
+    <style name="MineTabLayout" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/font_tab</item>
+    </style>
 </resources>

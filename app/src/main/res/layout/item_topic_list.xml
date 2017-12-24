@@ -22,7 +22,7 @@
         android:layout_marginLeft="@dimen/inner_margin"
         android:layout_alignBaseline="@id/avatar"
         android:textColor="@color/advance"
-        android:textSize="@dimen/font_normal"/>
+        android:textSize="@dimen/font_small"/>
 
     <TextView
         android:id="@+id/node"
@@ -32,7 +32,7 @@
         android:layout_marginLeft="@dimen/normal_margin"
         android:layout_alignBaseline="@id/avatar"
         android:textColor="@color/advance"
-        android:textSize="@dimen/font_small"/>
+        android:textSize="@dimen/font_smallest"/>
 
     <TextView
         android:id="@+id/title"
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
         android:textColor="@color/advance"
-        android:textSize="@dimen/font_small"/>
+        android:textSize="@dimen/font_smallest"/>
 
     <View
         android:layout_width="match_parent"

@@ -23,6 +23,9 @@
     <dimen name="tab_height">40dp</dimen>
 
     <dimen name="font_normal">16sp</dimen>
+    <dimen name="font_tab">15sp</dimen>
     <dimen name="font_small">14sp</dimen>
+    <dimen name="font_smallest">12sp</dimen>
+
     <dimen name="small_padding">4dp</dimen>
 </resources>

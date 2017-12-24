@@ -16,6 +16,7 @@
             android:layout_marginLeft="@dimen/normal_margin"
             android:layout_marginRight="@dimen/normal_margin"
             android:paddingBottom="@dimen/small_padding"
+            app:tabTextAppearance="@style/MineTabLayout"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/tab_selected_text"
             app:tabSelectedTextColor="@color/tab_selected_text"

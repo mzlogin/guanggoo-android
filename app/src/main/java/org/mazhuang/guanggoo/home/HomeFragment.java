@@ -47,6 +47,7 @@ public class HomeFragment extends BaseFragment {
     private void initViews() {
         HomePagerAdapter adapter = new HomePagerAdapter(getChildFragmentManager());
         mViewPager.setAdapter(adapter);
+        mViewPager.setOffscreenPageLimit(adapter.getCount());
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
