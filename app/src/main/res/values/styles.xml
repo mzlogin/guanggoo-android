@@ -41,4 +41,10 @@
     <style name="MineTabLayout" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">@dimen/font_tab</item>
     </style>
+
+    <style name="NavigationDrawerStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:listPreferredItemHeightSmall">56dp</item>
+        <item name="listPreferredItemHeightSmall">56dp</item>
+    </style>
 </resources>

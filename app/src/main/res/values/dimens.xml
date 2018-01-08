@@ -3,11 +3,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
-    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="nav_header_height">172dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="avatar_size">64dp</dimen>
     <dimen name="normal_margin">16dp</dimen>
+    <dimen name="large_middle_margin">14dp</dimen>
     <dimen name="middle_margin">12dp</dimen>
     <dimen name="inner_margin">8dp</dimen>
     <dimen name="avatar_size_middle">36dp</dimen>
@@ -28,4 +29,6 @@
     <dimen name="font_smallest">12sp</dimen>
 
     <dimen name="small_padding">4dp</dimen>
+    <dimen name="nav_header_margin">20dp</dimen>
+    <dimen name="avatar_margin_top">36dp</dimen>
 </resources>

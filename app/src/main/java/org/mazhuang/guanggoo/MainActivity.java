@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity
 
     private ImageView mAvatarImageView;
     private TextView mUsernameTextView;
-    private ImageView mLogoutImageView;
     @BindView(R.id.progress) ProgressBar mProgressBar;
     @BindView(R.id.main_appbar) AppBarLayout mMainAppBar;
 
@@ -76,7 +75,6 @@ public class MainActivity extends AppCompatActivity
                     .into(mAvatarImageView);
 
             mUsernameTextView.setText(AuthInfoManager.getInstance().getUsername());
-            mLogoutImageView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -92,9 +90,12 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // 设置抽屉菜单图标为图片原色
+        navigationView.setItemIconTintList(null);
+
         mAvatarImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.avatar);
         mUsernameTextView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.username);
-        mLogoutImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.logout);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,12 +104,6 @@ public class MainActivity extends AppCompatActivity
         };
         mAvatarImageView.setOnClickListener(listener);
         mUsernameTextView.setOnClickListener(listener);
-        mLogoutImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onLoginStatusChanged(false);
-            }
-        });
 
         openPage(ConstantUtil.HOME_URL, getString(R.string.app_name));
 
@@ -294,7 +289,6 @@ public class MainActivity extends AppCompatActivity
             AuthInfoManager.getInstance().clearAuthInfo();
             mAvatarImageView.setImageResource(R.drawable.m_default);
             mUsernameTextView.setText(R.string.not_logged_in);
-            mLogoutImageView.setVisibility(View.GONE);
         }
     }
 
