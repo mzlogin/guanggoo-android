@@ -12,6 +12,7 @@
 * [优化](#优化)
 * [API](#api)
 * [参与贡献](#参与贡献)
+* [相关项目](#相关项目)
 * [License](#license)
 
 <!-- vim-markdown-toc -->
@@ -89,6 +90,16 @@
 ## 参与贡献
 
 请参考 [如何参与贡献](./CONTRIBUTING.md)
+
+## 相关项目
+
+* [sjjvenu/guanggoo-iOS](https://github.com/sjjvenu/guanggoo-iOS)
+
+    光谷社区 iOS 版，已经在 App Store 上架，基于 Swift。
+
+* [cauil/react-native-guanggoo](https://github.com/cauil/react-native-guanggoo)
+
+    光谷社区 iOS 版，基于 React Native。
 
 ## License
 
