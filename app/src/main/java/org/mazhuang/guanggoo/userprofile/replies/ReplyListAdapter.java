@@ -18,6 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * @author mazhuang
+ */
 public class ReplyListAdapter extends RecyclerView.Adapter<ReplyListAdapter.ViewHolder> {
 
     private List<Reply> mData;
@@ -87,6 +90,9 @@ public class ReplyListAdapter extends RecyclerView.Adapter<ReplyListAdapter.View
             switch (v.getId()) {
                 case R.id.title:
                     mListener.openPage(mItem.getTopic().getUrl(), mItem.getTopic().getTitle());
+                    break;
+
+                default:
                     break;
             }
         }

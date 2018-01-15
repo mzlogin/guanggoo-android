@@ -1,7 +1,9 @@
 package org.mazhuang.guanggoo.base;
 
 /**
- * Created by mazhuang on 2017/9/16.
+ *
+ * @author mazhuang
+ * @date 2017/9/16
  */
 
 public interface BaseView<T> {

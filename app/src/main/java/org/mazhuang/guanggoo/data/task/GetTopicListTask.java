@@ -9,13 +9,16 @@ import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.entity.TopicList;
 import org.mazhuang.guanggoo.data.entity.User;
+import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by mazhuang on 2017/9/16.
+ *
+ * @author mazhuang
+ * @date 2017/9/16
  */
 
 public class GetTopicListTask extends BaseTask<TopicList> implements Runnable {
@@ -52,7 +55,7 @@ public class GetTopicListTask extends BaseTask<TopicList> implements Runnable {
                     hasMore = true;
                 } else if (disabledElements.last() != null) {
                     Elements disableLinkElements = disabledElements.last().select("a");
-                    if (!"下一页".equals(disableLinkElements.text())) {
+                    if (!ConstantUtil.NEXT_PAGE.equals(disableLinkElements.text())) {
                         hasMore = true;
                     }
                 }
@@ -75,9 +78,11 @@ public class GetTopicListTask extends BaseTask<TopicList> implements Runnable {
         Topic topic = new Topic();
 
         Element titleElement = element.select("h3.title").select("a").first();
-        if (titleElement != null) { // 主题列表页
+        if (titleElement != null) {
+            // 主题列表页
             topic.setTitle(titleElement.text());
-        } else { // 主题详情页
+        } else {
+            // 主题详情页
             titleElement = element.select("h3.title").first();
             if (titleElement != null) {
                 topic.setTitle(titleElement.text());
@@ -117,9 +122,11 @@ public class GetTopicListTask extends BaseTask<TopicList> implements Runnable {
 
         meta.setAuthor(user);
 
-        Elements lastTouchedElement = element.select("span.last-touched"); // 主题列表页
+        // 主题列表页
+        Elements lastTouchedElement = element.select("span.last-touched");
         if (lastTouchedElement.isEmpty()) {
-            lastTouchedElement = element.select("span.last-reply-time"); // 主题详情页
+            // 主题详情页
+            lastTouchedElement = element.select("span.last-reply-time");
         }
         meta.setLastTouched(lastTouchedElement.text());
 

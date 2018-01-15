@@ -6,7 +6,9 @@ import org.mazhuang.guanggoo.data.entity.UserProfile;
 import org.mazhuang.guanggoo.data.task.GetUserProfileTask;
 
 /**
- * Created by Lenovo on 2017/9/29.
+ *
+ * @author Lenovo
+ * @date 2017/9/29
  */
 
 public class UserProfilePresenter implements UserProfileContract.Presenter {

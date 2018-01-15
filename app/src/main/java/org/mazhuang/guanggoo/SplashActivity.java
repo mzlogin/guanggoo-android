@@ -8,6 +8,9 @@ import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.task.AuthCheckTask;
 
+/**
+ * @author mazhuang
+ */
 public class SplashActivity extends AppCompatActivity {
 
     @Override

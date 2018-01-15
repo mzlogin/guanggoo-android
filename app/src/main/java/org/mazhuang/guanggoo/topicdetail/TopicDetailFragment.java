@@ -43,7 +43,9 @@ import butterknife.OnClick;
 import butterknife.OnLongClick;
 
 /**
- * Created by mazhuang on 2017/9/17.
+ *
+ * @author mazhuang
+ * @date 2017/9/17
  */
 
 public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presenter> implements TopicDetailContract.View, CommentsActionListener {
@@ -141,7 +143,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     private void setViewData(TopicDetail topicDetail) {
         Favorite favorite = topicDetail.getFavorite();
         if (favorite != null) {
-            if ("favorite".equals(favorite.getDataType())) {
+            if (Favorite.TYPE_FAVORITE.equals(favorite.getDataType())) {
                 setFavoriteItemState(Favorite.STATE_FAVORITE);
             } else {
                 setFavoriteItemState(Favorite.STATE_UNFAVORITE);
@@ -250,6 +252,9 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
             case R.id.author:
                 onAt(mTopicDetail.getTopic().getMeta().getAuthor().getUsername());
                 return true;
+
+            default:
+                break;
         }
 
         return false;
@@ -418,7 +423,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
             String atText = String.format(" @%s ", username);
             if (!mCommentEditText.getText().toString().contains(atText)) {
-                mCommentEditText.setText(mCommentEditText.getText() + atText);
+                mCommentEditText.setText(String.format("%s%s", mCommentEditText.getText(), atText));
             }
             mCommentEditText.setSelection(mCommentEditText.getText().length());
         }

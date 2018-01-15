@@ -3,7 +3,9 @@ package org.mazhuang.guanggoo.data.entity;
 import android.text.TextUtils;
 
 /**
- * Created by Lenovo on 2017/9/29.
+ *
+ * @author Lenovo
+ * @date 2017/9/29
  */
 
 public class UserProfile {

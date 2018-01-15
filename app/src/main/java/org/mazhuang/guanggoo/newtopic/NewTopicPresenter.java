@@ -8,7 +8,9 @@ import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.task.NewTopicTask;
 
 /**
- * Created by mazhuang on 2017/10/10.
+ *
+ * @author mazhuang
+ * @date 2017/10/10
  */
 
 public class NewTopicPresenter implements NewTopicContract.Presenter {

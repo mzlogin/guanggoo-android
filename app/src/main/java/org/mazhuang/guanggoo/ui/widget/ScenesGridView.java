@@ -5,9 +5,10 @@ import android.util.AttributeSet;
 import android.widget.GridView;
 
 /**
- * Created by Lenovo on 2017/9/28.
+ * ref: https://stackoverflow.com/questions/44386926/recyclewview-with-nested-gridview-adjust-height
+ * @author Lenovo
+ * @date 2017/9/28
  */
-// ref: https://stackoverflow.com/questions/44386926/recyclewview-with-nested-gridview-adjust-height
 public class ScenesGridView  extends GridView {
 
     public ScenesGridView(Context context, AttributeSet attrs) {

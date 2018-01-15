@@ -13,7 +13,9 @@ import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
 /**
- * Created by mazhuang on 2017/12/23.
+ *
+ * @author mazhuang
+ * @date 2017/12/23
  */
 
 public class HomePagerAdapter extends FragmentStatePagerAdapter {

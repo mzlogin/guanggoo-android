@@ -18,6 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * @author mazhuang
+ */
 public class LoginFragment extends BaseFragment<LoginContract.Presenter> implements LoginContract.View {
 
     @BindView(R.id.email) EditText mEmailEdit;

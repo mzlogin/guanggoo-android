@@ -13,7 +13,9 @@ import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
 /**
- * Created by mazhuang on 2017/9/17.
+ *
+ * @author mazhuang
+ * @date 2017/9/17
  */
 
 public class TopicDetailPresenter implements TopicDetailContract.Presenter {

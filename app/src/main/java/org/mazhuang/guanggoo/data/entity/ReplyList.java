@@ -3,7 +3,9 @@ package org.mazhuang.guanggoo.data.entity;
 import java.util.List;
 
 /**
- * Created by mazhuang on 2017/10/6.
+ *
+ * @author mazhuang
+ * @date 2017/10/6
  */
 
 public class ReplyList {

@@ -18,6 +18,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author mazhuang
+ */
 public class NodesCloudFragment extends BaseFragment<NodesCloudContract.Presenter>
         implements NodesCloudContract.View, OnNodeClickListener {
 

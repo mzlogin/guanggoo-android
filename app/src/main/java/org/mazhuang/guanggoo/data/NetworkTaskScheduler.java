@@ -1,10 +1,17 @@
 package org.mazhuang.guanggoo.data;
 
+import org.mazhuang.guanggoo.base.NamedThreadFactory;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
- * Created by mazhuang on 2017/9/16.
+ *
+ * @author mazhuang
+ * @date 2017/9/16
  */
 
 public class NetworkTaskScheduler {
@@ -20,7 +27,14 @@ public class NetworkTaskScheduler {
     }
 
     private NetworkTaskScheduler() {
-        mExecutor = Executors.newSingleThreadExecutor();
+        mExecutor = new ThreadPoolExecutor(
+                1,
+                1,
+                5,
+                TimeUnit.SECONDS,
+                new LinkedBlockingQueue<Runnable>(),
+                new NamedThreadFactory(NetworkTaskScheduler.class.getSimpleName())
+        );
     }
 
     public void execute(Runnable runnable) {

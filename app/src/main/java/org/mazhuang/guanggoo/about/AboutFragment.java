@@ -17,7 +17,9 @@ import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
 
 /**
- * Created by mazhuang on 2017/10/6.
+ *
+ * @author mazhuang
+ * @date 2017/10/6
  */
 
 public class AboutFragment extends BaseFragment {
@@ -36,7 +38,7 @@ public class AboutFragment extends BaseFragment {
                     }
                 });
 
-        View aboutPage = new AboutPage(getActivity())
+        return new AboutPage(getActivity())
                 .isRTL(false)
                 .setImage(R.drawable.guanggoo_new)
                 .setDescription(getString(R.string.app_description, VersionUtil.getVersion(getContext())))
@@ -48,8 +50,6 @@ public class AboutFragment extends BaseFragment {
                 .addWebsite(getString(R.string.author_website), getString(R.string.author_website))
                 .addGitHub(getString(R.string.author_github), getString(R.string.follow_github))
                 .create();
-
-        return aboutPage;
     }
 
     @Override

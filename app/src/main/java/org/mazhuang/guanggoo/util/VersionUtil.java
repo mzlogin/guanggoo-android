@@ -7,11 +7,18 @@ import android.content.pm.PackageManager;
 import org.mazhuang.guanggoo.R;
 
 /**
- * Created by mazhuang on 2017/10/6.
+ *
+ * @author mazhuang
+ * @date 2017/10/6
  */
 
-public abstract class VersionUtil {
-    // 获取 versionName
+public class VersionUtil {
+
+    private VersionUtil() {}
+
+    /**
+     * 获取 versionName
+     */
     private static String getVersionName(Context context) {
         try {
             PackageInfo pi = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
@@ -22,7 +29,9 @@ public abstract class VersionUtil {
         }
     }
 
-    // 获取 versionCode
+    /**
+     * 获取 versionCode
+     */
     private static int getVersionCode(Context context) {
         try {
             PackageInfo pi=context.getPackageManager().getPackageInfo(context.getPackageName(), 0);

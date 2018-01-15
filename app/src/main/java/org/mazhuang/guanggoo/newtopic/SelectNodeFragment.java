@@ -10,7 +10,9 @@ import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
 /**
- * Created by mazhuang on 2017/11/18.
+ *
+ * @author mazhuang
+ * @date 2017/11/18
  */
 
 @FinishWhenCovered

@@ -2,7 +2,6 @@ package org.mazhuang.guanggoo.data.task;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.sax.EndElementListener;
 import android.text.TextUtils;
 
 import org.json.JSONException;
@@ -23,7 +22,9 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Created by mazhuang on 2017/9/16.
+ *
+ * @author mazhuang
+ * @date 2017/9/16
  */
 
 public abstract class BaseTask<T> implements Runnable {

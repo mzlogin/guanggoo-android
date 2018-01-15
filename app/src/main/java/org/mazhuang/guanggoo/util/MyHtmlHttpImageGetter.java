@@ -39,10 +39,13 @@ import java.lang.ref.WeakReference;
 import java.net.URI;
 import java.net.URL;
 
+/**
+ * @author mazhuang
+ */
 public class MyHtmlHttpImageGetter implements ImageGetter {
     TextView container;
     URI baseUri;
-    boolean matchParentWidth;
+    private boolean matchParentWidth;
 
     private boolean compressImage = false;
     private int qualityImage = 50;
@@ -76,6 +79,7 @@ public class MyHtmlHttpImageGetter implements ImageGetter {
         qualityImage = quality;
     }
 
+    @Override
     public Drawable getDrawable(String source) {
         UrlDrawable urlDrawable = new UrlDrawable();
 

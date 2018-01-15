@@ -30,7 +30,7 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.View
     private List<Topic> mData;
     private final FragmentCallBack mListener;
 
-    public TopicListAdapter(FragmentCallBack listener) {
+    TopicListAdapter(FragmentCallBack listener) {
         mListener = listener;
     }
 
@@ -43,7 +43,7 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.View
         notifyDataSetChanged();
     }
 
-    public void addData(List<Topic> data) {
+    void addData(List<Topic> data) {
         mData.addAll(data);
         notifyDataSetChanged();
     }
@@ -83,7 +83,7 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.View
         return mData == null ? 0 : mData.size();
     }
 
-    public boolean isFilled() {
+    boolean isFilled() {
         return (mData != null && mData.size() > 0);
     }
 
@@ -129,6 +129,9 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.View
                 case R.id.node:
                     Node node = mItem.getMeta().getNode();
                     mListener.openPage(node.getUrl(), node.getTitle());
+                    break;
+
+                default:
                     break;
             }
         }

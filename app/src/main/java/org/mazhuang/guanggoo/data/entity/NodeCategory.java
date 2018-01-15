@@ -3,7 +3,9 @@ package org.mazhuang.guanggoo.data.entity;
 import java.util.List;
 
 /**
- * Created by Lenovo on 2017/9/28.
+ *
+ * @author Lenovo
+ * @date 2017/9/28
  */
 
 public class NodeCategory {

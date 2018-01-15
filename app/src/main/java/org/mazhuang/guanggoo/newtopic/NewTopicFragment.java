@@ -18,7 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by mazhuang on 2017/10/10.
+ *
+ * @author mazhuang
+ * @date 2017/10/10
  */
 
 public class NewTopicFragment extends BaseFragment<NewTopicContract.Presenter> implements NewTopicContract.View {
@@ -57,6 +59,9 @@ public class NewTopicFragment extends BaseFragment<NewTopicContract.Presenter> i
             case R.id.action_send:
                 attemptNewTopic();
                 return true;
+
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

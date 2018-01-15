@@ -3,13 +3,13 @@ package org.mazhuang.guanggoo.userprofile.replies;
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.ReplyList;
-import org.mazhuang.guanggoo.data.entity.TopicList;
 import org.mazhuang.guanggoo.data.task.GetReplyListTask;
-import org.mazhuang.guanggoo.data.task.GetTopicListTask;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
 /**
- * Created by mazhuang on 2017/9/16.
+ *
+ * @author mazhuang
+ * @date 2017/9/16
  */
 
 public class ReplyListPresenter implements ReplyListContract.Presenter {

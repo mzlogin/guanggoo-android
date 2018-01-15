@@ -1,7 +1,9 @@
 package org.mazhuang.guanggoo.data.entity;
 
 /**
- * Created by mazhuang on 2017/10/6.
+ *
+ * @author mazhuang
+ * @date 2017/10/6
  */
 
 public class Reply {

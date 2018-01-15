@@ -16,7 +16,9 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Created by mazhuang on 2017/9/16.
+ *
+ * @author mazhuang
+ * @date 2017/9/16
  */
 
 public class LoginTask extends BaseTask<String> {

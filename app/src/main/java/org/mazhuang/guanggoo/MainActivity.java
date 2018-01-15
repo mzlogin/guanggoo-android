@@ -193,8 +193,8 @@ public class MainActivity extends AppCompatActivity
 
             if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
                 long backPressTime = System.nanoTime();
-                long ONE_SECOND_NANO = 1000 * 1000 * 1000L;
-                if (backPressTime - mLastBackPressTime > ONE_SECOND_NANO) {
+                long oneSecondNano = 1000 * 1000 * 1000L;
+                if (backPressTime - mLastBackPressTime > oneSecondNano) {
                     Toast.makeText(this, getString(R.string.back_to_quit), Toast.LENGTH_SHORT).show();
                 } else {
                     finish();

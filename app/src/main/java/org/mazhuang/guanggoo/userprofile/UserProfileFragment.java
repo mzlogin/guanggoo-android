@@ -22,6 +22,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * @author mazhuang
+ */
 public class UserProfileFragment extends BaseFragment<UserProfileContract.Presenter> implements UserProfileContract.View {
 
     private UserProfile mUserProfile;

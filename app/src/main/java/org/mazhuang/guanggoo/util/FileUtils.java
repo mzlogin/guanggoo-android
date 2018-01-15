@@ -14,7 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by mazhuang on 2017/11/18.
+ *
+ * @author mazhuang
+ * @date 2017/11/18
  * code from https://www.ctolib.com/topics-110262.html
  */
 
@@ -27,7 +29,8 @@ public class FileUtils {
                 if (!appDir.exists()) {
                     appDir.mkdir();
                 }
-                SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置以当前时间格式为图片名称
+                //设置以当前时间格式为图片名称
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
                 String fileName = df.format(new Date()) + ".png";
                 File file = new File(appDir, fileName);
                 try {
@@ -52,7 +55,14 @@ public class FileUtils {
     }
 
     public interface SaveResultCallback{
+        /**
+         * 保存成功
+         */
         void onSavedSuccess();
+
+        /**
+         * 保存失败
+         */
         void onSavedFailed();
     }
 }

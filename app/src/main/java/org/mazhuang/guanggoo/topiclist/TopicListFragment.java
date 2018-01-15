@@ -100,7 +100,7 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
                     if (mLoadable) {
                         if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                             mLoadable = false;
-                            if (totalItemCount >= ConstantUtil.TOPICS_PER_PAGE && totalItemCount <= 1024) {
+                            if (totalItemCount >= ConstantUtil.TOPICS_PER_PAGE && totalItemCount <= ConstantUtil.MAX_TOPICS) {
                                 mPresenter.getMoreTopic(totalItemCount / ConstantUtil.TOPICS_PER_PAGE + 1);
                             } else {
                                 Toast.makeText(getActivity(), "1024", Toast.LENGTH_SHORT).show();

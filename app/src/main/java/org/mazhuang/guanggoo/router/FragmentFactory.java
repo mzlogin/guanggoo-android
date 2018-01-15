@@ -1,5 +1,7 @@
 package org.mazhuang.guanggoo.router;
 
+import android.app.Fragment;
+
 import org.mazhuang.guanggoo.about.AboutFragment;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
@@ -27,12 +29,17 @@ import org.mazhuang.guanggoo.util.UrlUtil;
 import java.util.regex.Pattern;
 
 /**
- * Created by Lenovo on 2017/9/28.
+ *
+ * @author Lenovo
+ * @date 2017/9/28
  */
 
-public abstract class FragmentFactory {
+public class FragmentFactory {
+
+    private FragmentFactory() {}
 
     public enum PageType {
+        // 无
         NONE,
         // 首页
         HOME,

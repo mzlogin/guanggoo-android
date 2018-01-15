@@ -14,7 +14,9 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Created by mazhuang on 2017/9/18.
+ *
+ * @author mazhuang
+ * @date 2017/9/18
  */
 
 public class GetCommentsTask extends BaseTask<Map<Integer, Comment>> {

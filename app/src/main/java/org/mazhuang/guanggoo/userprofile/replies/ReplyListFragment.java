@@ -20,6 +20,9 @@ import org.mazhuang.guanggoo.util.ConstantUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author mazhuang
+ */
 public class ReplyListFragment extends BaseFragment<ReplyListContract.Presenter> implements ReplyListContract.View,
     SwipeRefreshLayout.OnRefreshListener {
 
@@ -79,7 +82,8 @@ public class ReplyListFragment extends BaseFragment<ReplyListContract.Presenter>
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0) { //check for scroll down
+                //check for scroll down
+                if (dy > 0) {
                     visibleItemCount = layoutManager.getChildCount();
                     totalItemCount = layoutManager.getItemCount();
                     pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
@@ -87,7 +91,7 @@ public class ReplyListFragment extends BaseFragment<ReplyListContract.Presenter>
                     if (mLoadable) {
                         if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                             mLoadable = false;
-                            if (totalItemCount >= ConstantUtil.REPLIES_PER_PAGE && totalItemCount <= 1024) {
+                            if (totalItemCount >= ConstantUtil.REPLIES_PER_PAGE && totalItemCount <= ConstantUtil.MAX_TOPICS) {
                                 mPresenter.getMoreReply(totalItemCount / ConstantUtil.REPLIES_PER_PAGE + 1);
                             } else {
                                 Toast.makeText(getActivity(), "1024", Toast.LENGTH_SHORT).show();

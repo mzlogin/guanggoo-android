@@ -9,7 +9,9 @@ import org.mazhuang.guanggoo.data.task.LoginTask;
 import java.util.Map;
 
 /**
- * Created by mazhuang on 2017/9/16.
+ *
+ * @author mazhuang
+ * @date 2017/9/16
  */
 
 public class LoginPresenter implements LoginContract.Presenter {

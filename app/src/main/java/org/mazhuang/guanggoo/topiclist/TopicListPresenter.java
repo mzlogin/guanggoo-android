@@ -2,7 +2,6 @@ package org.mazhuang.guanggoo.topiclist;
 
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
-import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.entity.TopicList;
 import org.mazhuang.guanggoo.data.task.BaseTask;
 import org.mazhuang.guanggoo.data.task.GetTopicListTask;
@@ -11,7 +10,9 @@ import org.mazhuang.guanggoo.util.UrlUtil;
 import java.util.List;
 
 /**
- * Created by mazhuang on 2017/9/16.
+ *
+ * @author mazhuang
+ * @date 2017/9/16
  */
 
 public class TopicListPresenter implements TopicListContract.Presenter {

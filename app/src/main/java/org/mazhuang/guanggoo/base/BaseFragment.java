@@ -8,7 +8,9 @@ import android.widget.Toast;
 import org.mazhuang.guanggoo.router.FragmentFactory;
 
 /**
- * Created by mazhuang on 2017/9/16.
+ *
+ * @author mazhuang
+ * @date 2017/9/16
  */
 
 public abstract class BaseFragment<T> extends Fragment {

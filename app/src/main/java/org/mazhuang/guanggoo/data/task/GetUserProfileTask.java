@@ -8,7 +8,9 @@ import org.mazhuang.guanggoo.data.entity.UserProfile;
 import java.io.IOException;
 
 /**
- * Created by Lenovo on 2017/9/29.
+ *
+ * @author Lenovo
+ * @date 2017/9/29
  */
 
 public class GetUserProfileTask extends BaseTask<UserProfile> {

@@ -12,7 +12,9 @@ import org.mazhuang.guanggoo.util.ConstantUtil;
 import java.io.IOException;
 
 /**
- * Created by mazhuang on 2017/9/16.
+ *
+ * @author mazhuang
+ * @date 2017/9/16
  */
 
 public class AuthCheckTask extends BaseTask<String> {

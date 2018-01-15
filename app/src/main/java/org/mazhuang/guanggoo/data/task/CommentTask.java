@@ -12,7 +12,9 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Created by mazhuang on 2017/9/26.
+ *
+ * @author mazhuang
+ * @date 2017/9/26
  */
 
 public class CommentTask extends BaseTask<String> {
@@ -46,7 +48,7 @@ public class CommentTask extends BaseTask<String> {
 
         try {
             Connection.Response res = Jsoup.connect(mUrl).cookies(cookies).headers(headers).data(datas).method(Connection.Method.POST).execute();
-            if (res.statusCode() == 200 || res.statusCode() == 302) {
+            if (res.statusCode() == ConstantUtil.HTTP_STATUS_200 || res.statusCode() == ConstantUtil.HTTP_STATUS_302) {
                 successOnUI("评论成功");
                 return;
             }

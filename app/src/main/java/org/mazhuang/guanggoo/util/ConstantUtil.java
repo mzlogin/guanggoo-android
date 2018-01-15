@@ -1,10 +1,15 @@
 package org.mazhuang.guanggoo.util;
 
 /**
- * Created by mazhuang on 2017/9/16.
+ *
+ * @author mazhuang
+ * @date 2017/9/16
  */
 
-public abstract class ConstantUtil {
+public class ConstantUtil {
+
+    private ConstantUtil() {}
+
     public static final String HOME_URL = "HOME_PAGE";
     public static final String BASE_URL = "http://www.guanggoo.com";
     public static final String FAVORITE_URL = BASE_URL + "/favorite";
@@ -33,4 +38,11 @@ public abstract class ConstantUtil {
 
     public static final String KEY_COOKIE = "cookie";
     public static final String KEY_XSRF = "_xsrf";
+
+    public static final String NEXT_PAGE = "下一页";
+
+    public static final int HTTP_STATUS_200 = 200;
+    public static final int HTTP_STATUS_302 = 302;
+
+    public static final int MAX_TOPICS = 1024;
 }

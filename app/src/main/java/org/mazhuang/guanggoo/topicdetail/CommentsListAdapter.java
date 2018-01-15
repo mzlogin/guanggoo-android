@@ -21,6 +21,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 
+/**
+ * @author mazhuang
+ */
 public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapter.ViewHolder> {
 
     private Map<Integer, Comment> mData;
@@ -135,6 +138,9 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
                 case R.id.author:
                     mListener.openPage(mItem.getMeta().getReplier().getUrl(), null);
                     break;
+
+                default:
+                    break;
             }
         }
 
@@ -149,6 +155,9 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
                 case R.id.author:
                     mListener.onAt(mItem.getMeta().getReplier().getUsername());
                     return true;
+
+                default:
+                    break;
             }
 
             return false;

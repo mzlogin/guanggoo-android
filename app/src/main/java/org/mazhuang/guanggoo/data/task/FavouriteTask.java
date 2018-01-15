@@ -11,7 +11,9 @@ import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
 /**
- * Created by guofeng007 on 2017/9/26.
+ *
+ * @author guofeng007
+ * @date 2017/9/26
  */
 
 public class FavouriteTask extends BaseTask<String> {
@@ -42,7 +44,7 @@ public class FavouriteTask extends BaseTask<String> {
         try {
             Connection.Response res = Jsoup.connect(mUrl).cookies(cookies).headers(headers).data(datas).method
                     (Connection.Method.GET).execute();
-            if (res.statusCode() == 200 || res.statusCode() == 302) {
+            if (res.statusCode() == ConstantUtil.HTTP_STATUS_200 || res.statusCode() == ConstantUtil.HTTP_STATUS_302) {
                 successOnUI("成功");
                 return;
             }

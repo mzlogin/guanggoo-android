@@ -9,10 +9,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by mazhuang on 2017/9/19.
+ *
+ * @author mazhuang
+ * @date 2017/9/19
  */
 
-public abstract class UrlUtil {
+public class UrlUtil {
+
+    private UrlUtil() {}
+
+    private static Pattern sTidPattern = Pattern.compile("/t/(\\d+)");
+    private static Pattern sNodeCodePattern = Pattern.compile("/node/(\\w+)");
 
     public static String appendPage(String baseUrl, int page) {
         return String.format(Locale.US, baseUrl.contains("?") ? "%s&p=%d" : "%s?p=%d",
@@ -20,8 +27,7 @@ public abstract class UrlUtil {
     }
 
     public static String getTid(String url) {
-        Pattern p = Pattern.compile("/t/(\\d+)");
-        Matcher m = p.matcher(url);
+        Matcher m = sTidPattern.matcher(url);
         if (m.find()) {
             return m.group(1);
         } else {
@@ -30,8 +36,7 @@ public abstract class UrlUtil {
     }
 
     public static String getNodeCode(String url) {
-        Pattern p = Pattern.compile("/node/(\\w+)");
-        Matcher m = p.matcher(url);
+        Matcher m = sNodeCodePattern.matcher(url);
         if (m.find()) {
             return m.group(1);
         } else {

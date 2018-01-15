@@ -24,7 +24,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by mazhuang on 2017/11/18.
+ *
+ * @author mazhuang
+ * @date 2017/11/18
  */
 
 public class ViewImageFragment extends BaseFragment<ViewImageContract.Presenter> implements ViewImageContract.View {
@@ -33,7 +35,7 @@ public class ViewImageFragment extends BaseFragment<ViewImageContract.Presenter>
 
     private static final int PERMISSIONS_REQUEST_CODE = 100;
 
-    private static final String[] sPermissions = {
+    private static final String[] PERMISSIONS = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
@@ -90,7 +92,7 @@ public class ViewImageFragment extends BaseFragment<ViewImageContract.Presenter>
         switch (item.getItemId()) {
             case R.id.action_save:
                 boolean isAllPermissionsGranted = true;
-                for (String permission : sPermissions) {
+                for (String permission : PERMISSIONS) {
                     if (ActivityCompat.checkSelfPermission(getContext().getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
                         isAllPermissionsGranted = false;
                         break;
@@ -98,7 +100,7 @@ public class ViewImageFragment extends BaseFragment<ViewImageContract.Presenter>
                 }
 
                 if (!isAllPermissionsGranted) {
-                    requestPermissions(sPermissions, PERMISSIONS_REQUEST_CODE);
+                    requestPermissions(PERMISSIONS, PERMISSIONS_REQUEST_CODE);
                 } else {
                     mPresenter.saveImage(mImageView);
                 }

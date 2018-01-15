@@ -8,7 +8,9 @@ import org.mazhuang.guanggoo.data.task.GetNodesCloudTask;
 import java.util.List;
 
 /**
- * Created by Lenovo on 2017/9/28.
+ *
+ * @author Lenovo
+ * @date 2017/9/28
  */
 
 public class NodesCloudPresenter implements NodesCloudContract.Presenter {

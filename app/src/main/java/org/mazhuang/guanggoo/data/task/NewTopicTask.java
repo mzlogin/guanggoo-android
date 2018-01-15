@@ -10,7 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by mazhuang on 2017/10/8.
+ *
+ * @author mazhuang
+ * @date 2017/10/8
  */
 
 public class NewTopicTask extends BaseTask<String> {
@@ -47,7 +49,7 @@ public class NewTopicTask extends BaseTask<String> {
 
         try {
             Connection.Response res = Jsoup.connect(mUrl).cookies(cookies).headers(headers).data(datas).method(Connection.Method.POST).execute();
-            if (res.statusCode() == 200 || res.statusCode() == 302) {
+            if (res.statusCode() == ConstantUtil.HTTP_STATUS_200 || res.statusCode() == ConstantUtil.HTTP_STATUS_302) {
                 successOnUI("发布成功");
                 return;
             }

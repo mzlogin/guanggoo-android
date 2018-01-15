@@ -7,13 +7,16 @@ import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Reply;
 import org.mazhuang.guanggoo.data.entity.ReplyList;
 import org.mazhuang.guanggoo.data.entity.Topic;
+import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by mazhuang on 2017/10/6.
+ *
+ * @author mazhuang
+ * @date 2017/10/6
  */
 
 public class GetReplyListTask extends BaseTask<ReplyList> {
@@ -70,7 +73,7 @@ public class GetReplyListTask extends BaseTask<ReplyList> {
                     hasMore = true;
                 } else if (disabledElements.last() != null) {
                     Elements disableLinkElements = disabledElements.last().select("a");
-                    if (!"下一页".equals(disableLinkElements.text())) {
+                    if (!ConstantUtil.NEXT_PAGE.equals(disableLinkElements.text())) {
                         hasMore = true;
                     }
                 }

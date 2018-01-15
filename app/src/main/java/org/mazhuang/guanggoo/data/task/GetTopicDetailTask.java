@@ -12,7 +12,9 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * Created by mazhuang on 2017/9/17.
+ *
+ * @author mazhuang
+ * @date 2017/9/17
  */
 
 public class GetTopicDetailTask extends BaseTask<TopicDetail> {
@@ -35,9 +37,6 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
             failedOnUI(e.getMessage());
             return;
         }
-
-
-
 
         Elements topicDetailElements = doc.select("div.topic-detail");
 
@@ -70,8 +69,6 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
             favorite.setText(text);
             topicDetail.setFavorite(favorite);
         }
-
-
 
         elements = topicDetailElements.select("div.ui-content");
 

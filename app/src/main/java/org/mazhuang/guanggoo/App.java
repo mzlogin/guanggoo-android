@@ -5,7 +5,9 @@ import android.app.Application;
 import com.tencent.bugly.Bugly;
 
 /**
- * Created by mazhuang on 2017/9/16.
+ *
+ * @author mazhuang
+ * @date 2017/9/16
  */
 
 public class App extends Application {

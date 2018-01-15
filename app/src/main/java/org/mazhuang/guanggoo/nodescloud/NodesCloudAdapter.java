@@ -20,7 +20,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Lenovo on 2017/9/28.
+ *
+ * @author Lenovo
+ * @date 2017/9/28
  */
 
 public class NodesCloudAdapter extends RecyclerView.Adapter<NodesCloudAdapter.ViewHolder> {

@@ -8,7 +8,9 @@ import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import org.mazhuang.guanggoo.util.FileUtils;
 
 /**
- * Created by mazhuang on 2017/11/18.
+ *
+ * @author mazhuang
+ * @date 2017/11/18
  */
 
 public class ViewImagePresenter implements ViewImageContract.Presenter {
