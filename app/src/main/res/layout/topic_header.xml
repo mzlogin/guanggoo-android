@@ -1,55 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorAccent"
     android:padding="@dimen/normal_margin"
     android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/titleColor"
-            android:textSize="@dimen/titleText"/>
+        android:layout_marginBottom="@dimen/topic_detail_avatar_top"
+        android:textColor="@color/major"
+        android:textSize="@dimen/font_title"/>
 
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="@dimen/avatar_size_small"
-            android:layout_height="@dimen/avatar_size_small"
-            android:layout_marginLeft="@dimen/normal_margin"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/m_default"/>
-    </LinearLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/topic_detail_avatar"
+        android:layout_height="@dimen/topic_detail_avatar"
+        android:layout_below="@id/title"
+        android:src="@drawable/m_default"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/normal_margin">
-        <TextView
-            android:id="@+id/created_time"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/metaColor"/>
-        <TextView
-            android:id="@+id/author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/emphasizeFontColor"/>
-        <TextView
-            android:id="@+id/node"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/nodeBackgroundDark"
-            android:layout_marginLeft="@dimen/normal_margin"
-            android:textColor="@color/metaColor"/>
-    </LinearLayout>
+        android:layout_below="@id/title"
+        android:layout_toRightOf="@id/avatar"
+        android:layout_marginLeft="@dimen/inner_margin"
+        android:textColor="@color/major"
+        android:textSize="@dimen/font_normal"/>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/created_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/avatar"
+        android:layout_below="@id/author"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginLeft="@dimen/inner_margin"
+        android:textColor="@color/assist"
+        android:textSize="@dimen/font_smallest"/>
+
+    <TextView
+        android:id="@+id/node"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/created_time"
+        android:layout_below="@id/author"
+        android:layout_marginTop="@dimen/small_margin"
+        android:textColor="@color/assist"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/follow"
+        android:layout_width="@dimen/follow_button_width"
+        android:layout_height="@dimen/follow_button_height"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/title"
+        android:layout_alignBaseline="@id/avatar"
+        android:background="@drawable/button"
+        android:textColor="@color/button_text"
+        android:textSize="@dimen/font_smallest"
+        android:text="@string/follow"/>
+
+</RelativeLayout>

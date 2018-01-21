@@ -1,55 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorAccent"
-    android:padding="@dimen/normal_margin"
-    android:orientation="horizontal">
+    android:padding="@dimen/normal_margin">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar"
-        android:layout_width="@dimen/avatar_size_small"
-        android:layout_height="@dimen/avatar_size_small"
+        android:layout_width="@dimen/avatar_size_middle"
+        android:layout_height="@dimen/avatar_size_middle"
         android:src="@drawable/m_default" />
 
-    <LinearLayout
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginLeft="@dimen/normal_margin"
-        android:orientation="vertical">
+        android:layout_toRightOf="@id/avatar"
+        android:layout_marginLeft="@dimen/inner_margin"
+        android:textSize="@dimen/font_small"
+        android:textColor="@color/major"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/author"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/emphasizeFontColor"/>
-            <TextView
-                android:id="@+id/last_touched"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/normal_margin"
-                android:layout_weight="1"
-                android:textColor="@color/metaColor"/>
-            <TextView
-                android:id="@+id/floor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/inner_margin"
-                android:textColor="@color/metaColor"/>
-        </LinearLayout>
+    <TextView
+        android:id="@+id/last_touched"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/avatar"
+        android:layout_below="@id/author"
+        android:layout_marginLeft="@dimen/inner_margin"
+        android:textSize="@dimen/font_little"
+        android:textColor="@color/assist"/>
 
-        <org.sufficientlysecure.htmltextview.HtmlTextView
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/inner_margin"
-            android:textColorLink="@color/defaultFontColor"/>
+    <TextView
+        android:id="@+id/floor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@id/author"
+        android:textSize="@dimen/font_smallest"
+        android:textColor="@color/assist"/>
 
-    </LinearLayout>
+    <org.sufficientlysecure.htmltextview.HtmlTextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/avatar"
+        android:layout_marginTop="@dimen/middle_margin"
+        android:layout_marginBottom="@dimen/middle_margin"
+        android:textColorLink="@color/defaultFontColor" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/reply"
+        android:layout_width="@dimen/image_button_size"
+        android:layout_height="@dimen/image_button_size"
+        android:layout_below="@id/content"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:src="@drawable/reply" />
+
+    <ImageView
+        android:id="@+id/vote"
+        android:layout_width="@dimen/image_button_size"
+        android:layout_height="@dimen/image_button_size"
+        android:layout_below="@id/content"
+        android:layout_toLeftOf="@id/reply"
+        android:layout_marginRight="65dp"
+        android:background="@null"
+        android:src="@drawable/vote"/>
+
+    <TextView
+        android:id="@+id/vote_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/vote"
+        android:layout_alignBottom="@id/vote"
+        android:textColor="@color/advance"
+        android:textSize="@dimen/font_smallest"/>
+
+</RelativeLayout>

@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">@color/main</color>
     <color name="colorPrimaryDark">@color/main</color>
-    <color name="colorAccent">#F3F3F3</color>
+    <color name="colorAccent">@color/background</color>
     <color name="defaultFontColor">#838383</color>
     <color name="nodeBackground">#F5F5F5</color>
     <color name="listBackground">#CDCDCD</color>
@@ -30,4 +30,6 @@
     <!-- UI 规范用色，主题基准 end -->
 
     <color name="white">#FFFFFF</color>
+
+    <color name="big_split">#FAFBFD</color>
 </resources>

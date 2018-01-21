@@ -59,6 +59,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     @BindView(R.id.author) TextView mAuthorTextView;
     @BindView(R.id.node) TextView mNodeTextView;
     @BindView(R.id.content) WebView mContentWebView;
+    @BindView(R.id.comments_count) TextView mCommentsCountTextView;
     @BindView(R.id.comments) RecyclerView mCommentsRecyclerView;
     @BindView(R.id.load_more) TextView mLoadMoreTextView;
     @BindView(R.id.comment_view) View mCommentsView;
@@ -168,6 +169,8 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
             mLoadMoreTextView.setVisibility(View.VISIBLE);
             mLoadMoreTextView.setEnabled(true);
         }
+
+        mCommentsCountTextView.setText(getString(R.string.comments_count, mTopicDetail.getCommentsCount()));
     }
 
     private void initViews() {

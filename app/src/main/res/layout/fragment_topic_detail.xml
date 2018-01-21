@@ -14,9 +14,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:background="@color/background"
             android:paddingBottom="@dimen/keep_blank">
 
             <include layout="@layout/topic_header" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/normal_margin"
+                android:layout_marginRight="@dimen/normal_margin"
+                android:layout_marginTop="@dimen/middle_margin"
+                android:layout_marginBottom="@dimen/inner_margin"
+                android:background="@color/split" />
 
             <WebView
                 android:id="@+id/content"
@@ -26,11 +36,26 @@
                 android:textColorLink="@color/defaultFontColor"
                 android:focusableInTouchMode="false" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/big_split" />
+
+            <TextView
+                android:id="@+id/comments_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_margin"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="@dimen/normal_margin"
+                android:textColor="@color/minor"
+                android:textSize="@dimen/font_small"/>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/comments"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/listBackground"/>
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/load_more"

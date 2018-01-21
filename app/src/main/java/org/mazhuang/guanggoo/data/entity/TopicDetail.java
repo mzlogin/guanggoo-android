@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class TopicDetail {
 
-
     private Favorite favorite;
     private Topic topic;
     private String content;
@@ -45,5 +44,19 @@ public class TopicDetail {
 
     public void setFavorite(Favorite favorite) {
         this.favorite = favorite;
+    }
+
+    public int getCommentsCount() {
+        if (comments == null || comments.isEmpty()) {
+            return 0;
+        }
+
+        Integer max = 0;
+
+        for (Integer i : comments.keySet()) {
+            max = Math.max(i, 0);
+        }
+
+        return max;
     }
 }
