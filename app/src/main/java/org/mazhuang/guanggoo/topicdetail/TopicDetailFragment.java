@@ -32,6 +32,7 @@ import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.util.ConstantUtil;
+import org.mazhuang.guanggoo.util.DimensUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -240,7 +241,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mCommentsRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                outRect.set(0, 0, 0, 1);
+                outRect.set(0, 0, 0, Math.round(DimensUtil.getDensity(getActivity().getWindowManager())));
             }
         });
         if (mAdapter == null) {

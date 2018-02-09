@@ -96,6 +96,7 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
         MyHtmlHttpImageGetter imageGetter = new MyHtmlHttpImageGetter(holder.mContentTextView);
         imageGetter.enableCompressImage(true, 30);
         holder.mContentTextView.setHtml(holder.mItem.getContent(), imageGetter);
+        holder.mVoteCountTextView.setText(String.valueOf(holder.mItem.getMeta().getVote().getCount()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +121,8 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
         @BindView(R.id.content) HtmlTextView mContentTextView;
         @BindView(R.id.floor) TextView mFloorTextView;
         @BindView(R.id.reply) ImageView mReplyImageView;
+        @BindView(R.id.vote) ImageView mVoteImageView;
+        @BindView(R.id.vote_count) TextView mVoteCountTextView;
         public Comment mItem;
 
         public ViewHolder(View view) {
@@ -128,7 +131,7 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
             ButterKnife.bind(this, view);
         }
 
-        @OnClick({R.id.avatar, R.id.author, R.id.reply})
+        @OnClick({R.id.avatar, R.id.author, R.id.reply, R.id.vote})
         public void onClick(View v) {
             if (mListener == null) {
                 return;
@@ -142,6 +145,9 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
 
                 case R.id.reply:
                     mListener.onAt(mItem.getMeta().getReplier().getUsername());
+                    break;
+
+                case R.id.vote:
                     break;
 
                 default:

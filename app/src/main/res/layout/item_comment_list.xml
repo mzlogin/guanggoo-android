@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/normal_margin">
+    android:background="@color/white"
+    android:paddingBottom="@dimen/normal_margin"
+    android:paddingTop="@dimen/normal_margin">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar"
@@ -61,8 +63,7 @@
         android:layout_width="@dimen/image_button_size"
         android:layout_height="@dimen/image_button_size"
         android:layout_below="@id/content"
-        android:layout_toLeftOf="@id/reply"
-        android:layout_marginRight="65dp"
+        android:layout_marginLeft="215dp"
         android:background="@null"
         android:src="@drawable/vote"/>
 
@@ -70,9 +71,11 @@
         android:id="@+id/vote_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/content"
         android:layout_toRightOf="@id/vote"
-        android:layout_alignBottom="@id/vote"
+        android:layout_marginLeft="@dimen/small_margin"
+        android:layout_alignBaseline="@id/vote"
         android:textColor="@color/advance"
-        android:textSize="@dimen/font_smallest"/>
+        android:textSize="@dimen/font_smallest" />
 
 </RelativeLayout>
