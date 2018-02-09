@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:fadingEdge="vertical"
         android:scrollbars="vertical">
 
@@ -71,18 +73,62 @@
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/comment_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"
         app:cardElevation="8dp"
         app:cardBackgroundColor="@color/colorAccent">
 
         <LinearLayout
+            android:id="@+id/bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_bar_height"
+            android:layout_marginLeft="@dimen/normal_margin"
+            android:layout_marginRight="@dimen/normal_margin"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/edit" />
+
+            <TextView
+                android:id="@+id/edit_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/small_margin"
+                android:textColor="@color/advance"
+                android:textSize="@dimen/font_normal"
+                android:text="@string/reply"/>
+
+            <ImageView
+                android:id="@+id/favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/unfavorite" />
+
+            <ImageView
+                android:id="@+id/share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/icon_interval"
+                android:background="@null"
+                android:src="@drawable/share" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/comment_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:visibility="gone">
 
             <EditText
                 android:id="@+id/comment"
@@ -101,17 +147,17 @@
                 android:layout_width="@dimen/comment_button_width"
                 android:layout_height="@dimen/button_height"
                 android:layout_gravity="bottom"
-                android:background="@drawable/green_button"
+                android:background="@drawable/blue_button"
                 android:paddingLeft="@dimen/inner_margin"
                 android:paddingRight="@dimen/inner_margin"
                 android:layout_marginRight="@dimen/inner_margin"
                 android:layout_marginBottom="@dimen/small_margin"
                 android:enabled="false"
-                android:textColor="@color/green_button"
+                android:textColor="@color/blue_button"
                 android:text="@string/comment"/>
 
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
 
-</RelativeLayout>
+</LinearLayout>

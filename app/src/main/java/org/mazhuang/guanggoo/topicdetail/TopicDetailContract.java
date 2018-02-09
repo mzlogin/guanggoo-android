@@ -31,9 +31,13 @@ public interface TopicDetailContract {
 
         /**
          * 收藏
-         * @param state 当前状态
          */
-        void favourite(String state);
+        void favorite();
+
+        /**
+         * 取消收藏
+         */
+        void unfavorite();
     }
 
     interface View extends BaseView<Presenter> {
@@ -74,15 +78,24 @@ public interface TopicDetailContract {
 
         /**
          * 收藏成功
-         * @param msg 用于 toast 的提示信息
-         * @param nextState 下一个状态
          */
-        void favouriteSuccess(String msg, String nextState);
+        void onFavoriteSucceed();
 
         /**
          * 收藏失败
          * @param msg 失败提示信息
          */
-        void favouriteFail(String msg);
+        void onFavoriteFail(String msg);
+
+        /**
+         * 取消收藏成功
+         */
+        void onUnfavoriteSucceed();
+
+        /**
+         * 取消收藏失败
+         * @param msg 失败提示信息
+         */
+        void onUnfavoriteFailed(String msg);
     }
 }

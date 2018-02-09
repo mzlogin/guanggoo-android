@@ -12,9 +12,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -31,7 +28,6 @@ import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
-import org.mazhuang.guanggoo.data.entity.Favorite;
 import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.router.FragmentFactory;
@@ -62,11 +58,10 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     @BindView(R.id.comments_count) TextView mCommentsCountTextView;
     @BindView(R.id.comments) RecyclerView mCommentsRecyclerView;
     @BindView(R.id.load_more) TextView mLoadMoreTextView;
-    @BindView(R.id.comment_view) View mCommentsView;
     @BindView(R.id.comment) EditText mCommentEditText;
     @BindView(R.id.submit) Button mSubmitButton;
-
-    private MenuItem mFavoriteMenuItem;
+    @BindView(R.id.comment_view) View mCommentsView;
+    @BindView(R.id.favorite) ImageView mFavoriteImageView;
 
     @Nullable
     @Override
@@ -88,42 +83,6 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         return root;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.topic_detail, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-
-        mFavoriteMenuItem = menu.findItem(R.id.action_favorite);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_share:
-                shareCurrentLink();
-                return true;
-
-            case R.id.action_comment:
-                showCommentView();
-                return true;
-
-            case R.id.action_favorite:
-                mPresenter.favourite(mFavoriteMenuItem.getTitle().toString());
-                break;
-
-            default:
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void shareCurrentLink() {
         if (TextUtils.isEmpty(mUrl)) {
             Toast.makeText(getContext(), R.string.cannot_share, Toast.LENGTH_SHORT).show();
@@ -142,14 +101,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     }
 
     private void setViewData(TopicDetail topicDetail) {
-        Favorite favorite = topicDetail.getFavorite();
-        if (favorite != null) {
-            if (Favorite.TYPE_FAVORITE.equals(favorite.getDataType())) {
-                setFavoriteItemState(Favorite.STATE_FAVORITE);
-            } else {
-                setFavoriteItemState(Favorite.STATE_UNFAVORITE);
-            }
-        }
+        setFavoriteState(topicDetail.getFavorite().isFavorite());
         mTitleTextView.setText(topicDetail.getTopic().getTitle());
         Glide.with(getContext())
                 .load(topicDetail.getTopic().getAvatar())
@@ -195,7 +147,8 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         });
     }
 
-    @OnClick({R.id.load_more, R.id.submit, R.id.author, R.id.avatar, R.id.node})
+    @OnClick({R.id.load_more, R.id.submit, R.id.author, R.id.avatar,
+            R.id.node, R.id.edit, R.id.edit_text, R.id.favorite, R.id.share})
     public void onClick(View v) {
         if (mTopicDetail == null) {
             return;
@@ -237,6 +190,23 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
                     Node node = mTopicDetail.getTopic().getMeta().getNode();
                     mListener.openPage(node.getUrl(), node.getTitle());
                 }
+                break;
+
+            case R.id.edit:
+            case R.id.edit_text:
+                showCommentView();
+                break;
+
+            case R.id.favorite:
+                if (mTopicDetail.getFavorite().isFavorite()) {
+                    mPresenter.unfavorite();
+                } else {
+                    mPresenter.favorite();
+                }
+                break;
+
+            case R.id.share:
+                shareCurrentLink();
                 break;
 
             default:
@@ -372,32 +342,18 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void favouriteSuccess(String msg, String nextState) {
-        setFavoriteItemState(nextState);
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-    }
-
-    private void setFavoriteItemState(String state) {
-        if (mFavoriteMenuItem != null) {
-            if (Favorite.STATE_FAVORITE.equals(state)) {
-                mFavoriteMenuItem.setIcon(R.drawable.ic_menu_favorite);
-                mFavoriteMenuItem.setTitle(R.string.favorite);
-            } else {
-                mFavoriteMenuItem.setIcon(R.drawable.ic_menu_favorite_border);
-                mFavoriteMenuItem.setTitle(R.string.cancel_favorite);
-            }
+    private void setFavoriteState(boolean favorite) {
+        mTopicDetail.getFavorite().setFavorite(favorite);
+        if (favorite) {
+            mFavoriteImageView.setImageResource(R.drawable.ic_menu_favors);
+        } else {
+            mFavoriteImageView.setImageResource(R.drawable.unfavorite);
         }
     }
 
-    @Override
-    public void favouriteFail(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-    }
-
     public void showCommentView() {
-        mCommentsView.setVisibility(View.VISIBLE);
         mCommentEditText.requestFocus();
+        mCommentsView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -430,5 +386,38 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
             }
             mCommentEditText.setSelection(mCommentEditText.getText().length());
         }
+    }
+
+    @Override
+    public void onFavoriteSucceed() {
+        if (getContext() == null) {
+            return;
+        }
+
+        boolean favorite = mTopicDetail.getFavorite().isFavorite();
+        setFavoriteState(!favorite);
+        toast(getString(R.string.favorite_succeed));
+    }
+
+    @Override
+    public void onFavoriteFail(String msg) {
+        toast(msg);
+    }
+
+    @Override
+    public void onUnfavoriteSucceed() {
+        if (getContext() == null) {
+            return;
+        }
+
+        boolean favorite = mTopicDetail.getFavorite().isFavorite();
+        setFavoriteState(!favorite);
+
+        toast(getString(R.string.unfavorite_succeed));
+    }
+
+    @Override
+    public void onUnfavoriteFailed(String msg) {
+        toast(msg);
     }
 }

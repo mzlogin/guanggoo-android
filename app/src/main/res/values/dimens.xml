@@ -39,4 +39,6 @@
     <dimen name="follow_button_height">26dp</dimen>
     <dimen name="font_little">10sp</dimen>
     <dimen name="image_button_size">24dp</dimen>
+    <dimen name="bottom_bar_height">48dp</dimen>
+    <dimen name="icon_interval">32dp</dimen>
 </resources>

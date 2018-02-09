@@ -80,39 +80,37 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
     }
 
     @Override
-    public void favourite(final String favouriteState) {
+    public void favorite() {
         String topicId = UrlUtil.getTid(getUrl());
-        String favouriteUrl = "";
-        String nextState = "";
-        if (Favorite.STATE_FAVORITE.equals(favouriteState)) {
-            nextState = Favorite.STATE_UNFAVORITE;
-            favouriteUrl = ConstantUtil.FAVORITE_URL + "?topic_id=" + topicId;
-        } else if (Favorite.STATE_UNFAVORITE.equals(favouriteState)) {
-            nextState = Favorite.STATE_FAVORITE;
-            favouriteUrl = ConstantUtil.UN_FAVORITE_URL + "?topic_id=" + topicId;
-        }
+        String favouriteUrl = ConstantUtil.FAVORITE_URL + "?topic_id=" + topicId;
 
-        final String finalNextState = nextState;
         NetworkTaskScheduler.getInstance().execute(new FavouriteTask(favouriteUrl, new OnResponseListener<String>() {
             @Override
             public void onSucceed(String data) {
-                String msg = "";
-                if (Favorite.STATE_FAVORITE.equals(favouriteState)) {
-                    msg = "收藏成功";
-                } else if (Favorite.STATE_UNFAVORITE.equals(favouriteState)) {
-                    msg = "取消收藏成功";
-                }
-                mView.favouriteSuccess(msg, finalNextState);
+                mView.onFavoriteSucceed();
             }
 
             @Override
             public void onFailed(String msg) {
-                if (Favorite.STATE_FAVORITE.equals(favouriteState)) {
-                    msg = "收藏失败";
-                } else if (Favorite.STATE_UNFAVORITE.equals(favouriteState)) {
-                    msg = "取消收藏失败";
-                }
-                mView.favouriteFail(msg);
+                mView.onFavoriteFail(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void unfavorite() {
+        String topicId = UrlUtil.getTid(getUrl());
+        String favouriteUrl = ConstantUtil.UN_FAVORITE_URL + "?topic_id=" + topicId;
+
+        NetworkTaskScheduler.getInstance().execute(new FavouriteTask(favouriteUrl, new OnResponseListener<String>() {
+            @Override
+            public void onSucceed(String data) {
+                mView.onUnfavoriteSucceed();
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                mView.onUnfavoriteFailed(msg);
             }
         }));
     }

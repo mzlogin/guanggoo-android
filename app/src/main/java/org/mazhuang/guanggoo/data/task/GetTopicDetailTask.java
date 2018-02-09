@@ -58,17 +58,13 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
 
         topicDetail.setTopic(topic);
         // 解析收藏
+        Favorite favorite = new Favorite();
         Elements favouriteElement = doc.select(".J_topicFavorite");
         if(favouriteElement!=null){
-            String hrefUrl = favouriteElement.attr("href");
             String dataType = favouriteElement.attr("data-type");
-            String text = favouriteElement.text();
-            Favorite favorite = new Favorite();
-            favorite.setUrl(hrefUrl);
-            favorite.setDataType(dataType);
-            favorite.setText(text);
-            topicDetail.setFavorite(favorite);
+            favorite.setFavorite(!Favorite.TYPE_NOT_FAVORITE.equals(dataType));
         }
+        topicDetail.setFavorite(favorite);
 
         elements = topicDetailElements.select("div.ui-content");
 

@@ -119,6 +119,7 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
         @BindView(R.id.author) TextView mAuthorTextView;
         @BindView(R.id.content) HtmlTextView mContentTextView;
         @BindView(R.id.floor) TextView mFloorTextView;
+        @BindView(R.id.reply) ImageView mReplyImageView;
         public Comment mItem;
 
         public ViewHolder(View view) {
@@ -127,7 +128,7 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
             ButterKnife.bind(this, view);
         }
 
-        @OnClick({R.id.avatar, R.id.author})
+        @OnClick({R.id.avatar, R.id.author, R.id.reply})
         public void onClick(View v) {
             if (mListener == null) {
                 return;
@@ -137,6 +138,10 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
                 case R.id.avatar:
                 case R.id.author:
                     mListener.openPage(mItem.getMeta().getReplier().getUrl(), null);
+                    break;
+
+                case R.id.reply:
+                    mListener.onAt(mItem.getMeta().getReplier().getUsername());
                     break;
 
                 default:

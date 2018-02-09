@@ -79,6 +79,9 @@
     <string name="comments_info_long">%1$s 评论 · 最新回复 %2$s · %3$s</string>
     <string name="follow">+ 关注</string>
     <string name="comments_count">共收到%1$d条评论</string>
+    <string name="reply">发表评论...</string>
+    <string name="favorite_succeed">收藏成功</string>
+    <string name="unfavorite_succeed">取消收藏成功</string>
 
     <string-array name="home_tab_names">
         <item>@string/default_order_topics</item>

@@ -12,7 +12,6 @@
     <color name="titleColor">#676767</color>
     <color name="metaColor">#9D9D9D</color>
     <color name="nodeBackgroundDark">#E3E3E3</color>
-    <color name="wechatGreen">#1AAD19</color>
 
     <!-- UI 规范用色，主题基准 begin -->
     <color name="main">#258DF5</color>
