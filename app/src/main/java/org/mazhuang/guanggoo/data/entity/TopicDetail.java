@@ -54,7 +54,7 @@ public class TopicDetail {
         Integer max = 0;
 
         for (Integer i : comments.keySet()) {
-            max = Math.max(i, 0);
+            max = Math.max(i, max);
         }
 
         return max;
