@@ -54,7 +54,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/split_height"
         android:layout_below="@id/comments_info"
         android:layout_marginTop="@dimen/normal_margin"
         android:background="@color/split" />

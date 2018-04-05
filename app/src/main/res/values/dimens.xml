@@ -41,4 +41,5 @@
     <dimen name="image_button_size">24dp</dimen>
     <dimen name="bottom_bar_height">48dp</dimen>
     <dimen name="icon_interval">32dp</dimen>
+    <dimen name="split_height">1px</dimen>
 </resources>
