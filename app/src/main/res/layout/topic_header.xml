@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/normal_margin"
-    android:orientation="vertical">
+    android:padding="@dimen/normal_margin">
 
     <TextView
         android:id="@+id/title"
@@ -53,11 +52,12 @@
 
     <Button
         android:id="@+id/follow"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="@dimen/follow_button_width"
         android:layout_height="@dimen/follow_button_height"
         android:layout_alignParentRight="true"
         android:layout_below="@id/title"
-        android:layout_alignBaseline="@id/avatar"
+        android:layout_marginTop="7dp"
         android:background="@drawable/button"
         android:textColor="@color/button_text"
         android:textSize="@dimen/font_smallest"

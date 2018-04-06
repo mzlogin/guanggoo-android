@@ -241,7 +241,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mCommentsRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                outRect.set(0, 0, 0, Math.round(DimensUtil.getDensity(getActivity().getWindowManager())));
+                outRect.set(0, 0, 0, 1);
             }
         });
         if (mAdapter == null) {

@@ -23,7 +23,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/split_height"
                 android:layout_marginLeft="@dimen/normal_margin"
                 android:layout_marginRight="@dimen/normal_margin"
                 android:layout_marginTop="@dimen/middle_margin"
