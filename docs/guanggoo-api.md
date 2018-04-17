@@ -15,6 +15,7 @@
     * [收藏主题](#收藏主题)
     * [取消收藏](#取消收藏)
 * [发表新主题](#发表新主题)
+* [评论点赞](#评论点赞)
 
 <!-- vim-markdown-toc -->
 
@@ -307,4 +308,37 @@ Connection: keep-alive
 Location: /
 Server: TornadoServer/3.2
 
+```
+
+## 评论点赞
+
+**Request**
+
+比如赞 <http://www.guanggoo.com/t/30372> 的 12 楼：
+
+```
+GET /replyVote?reply_id=203544 HTTP/1.1
+Host: www.guanggoo.com
+Connection: keep-alive
+Accept: application/json, text/javascript, */*; q=0.01
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Mobile Safari/537.36
+Referer: http://www.guanggoo.com/t/30372
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7
+Cookie: _ga=GA1.2.606805923.1500596270; _gid=GA1.2.1973807385.1523923870; Hm_lvt_fc1abeddfec5c3ea88cf6cdae32cdde7=1523923870; _xsrf=a05bac9512b94633a61b75e9b7ad4f29; verification="MzU4ZjAwZmY1YjE3YzIwMzkxZDYwZmNlM2QxZDU2NWMyOGNhZDQyMjI0YzYwMTAxNjBlZDgxYTIwOGM1ZGUzYg==|1523923873|8f5b1363dc248e86bf2c60884ab9f949bdacab39"; session_id="NzhmZDlkNjIzOWFjNjlkYmY1ZGExMTJkMDFhMTI2ZTgwM2I3MzQ4ZjRiYzE2ZjJkODA5ZjVmYTUxNDNlNTEyZQ==|1523923873|0f58766c33ef471d1ebcbace76b5193d212b2423"; user="MTE1NTQ=|1523923873|262509f7375f8b899a9eb2a98653ea1a47bc7917"; _gat=1; Hm_lpvt_fc1abeddfec5c3ea88cf6cdae32cdde7=1523923936
+```
+
+**Response**
+
+如果还未赞过该评论：
+
+```
+{"message": "thanks_for_your_vote", "success": 1}
+```
+
+如果已经赞过该评论：
+
+```
+{"message": "already_voted", "success": 0}
 ```
