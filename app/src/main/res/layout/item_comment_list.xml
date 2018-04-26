@@ -74,7 +74,8 @@
         android:layout_below="@id/content"
         android:layout_toRightOf="@id/vote"
         android:layout_marginLeft="@dimen/small_margin"
-        android:layout_alignBaseline="@id/vote"
+        android:layout_alignBottom="@id/vote"
+        android:gravity="center_vertical"
         android:textColor="@color/advance"
         android:textSize="@dimen/font_smallest" />
 
