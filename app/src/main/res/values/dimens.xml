@@ -26,6 +26,7 @@
     <dimen name="font_title">20sp</dimen>
     <dimen name="font_normal">16sp</dimen>
     <dimen name="font_tab">15sp</dimen>
+    <dimen name="font_comment">15sp</dimen>
     <dimen name="font_small">14sp</dimen>
     <dimen name="font_smallest">12sp</dimen>
 
@@ -42,4 +43,6 @@
     <dimen name="bottom_bar_height">48dp</dimen>
     <dimen name="icon_interval">32dp</dimen>
     <dimen name="split_height">1px</dimen>
+
+    <item name="line_spacing_multiplier" type="dimen" format="float">1.4</item>
 </resources>

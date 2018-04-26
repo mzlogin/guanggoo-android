@@ -74,7 +74,8 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
         super.onResume();
 
         if (!mFirstFetchFinished && mListener != null) {
-            mListener.startLoading();
+            mRefreshLayout.setRefreshing(true);
+            mEmptyLayout.setRefreshing(true);
         }
     }
 

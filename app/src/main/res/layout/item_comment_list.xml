@@ -47,7 +47,10 @@
         android:layout_below="@id/avatar"
         android:layout_marginTop="@dimen/middle_margin"
         android:layout_marginBottom="@dimen/middle_margin"
-        android:textColorLink="@color/defaultFontColor" />
+        android:textSize="@dimen/font_comment"
+        android:textColor="@color/major"
+        android:textColorLink="@color/main"
+        android:lineSpacingMultiplier="@dimen/line_spacing_multiplier"/>
 
     <ImageView
         android:id="@+id/reply"

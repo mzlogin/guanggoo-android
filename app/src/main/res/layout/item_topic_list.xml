@@ -42,6 +42,7 @@
         android:layout_marginTop="@dimen/middle_margin"
         android:layout_marginBottom="@dimen/normal_margin"
         android:textColor="@color/major"
+        android:lineSpacingMultiplier="@dimen/line_spacing_multiplier"
         android:textSize="@dimen/font_normal"/>
 
     <TextView
