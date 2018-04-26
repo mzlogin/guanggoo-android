@@ -9,6 +9,7 @@ import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.data.task.CommentTask;
 import org.mazhuang.guanggoo.data.task.FavouriteTask;
 import org.mazhuang.guanggoo.data.task.GetTopicDetailTask;
+import org.mazhuang.guanggoo.data.task.VoteCommentTask;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
@@ -111,6 +112,30 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
             @Override
             public void onFailed(String msg) {
                 mView.onUnfavoriteFailed(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void voteComment(String url, final OnResponseListener<Boolean> listener) {
+        mView.startLoading();
+        NetworkTaskScheduler.getInstance().execute(new VoteCommentTask(url, new OnResponseListener<Boolean>() {
+            @Override
+            public void onSucceed(Boolean value) {
+                mView.stopLoading();
+                listener.onSucceed(value);
+                if (value) {
+                    mView.onVoteCommentSucceed();
+                } else {
+                    mView.onVoteCommentFailed("您已经点过赞了");
+                }
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                mView.stopLoading();
+                listener.onFailed(msg);
+                mView.onVoteCommentFailed(msg);
             }
         }));
     }

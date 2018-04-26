@@ -2,6 +2,7 @@ package org.mazhuang.guanggoo.topicdetail;
 
 import org.mazhuang.guanggoo.base.BasePresenter;
 import org.mazhuang.guanggoo.base.BaseView;
+import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
 
 /**
@@ -38,6 +39,13 @@ public interface TopicDetailContract {
          * 取消收藏
          */
         void unfavorite();
+
+        /**
+         * 对评论点赞
+         * @param url URL
+         * @param listener 点赞结果回调
+         */
+        void voteComment(String url, OnResponseListener<Boolean> listener);
     }
 
     interface View extends BaseView<Presenter> {
@@ -97,5 +105,16 @@ public interface TopicDetailContract {
          * @param msg 失败提示信息
          */
         void onUnfavoriteFailed(String msg);
+
+        /**
+         * 评论点赞成功
+         */
+        void onVoteCommentSucceed();
+
+        /**
+         * 评论点赞失败
+         * @param msg 失败提示信息
+         */
+        void onVoteCommentFailed(String msg);
     }
 }

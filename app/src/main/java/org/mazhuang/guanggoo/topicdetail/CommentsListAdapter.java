@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.R;
+import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Comment;
 import org.mazhuang.guanggoo.util.MyHtmlHttpImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
@@ -96,6 +97,7 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
         MyHtmlHttpImageGetter imageGetter = new MyHtmlHttpImageGetter(holder.mContentTextView);
         imageGetter.enableCompressImage(true, 30);
         holder.mContentTextView.setHtml(holder.mItem.getContent(), imageGetter);
+        holder.mVoteImageView.setEnabled(!holder.mItem.getMeta().getVote().isVoted());
         holder.mVoteCountTextView.setText(String.valueOf(holder.mItem.getMeta().getVote().getCount()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -148,6 +150,22 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
                     break;
 
                 case R.id.vote:
+                    mListener.onVote(mItem.getMeta().getVote().getUrl(), new OnResponseListener<Boolean>() {
+                        @Override
+                        public void onSucceed(Boolean succeed) {
+                            Comment.Vote vote = mItem.getMeta().getVote();
+                            vote.setVoted(true);
+                            if (succeed) {
+                                vote.setCount(vote.getCount() + 1);
+                            }
+                            notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onFailed(String msg) {
+
+                        }
+                    });
                     break;
 
                 default:

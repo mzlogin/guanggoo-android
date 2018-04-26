@@ -1,5 +1,7 @@
 package org.mazhuang.guanggoo.topicdetail;
 
+import org.mazhuang.guanggoo.data.OnResponseListener;
+
 /**
  *
  * @author mazhuang
@@ -19,4 +21,11 @@ public interface CommentsActionListener {
      * @param username 要 @ 的用户名
      */
     void onAt(String username);
+
+    /**
+     * 给评论点赞
+     * @param url 点赞 URL
+     * @param listener 点赞结果回调
+     */
+    void onVote(String url, OnResponseListener<Boolean> listener);
 }

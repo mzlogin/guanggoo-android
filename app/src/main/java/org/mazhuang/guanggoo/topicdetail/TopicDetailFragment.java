@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
+import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.router.FragmentFactory;
@@ -390,6 +391,15 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     }
 
     @Override
+    public void onVote(String url, OnResponseListener<Boolean> listener) {
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+
+        mPresenter.voteComment(url, listener);
+    }
+
+    @Override
     public void onFavoriteSucceed() {
         if (getContext() == null) {
             return;
@@ -419,6 +429,16 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
     @Override
     public void onUnfavoriteFailed(String msg) {
+        toast(msg);
+    }
+
+    @Override
+    public void onVoteCommentSucceed() {
+
+    }
+
+    @Override
+    public void onVoteCommentFailed(String msg) {
         toast(msg);
     }
 }

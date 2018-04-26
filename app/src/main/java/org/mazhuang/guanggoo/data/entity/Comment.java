@@ -53,6 +53,7 @@ public class Comment {
     public static class Vote {
         private String url;
         private int count;
+        private boolean voted;
 
         public String getUrl() {
             return url;
@@ -68,6 +69,14 @@ public class Comment {
 
         public void setCount(int count) {
             this.count = count;
+        }
+
+        public boolean isVoted() {
+            return voted;
+        }
+
+        public void setVoted(boolean voted) {
+            this.voted = voted;
         }
     }
 
