@@ -29,6 +29,7 @@ import org.mazhuang.guanggoo.util.UrlUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * @author mazhuang
@@ -43,6 +44,7 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
     @BindView(R.id.list) RecyclerView mRecyclerView;
     @BindView(R.id.refresh_layout) SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.empty) SwipeRefreshLayout mEmptyLayout;
+    @BindView(R.id.fab) CircleImageView mFabButton;
 
     private boolean mFirstFetchFinished = false;
 
@@ -116,6 +118,14 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
         initSwipeLayout(mEmptyLayout);
 
         handleEmptyList();
+
+        handleFabButton();
+    }
+
+    private void handleFabButton() {
+        if (getPageType() == FragmentFactory.PageType.USER_FAVORS) {
+            mFabButton.setVisibility(View.GONE);
+        }
     }
 
     private void initSwipeLayout(SwipeRefreshLayout swipeRefreshLayout) {
