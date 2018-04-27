@@ -34,7 +34,7 @@
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/normal_margin"
+                android:layout_marginTop="@dimen/normal_margin"
                 android:textColorLink="@color/defaultFontColor"
                 android:focusableInTouchMode="false" />
 

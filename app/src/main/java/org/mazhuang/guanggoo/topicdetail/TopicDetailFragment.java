@@ -115,7 +115,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mNodeTextView.setText(topicDetail.getTopic().getMeta().getNode().getTitle());
 
         // 相比 loadData，这个调用能解决中文乱码的问题
-        mContentWebView.loadDataWithBaseURL(null, topicDetail.getContent() + "<style>html,body{padding:0;margin:0;} .ui-content{margin:0;padding:12px 18px 0 18px;font-size:15px; line-height:26px;} img{display:inline; height:auto; max-width:100%;} a{word-break:break-all; word-wrap:break-word;} pre, code, pre code{word-wrap:normal; overflow:auto;} pre{padding:16px; bordor-radius:3px; border:1px solid #ccc;}</style>", "text/html", "UTF-8", null);
+        mContentWebView.loadDataWithBaseURL(null, topicDetail.getContent() + "<style>html,body{padding:0;margin:0;} .ui-content{margin:0;padding:0 18px 0 18px;font-size:15px; line-height:26px;} img{display:inline; height:auto; max-width:100%;} a{word-break:break-all; word-wrap:break-word;} pre, code, pre code{word-wrap:normal; overflow:auto;} pre{padding:16px; bordor-radius:3px; border:1px solid #ccc;}</style>", "text/html", "UTF-8", null);
 
         mAdapter.setData(mTopicDetail.getComments());
 
