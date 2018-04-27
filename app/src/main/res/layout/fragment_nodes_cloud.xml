@@ -4,8 +4,6 @@
     android:id="@+id/nodes_cloud"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:layoutManager="LinearLayoutManager"
+    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
     android:scrollbars="none"
-    android:paddingLeft="@dimen/normal_margin"
-    android:paddingRight="@dimen/normal_margin"
-    android:paddingBottom="@dimen/normal_margin"/>
+    android:layout_marginBottom="@dimen/normal_margin"/>
