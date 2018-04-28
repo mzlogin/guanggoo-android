@@ -150,13 +150,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void openUserProfile() {
-        String username = AuthInfoManager.getInstance().getUsername();
-        String url = ConstantUtil.USER_PROFILE_SELF_FAKE_URL;
-        if (!TextUtils.isEmpty(username)) {
-            url = String.format(ConstantUtil.USER_PROFILE_BASE_URL, username);
-        }
-
-        openPage(url, getString(R.string.profile));
+        openPage(ConstantUtil.USER_PROFILE_SELF_FAKE_URL, getString(R.string.profile));
     }
 
     public static void addFragmentToStack(FragmentManager fm, Fragment fragment) {

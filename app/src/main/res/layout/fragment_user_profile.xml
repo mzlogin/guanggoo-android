@@ -2,96 +2,111 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="@dimen/normal_margin"
-    android:paddingBottom="@dimen/normal_margin">
+    android:background="@color/big_split">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/normal_margin"
-        android:paddingRight="@dimen/normal_margin">
+        android:background="@color/white">
 
         <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="@drawable/profile_header"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar"
-            android:layout_width="@dimen/avatar_size"
-            android:layout_height="@dimen/avatar_size"
-            android:layout_centerVertical="true"
+            android:layout_width="@dimen/avatar_size_large"
+            android:layout_height="@dimen/avatar_size_large"
+            android:layout_marginTop="124dp"
+            android:layout_marginLeft="@dimen/normal_margin"
             android:src="@drawable/m_default" />
 
         <TextView
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/avatar"
+            android:layout_below="@id/avatar"
             android:layout_marginLeft="@dimen/normal_margin"
-            android:textColor="@color/emphasizeFontColor"
+            android:layout_marginTop="@dimen/inner_margin"
+            android:textColor="@color/major"
             android:textSize="@dimen/titleText"/>
         
         <TextView
             android:id="@+id/number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/avatar"
             android:layout_below="@id/username"
             android:layout_marginLeft="@dimen/normal_margin"
-            android:layout_marginTop="@dimen/inner_margin"/>
-
-        <TextView
-            android:id="@+id/since"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/avatar"
-            android:layout_below="@id/number"
-            android:layout_marginLeft="@dimen/normal_margin"/>
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="@dimen/normal_margin"
+            android:textSize="@dimen/font_smallest"
+            android:textColor="@color/assist"/>
 
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/user_favors"
-        style="@style/LinearClickableItem">
+        style="@style/LinearClickableItem"
+        android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/title_favorite"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/user_favors"
-            android:textSize="@dimen/linear_item_font_size"/>
+            android:textSize="@dimen/font_small"
+            android:textColor="@color/major"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_right_arrow"
-            android:tint="@color/defaultFontColor"/>
+            android:src="@drawable/right"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/user_topics"
         style="@style/LinearClickableItem">
         <TextView
+            android:id="@+id/title_topic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/user_topics"
-            android:textSize="@dimen/linear_item_font_size"/>
+            android:textSize="@dimen/font_small"
+            android:textColor="@color/major"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_right_arrow"
-            android:tint="@color/defaultFontColor"/>
+            android:src="@drawable/right"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/user_replies"
         style="@style/LinearClickableItem">
         <TextView
+            android:id="@+id/title_reply"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/user_replies"
-            android:textSize="@dimen/linear_item_font_size"/>
+            android:textSize="@dimen/font_small"
+            android:textColor="@color/major"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_right_arrow"
-            android:tint="@color/defaultFontColor"/>
+            android:src="@drawable/right"/>
     </LinearLayout>
+    
+    <TextView
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/linear_item_height"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:textColor="@color/alert"
+        android:textSize="@dimen/font_normal"
+        android:text="@string/logout"
+        android:visibility="gone"/>
 
 </LinearLayout>

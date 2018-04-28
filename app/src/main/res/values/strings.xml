@@ -82,6 +82,10 @@
     <string name="reply">发表评论...</string>
     <string name="favorite_succeed">收藏成功</string>
     <string name="unfavorite_succeed">取消收藏成功</string>
+    <string name="logout">退出登录</string>
+    <string name="my_favorite">我的收藏</string>
+    <string name="my_topic">我的主题</string>
+    <string name="my_reply">我的回复</string>
 
     <string-array name="home_tab_names">
         <item>@string/default_order_topics</item>

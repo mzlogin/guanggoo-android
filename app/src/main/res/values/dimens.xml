@@ -6,6 +6,7 @@
     <dimen name="nav_header_height">172dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="avatar_size_large">72dp</dimen>
     <dimen name="avatar_size">64dp</dimen>
     <dimen name="normal_margin">16dp</dimen>
     <dimen name="large_middle_margin">14dp</dimen>
@@ -19,7 +20,7 @@
     <dimen name="button_height">36dp</dimen>
     <dimen name="comment_button_width">44dp</dimen>
     <dimen name="small_margin">4dp</dimen>
-    <dimen name="linear_item_height">48dp</dimen>
+    <dimen name="linear_item_height">54dp</dimen>
     <dimen name="linear_item_font_size">16sp</dimen>
     <dimen name="tab_height">40dp</dimen>
 
