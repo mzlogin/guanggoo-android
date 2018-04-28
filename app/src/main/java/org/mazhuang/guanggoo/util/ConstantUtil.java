@@ -10,6 +10,7 @@ public class ConstantUtil {
 
     private ConstantUtil() {}
 
+
     public static final String HOME_URL = "HOME_PAGE";
     public static final String BASE_URL = "http://www.guanggoo.com";
     public static final String FAVORITE_URL = BASE_URL + "/favorite";
@@ -45,4 +46,6 @@ public class ConstantUtil {
     public static final int HTTP_STATUS_302 = 302;
 
     public static final int MAX_TOPICS = 1024;
+
+    public static final String QRCODE_URL = "http://mazhuang.org/guanggoo-android/qrcode.png";
 }

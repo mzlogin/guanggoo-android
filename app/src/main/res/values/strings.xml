@@ -50,15 +50,15 @@
     <string name="no_content">暂无内容</string>
     <string name="action_register">没有账号？点此注册</string>
     <string name="about">关于我们</string>
-    <string name="contact_me">联系我</string>
-    <string name="app_description">光谷社区第三方客户端 %1$s</string>
+    <string name="contact_me">发邮件吐槽</string>
+    <string name="app_description">光谷社区第三方客户端 %1$s\nPowered by mzlogin / colinlee</string>
     <string name="version_unknown">未知版本</string>
     <string name="version_name_format">v%1$s(%2$d)</string>
     <string name="follow_github">\@mzlogin</string>
     <string name="author_email">chumpma@gmail.com</string>
     <string name="author_website">http://mazhuang.org</string>
     <string name="author_github">mzlogin</string>
-    <string name="source_code">源代码</string>
+    <string name="source_code">获取源代码</string>
     <string name="source_code_address">mzlogin/guanggoo-android</string>
     <string name="reply_list">回复列表</string>
     <string name="new_topic">发表新主题</string>
@@ -86,6 +86,7 @@
     <string name="my_favorite">我的收藏</string>
     <string name="my_topic">我的主题</string>
     <string name="my_reply">我的回复</string>
+    <string name="qrcode">分享给好友</string>
 
     <string-array name="home_tab_names">
         <item>@string/default_order_topics</item>
