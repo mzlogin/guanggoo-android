@@ -10,7 +10,7 @@
 
 下载地址
 
-<http://mazhuang.org/guanggoo-android/guanggoo-lastest.apk>
+<https://www.coolapk.com/apk/164523>
 
 ## 源代码
 
