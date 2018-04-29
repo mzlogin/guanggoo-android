@@ -4,7 +4,6 @@ import com.vdurmont.emoji.EmojiParser;
 
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
-import org.mazhuang.guanggoo.data.entity.Favorite;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.data.task.CommentTask;
 import org.mazhuang.guanggoo.data.task.FavouriteTask;

@@ -30,8 +30,7 @@ public class FavouriteTask extends BaseTask<String> {
         String xsrf = getXsrf();
 
         Map<String, String> headers = new HashMap<>();
-        headers.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-        headers.put("Content-Type", "application/x-www-form-urlencoded");
+        headers.put("Accept", "application/json, text/javascript, */*; q=0.01");
 
         Map<String, String> datas = new HashMap<>();
         datas.put(ConstantUtil.KEY_XSRF, xsrf);
@@ -46,6 +45,9 @@ public class FavouriteTask extends BaseTask<String> {
                     (Connection.Method.GET).execute();
             if (res.statusCode() == ConstantUtil.HTTP_STATUS_200 || res.statusCode() == ConstantUtil.HTTP_STATUS_302) {
                 successOnUI("成功");
+                return;
+            } else if (res.statusCode() == ConstantUtil.HTTP_STATUS_304) {
+                failedOnUI("不能收藏自己的主题");
                 return;
             }
         } catch (IOException e) {

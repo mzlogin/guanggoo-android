@@ -45,6 +45,7 @@ public class ConstantUtil {
 
     public static final int HTTP_STATUS_200 = 200;
     public static final int HTTP_STATUS_302 = 302;
+    public static final int HTTP_STATUS_304 = 304;
 
     public static final int MAX_TOPICS = 1024;
 

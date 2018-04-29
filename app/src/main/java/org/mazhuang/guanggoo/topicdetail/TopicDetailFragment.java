@@ -28,12 +28,12 @@ import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
+import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.util.ConstantUtil;
-import org.mazhuang.guanggoo.util.DimensUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -103,6 +103,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     }
 
     private void setViewData(TopicDetail topicDetail) {
+        checkIsSelfTopic();
         setFavoriteState(topicDetail.getFavorite().isFavorite());
         mTitleTextView.setText(topicDetail.getTopic().getTitle());
         Glide.with(getContext())
@@ -125,6 +126,12 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         }
 
         mCommentsCountTextView.setText(getString(R.string.comments_count, mTopicDetail.getCommentsCount()));
+    }
+
+    private void checkIsSelfTopic() {
+        if (!AuthInfoManager.getInstance().getUsername().equals(mTopicDetail.getTopic().getMeta().getAuthor().getUsername())) {
+            mFavoriteImageView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initViews() {
