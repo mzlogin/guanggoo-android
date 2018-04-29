@@ -46,6 +46,18 @@ public interface TopicDetailContract {
          * @param listener 点赞结果回调
          */
         void voteComment(String url, OnResponseListener<Boolean> listener);
+
+        /**
+         * 关注用户
+         * @param username 用户名
+         */
+        void followUser(String username);
+
+        /**
+         * 取消关注
+         * @param username 用户名
+         */
+        void unfollowUser(String username);
     }
 
     interface View extends BaseView<Presenter> {
@@ -116,5 +128,27 @@ public interface TopicDetailContract {
          * @param msg 失败提示信息
          */
         void onVoteCommentFailed(String msg);
+
+        /**
+         * 关注用户成功
+         */
+        void onFollowUserSucceed();
+
+        /**
+         * 关注用户失败
+         * @param msg 失败提示信息
+         */
+        void onFollowUserFailed(String msg);
+
+        /**
+         * 取消关注成功
+         */
+        void onUnfollowUserSucceed();
+
+        /**
+         * 取消关注失败
+         * @param msg 失败提示信息
+         */
+        void onUnfollowUserFailed(String msg);
     }
 }

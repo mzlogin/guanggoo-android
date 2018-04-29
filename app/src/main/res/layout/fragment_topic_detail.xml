@@ -113,8 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:src="@drawable/unfavorite"
-                android:visibility="gone"/>
+                android:src="@drawable/unfavorite"/>
 
             <ImageView
                 android:id="@+id/share"

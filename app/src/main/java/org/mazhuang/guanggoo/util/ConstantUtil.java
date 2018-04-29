@@ -28,6 +28,7 @@ public class ConstantUtil {
     public static final String USER_FAVORS_BASE_URL = BASE_URL + "/u/%s/favorites";
     public static final String USER_TOPICS_BASE_URL = BASE_URL + "/u/%s/topics";
     public static final String USER_REPLIES_BASE_URL = BASE_URL + "/u/%s/replies";
+    public static final String FOLLOW_USER_BASE_URL = BASE_URL + "/f/user/%s";
     public static final String NEW_TOPIC_BASE_URL = BASE_URL + "/t/create/%s";
 
     public static final String ABOUT_URL = "INNER_PAGE_ABOUT";

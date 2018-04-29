@@ -7,6 +7,8 @@ import org.mazhuang.guanggoo.data.entity.Comment;
 import org.mazhuang.guanggoo.data.entity.Favorite;
 import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
+import org.mazhuang.guanggoo.data.entity.UserProfile;
+import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import java.io.IOException;
 import java.util.Map;
@@ -52,9 +54,9 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
             return;
         }
 
-        TopicDetail topicDetail = new TopicDetail();
+        final TopicDetail topicDetail = new TopicDetail();
 
-        Topic topic = GetTopicListTask.createTopicFromElement(elements.first());
+        final Topic topic = GetTopicListTask.createTopicFromElement(elements.first());
 
         topicDetail.setTopic(topic);
         // 解析收藏
@@ -81,6 +83,19 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
 
         topicDetail.setComments(comments);
 
-        successOnUI(topicDetail);
+        new GetUserProfileTask(topicDetail.getTopic().getMeta().getAuthor().getUrl(), new OnResponseListener<UserProfile>() {
+            @Override
+            public void onSucceed(UserProfile data) {
+                if (data.isFollowed()) {
+                    topicDetail.getTopic().getMeta().getAuthor().setFollowed(true);
+                }
+                successOnUI(topicDetail);
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                successOnUI(topicDetail);
+            }
+        }).run();
     }
 }

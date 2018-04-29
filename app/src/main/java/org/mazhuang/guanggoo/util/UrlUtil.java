@@ -20,6 +20,7 @@ public class UrlUtil {
 
     private static Pattern sTidPattern = Pattern.compile("/t/(\\d+)");
     private static Pattern sNodeCodePattern = Pattern.compile("/node/(\\w+)");
+    private static Pattern sUserNamePattern = Pattern.compile("/(u|user)/(\\w+)");
 
     public static String appendPage(String baseUrl, int page) {
         return String.format(Locale.US, baseUrl.contains("?") ? "%s&p=%d" : "%s?p=%d",
@@ -39,6 +40,15 @@ public class UrlUtil {
         Matcher m = sNodeCodePattern.matcher(url);
         if (m.find()) {
             return m.group(1);
+        } else {
+            return null;
+        }
+    }
+
+    public static String getUserName(String url) {
+        Matcher m = sUserNamePattern.matcher(url);
+        if (m.find()) {
+            return m.group(2);
         } else {
             return null;
         }

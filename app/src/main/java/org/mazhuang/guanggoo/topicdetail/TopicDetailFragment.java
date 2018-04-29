@@ -64,6 +64,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     @BindView(R.id.submit) Button mSubmitButton;
     @BindView(R.id.comment_view) View mCommentsView;
     @BindView(R.id.favorite) ImageView mFavoriteImageView;
+    @BindView(R.id.follow) Button mFollowButton;
 
     @Nullable
     @Override
@@ -103,7 +104,6 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     }
 
     private void setViewData(TopicDetail topicDetail) {
-        checkIsSelfTopic();
         setFavoriteState(topicDetail.getFavorite().isFavorite());
         mTitleTextView.setText(topicDetail.getTopic().getTitle());
         Glide.with(getContext())
@@ -126,12 +126,14 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         }
 
         mCommentsCountTextView.setText(getString(R.string.comments_count, mTopicDetail.getCommentsCount()));
+
+        if (topicDetail.getTopic().getMeta().getAuthor().isFollowed()) {
+            mFollowButton.setText(R.string.unfollow);
+        }
     }
 
-    private void checkIsSelfTopic() {
-        if (!AuthInfoManager.getInstance().getUsername().equals(mTopicDetail.getTopic().getMeta().getAuthor().getUsername())) {
-            mFavoriteImageView.setVisibility(View.VISIBLE);
-        }
+    private boolean isSelfOwnTopic() {
+        return AuthInfoManager.getInstance().getUsername().equals(mTopicDetail.getTopic().getMeta().getAuthor().getUsername());
     }
 
     private void initViews() {
@@ -157,7 +159,8 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     }
 
     @OnClick({R.id.load_more, R.id.submit, R.id.author, R.id.avatar,
-            R.id.node, R.id.edit, R.id.edit_text, R.id.favorite, R.id.share})
+            R.id.node, R.id.edit, R.id.edit_text, R.id.favorite, R.id.share,
+    R.id.follow})
     public void onClick(View v) {
         if (mTopicDetail == null) {
             return;
@@ -207,6 +210,10 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
                 break;
 
             case R.id.favorite:
+                if (isSelfOwnTopic()) {
+                    toast(getString(R.string.cannot_favorite_self_own_topic));
+                    return;
+                }
                 if (mTopicDetail.getFavorite().isFavorite()) {
                     mPresenter.unfavorite();
                 } else {
@@ -217,6 +224,20 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
             case R.id.share:
                 shareCurrentLink();
                 break;
+
+            case R.id.follow: {
+                if (isSelfOwnTopic()) {
+                    toast(getString(R.string.cannot_follow_self));
+                    return;
+                }
+                String username = mTopicDetail.getTopic().getMeta().getAuthor().getUsername();
+                if (getString(R.string.follow).equals(mFollowButton.getText().toString())) {
+                    mPresenter.followUser(username);
+                } else {
+                    mPresenter.unfollowUser(username);
+                }
+                break;
+            }
 
             default:
                 break;
@@ -446,6 +467,28 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
     @Override
     public void onVoteCommentFailed(String msg) {
+        toast(msg);
+    }
+
+    @Override
+    public void onFollowUserSucceed() {
+        toast("关注成功");
+        mFollowButton.setText(R.string.unfollow);
+    }
+
+    @Override
+    public void onFollowUserFailed(String msg) {
+        toast(msg);
+    }
+
+    @Override
+    public void onUnfollowUserSucceed() {
+        toast("取消关注成功");
+        mFollowButton.setText(R.string.follow);
+    }
+
+    @Override
+    public void onUnfollowUserFailed(String msg) {
         toast(msg);
     }
 }

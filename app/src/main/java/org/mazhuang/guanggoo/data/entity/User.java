@@ -9,6 +9,7 @@ package org.mazhuang.guanggoo.data.entity;
 public class User {
     private String username;
     private String url;
+    private boolean followed;
 
     public String getUsername() {
         return username;
@@ -24,5 +25,13 @@ public class User {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public boolean isFollowed() {
+        return followed;
+    }
+
+    public void setFollowed(boolean followed) {
+        this.followed = followed;
     }
 }

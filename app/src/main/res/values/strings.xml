@@ -88,6 +88,9 @@
     <string name="my_topic">我的主题</string>
     <string name="my_reply">我的回复</string>
     <string name="qrcode">分享给好友</string>
+    <string name="unfollow">取消关注</string>
+    <string name="cannot_follow_self">不能关注自己</string>
+    <string name="cannot_favorite_self_own_topic">不能收藏自己的帖子</string>
 
     <string-array name="home_tab_names">
         <item>@string/default_order_topics</item>

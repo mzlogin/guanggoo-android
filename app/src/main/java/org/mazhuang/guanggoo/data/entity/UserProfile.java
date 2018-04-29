@@ -14,6 +14,7 @@ public class UserProfile {
     private String avatar;
     private String number;
     private String since;
+    private boolean followed;
 
     public String getUsername() {
         return username;
@@ -53,6 +54,14 @@ public class UserProfile {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public boolean isFollowed() {
+        return followed;
+    }
+
+    public void setFollowed(boolean followed) {
+        this.followed = followed;
     }
 
     public boolean isValid() {

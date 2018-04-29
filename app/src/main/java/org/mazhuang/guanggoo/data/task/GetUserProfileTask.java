@@ -53,6 +53,11 @@ public class GetUserProfileTask extends BaseTask<UserProfile> {
         profile.setNumber(headerElements.select("div.user-number .number").text());
         profile.setSince(headerElements.select("div.user-number .since").text());
 
+        Elements followStatusElements = headerElements.select("span.label-success");
+        if (!followStatusElements.isEmpty()) {
+            profile.setFollowed("取消关注".equals(followStatusElements.select("a").text()));
+        }
+
         if (profile.isValid()) {
             successOnUI(profile);
         } else {
