@@ -16,6 +16,7 @@
     * [取消收藏](#取消收藏)
 * [发表新主题](#发表新主题)
 * [评论点赞](#评论点赞)
+* [关注/取消关注](#关注取消关注)
 
 <!-- vim-markdown-toc -->
 
@@ -341,4 +342,93 @@ Cookie: _ga=GA1.2.606805923.1500596270; _gid=GA1.2.1973807385.1523923870; Hm_lvt
 
 ```
 {"message": "already_voted", "success": 0}
+```
+
+## 关注/取消关注
+
+关注和取消关注都是发相同的请求，请求之后都是需要重新请求个人信息页来判断是否关注和取消关注成功。
+
+**Request**
+
+```html
+GET /f/user/youngway HTTP/1.1
+Host: www.guanggoo.com
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Mobile Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Referer: http://www.guanggoo.com/u/youngway
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7
+Cookie: _ga=GA1.2.211778315.1506434797; _xsrf=5f39918216ed46fa81444294037731d3; Hm_lvt_fc1abeddfec5c3ea88cf6cdae32cdde7=1524528530,1524544856,1524643298,1524711283; _gid=GA1.2.2070239126.1524922970; verification="MjQ5NWYzNWQ5YTZkODA1ZmY5ZThlYzYzNTc0NjQ5MmU2OTE4ZGE0YmNhZjNiNDY3NmY4ZmQ5ZTZhZGRjMzk0OA==|1524985028|2bb9253ff306142259330ab8610db9b763694ae7"; session_id="MTYyODUxYzc4NzcwNTQ0NDFmYWQ4OWJmOGU1ZjgwNjVlNjBmZmVmMjBiYWFjMTNmOTZiOTg2YjdhYTRmZGVkZA==|1524985028|3320799a0d0b37e855c74088c3fed35e65b83a23"; user="MTE1NTQ=|1524985028|1be1826342cb95dbd6e3255145407b7bc3e48c6c"; Hm_lpvt_fc1abeddfec5c3ea88cf6cdae32cdde7=1524987630
+```
+
+**Response**
+
+```html
+HTTP/1.1 302 Found
+Date: Sun, 29 Apr 2018 07:46:00 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+Location: /u/youngway
+Server: TornadoServer/3.2
+```
+
+Web 上会自动跳转到个人信息页，已经关注的情况：
+
+```html
+<div class="user-page">
+  <div class="profile container-box">
+    <div class="ui-header">
+      <a href="/u/youngway">
+        <img src="http://cdn.guanggoo.com/static/avatar/52/m_default.png" alt="" class="avatar" />
+      </a>
+      <div class="username">youngway</div>
+      <span class="label label-success" style="margin-left:4px"><a href="/f/user/youngway" style="color:#FFFFFF">取消关注</a></span>
+      <div class="user-number">
+        <div class="number">光谷社区第27152号成员</div>
+        <div class="since">入住于2018-04-25</div>
+      </div>
+    </div>
+    <div class="ui-content">
+      <dl>
+        <dt>ID</dt>
+        <dd>youngway</dd>
+      </dl>
+      <dl>
+        <dt>Email</dt>
+        <dd>1067582***@qq.com</dd>
+      </dl>
+    </div>
+  </div>
+</div>
+```
+
+```html
+<div class="user-page">
+  <div class="profile container-box">
+    <div class="ui-header">
+      <a href="/u/youngway">
+        <img src="http://cdn.guanggoo.com/static/avatar/52/m_default.png" alt="" class="avatar" />
+      </a>
+      <div class="username">youngway</div>
+      <span class="label label-success" style="margin-left:4px"><a href="/f/user/youngway" style="color:#FFFFFF">+关注</a></span>
+      <div class="user-number">
+        <div class="number">光谷社区第27152号成员</div>
+        <div class="since">入住于2018-04-25</div>
+      </div>
+    </div>
+    <div class="ui-content">
+      <dl>
+        <dt>ID</dt>
+        <dd>youngway</dd>
+      </dl>
+      <dl>
+        <dt>Email</dt>
+        <dd>1067582***@qq.com</dd>
+      </dl>
+    </div>
+  </div>
+</div>
 ```
