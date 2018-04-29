@@ -48,6 +48,10 @@ public class HomePagerAdapter extends FragmentStatePagerAdapter {
                 url = ConstantUtil.ELITE_URL;
                 break;
 
+            case 3:
+                url = ConstantUtil.FOLLOWS_URL;
+                break;
+
             default:
                 break;
         }

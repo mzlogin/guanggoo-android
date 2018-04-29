@@ -13,7 +13,8 @@
         android:paddingTop="@dimen/inner_margin"
         android:paddingBottom="@dimen/inner_margin"
         android:background="@color/colorAccent"
-        android:textColor="@color/defaultFontColor" />
+        android:textColor="@color/defaultFontColor"
+        android:textSize="@dimen/font_normal"/>
 
     <org.sufficientlysecure.htmltextview.HtmlTextView
         android:id="@+id/content"
@@ -24,6 +25,8 @@
         android:paddingRight="@dimen/normal_margin"
         android:paddingTop="@dimen/inner_margin"
         android:paddingBottom="@dimen/inner_margin"
+        android:textColor="@color/major"
+        android:textSize="@dimen/font_comment"
         android:textColorLink="@color/defaultFontColor"/>
 
     <ImageView

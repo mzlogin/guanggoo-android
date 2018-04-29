@@ -117,17 +117,17 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
         switch (v.getId()) {
             case R.id.user_favors:
                 mListener.openPage(String.format(ConstantUtil.USER_FAVORS_BASE_URL, mUserProfile.getUsername()),
-                        getString(R.string.user_favors));
+                        mFavoriteTextView.getText().toString());
                 break;
 
             case R.id.user_topics:
                 mListener.openPage(String.format(ConstantUtil.USER_TOPICS_BASE_URL, mUserProfile.getUsername()),
-                        getString(R.string.user_topics));
+                        mTopicTextView.getText().toString());
                 break;
 
             case R.id.user_replies:
                 mListener.openPage(String.format(ConstantUtil.USER_REPLIES_BASE_URL, mUserProfile.getUsername()),
-                        getString(R.string.user_replies));
+                        mReplyTextView.getText().toString());
                 break;
 
             case R.id.logout:

@@ -46,6 +46,7 @@
         android:src="@drawable/new_topic"
         android:layout_gravity="bottom|right"
         android:layout_marginRight="@dimen/small_margin"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        android:visibility="gone"/>
 
 </FrameLayout>

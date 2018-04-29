@@ -123,8 +123,9 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
     }
 
     private void handleFabButton() {
-        if (getPageType() == FragmentFactory.PageType.USER_FAVORS) {
-            mFabButton.setVisibility(View.GONE);
+        if (getPageType() == FragmentFactory.PageType.HOME_TOPIC_LIST ||
+                getPageType() == FragmentFactory.PageType.NODE_TOPIC_LIST) {
+            mFabButton.setVisibility(View.VISIBLE);
         }
     }
 
