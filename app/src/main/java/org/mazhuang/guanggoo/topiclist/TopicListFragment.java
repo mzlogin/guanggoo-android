@@ -248,11 +248,6 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
     }
 
     private void finishRefresh() {
-
-        if (mListener != null && mListener.isLoading()) {
-            mListener.stopLoading();
-        }
-
         mRefreshLayout.setRefreshing(false);
         mEmptyLayout.setRefreshing(false);
         if (!mFirstFetchFinished) {
