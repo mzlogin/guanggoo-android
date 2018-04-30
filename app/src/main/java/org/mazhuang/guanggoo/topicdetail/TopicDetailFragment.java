@@ -38,6 +38,7 @@ import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.ui.widget.PreImeEditText;
 import org.mazhuang.guanggoo.util.ConstantUtil;
+import org.mazhuang.guanggoo.util.SoftInputUtil;
 
 import java.util.Locale;
 
@@ -180,11 +181,9 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+                    SoftInputUtil.showSoftInput(getActivity());
                 } else {
-                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(),0);
+                    SoftInputUtil.hideSoftInputFromWindow(getActivity(), v);
                 }
             }
         });

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.util.ConstantUtil;
+import org.mazhuang.guanggoo.util.SoftInputUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -109,21 +110,13 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
             return;
         }
 
-        hideSoftInput();
+        SoftInputUtil.hideSoftInput(getActivity());
 
         mListener.onLoginStatusChanged(true);
 
         getActivity().onBackPressed();
         if (mListener != null && !ConstantUtil.LOGIN_URL.equals(mUrl)) {
             mListener.openPage(mUrl, mTitle);
-        }
-    }
-
-    private void hideSoftInput() {
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        boolean isOpen = imm != null && imm.isActive();
-        if (isOpen) {
-            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 
