@@ -91,6 +91,9 @@
     <string name="unfollow">取消关注</string>
     <string name="cannot_follow_self">不能关注自己</string>
     <string name="cannot_favorite_self_own_topic">不能收藏自己的帖子</string>
+    <string name="confirm">确定</string>
+    <string name="logout_confirm">确认退出？</string>
+    <string name="logout_tip_message">退出后缓存将被清空，大部分功能需要重新登录后才能使用，确认退出吗？</string>
 
     <string-array name="home_tab_names">
         <item>@string/default_order_topics</item>

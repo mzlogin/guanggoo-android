@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void openUserProfile() {
-        openPage(ConstantUtil.USER_PROFILE_SELF_FAKE_URL, getString(R.string.profile));
+        openPage(ConstantUtil.USER_PROFILE_SELF_FAKE_URL, getString(R.string.personal_center));
     }
 
     public static void addFragmentToStack(FragmentManager fm, Fragment fragment) {

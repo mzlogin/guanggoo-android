@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.mazhuang.guanggoo.router.FragmentFactory;
@@ -45,6 +46,7 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
     @BindView(R.id.refresh_layout) SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.empty) SwipeRefreshLayout mEmptyLayout;
     @BindView(R.id.fab) CircleImageView mFabButton;
+    @BindView(R.id.no_content) TextView mNoContentTextView;
 
     private boolean mFirstFetchFinished = false;
 
@@ -131,11 +133,7 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
 
     private void initSwipeLayout(SwipeRefreshLayout swipeRefreshLayout) {
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(
-                R.color.metaColor,
-                R.color.colorAccent,
-                android.R.color.white
-        );
+        swipeRefreshLayout.setColorSchemeResources(R.color.main);
     }
 
     @OnClick({R.id.fab})
@@ -172,6 +170,10 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
             return;
         }
 
+        if (topicList.getTopics().isEmpty()) {
+            mNoContentTextView.setText(R.string.no_content);
+        }
+
         mLoadable = topicList.isHasMore();
 
         mAdapter.setData(topicList.getTopics());
@@ -187,6 +189,8 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
         if (getContext() == null) {
             return;
         }
+
+        mNoContentTextView.setText(R.string.no_content);
 
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
 
@@ -237,6 +241,8 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
         if (!mFirstFetchFinished) {
             return;
         }
+
+        mNoContentTextView.setText("");
 
         mPresenter.getTopicList();
     }

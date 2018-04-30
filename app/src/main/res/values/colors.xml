@@ -29,6 +29,10 @@
     <!-- UI 规范用色，主题基准 end -->
 
     <color name="white">#FFFFFF</color>
-
     <color name="big_split">#FAFBFD</color>
+
+    <color name="loading_start">#00258DF5</color>
+    <color name="loading_center">#88258DF5</color>
+    <color name="loading_end">#FF258DF5</color>
+
 </resources>

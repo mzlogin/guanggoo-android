@@ -1,8 +1,11 @@
 package org.mazhuang.guanggoo.userprofile;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,8 +134,19 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
                 break;
 
             case R.id.logout:
-                mListener.onLoginStatusChanged(false);
-                getActivity().onBackPressed();
+                new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme_AlertDialog))
+                        .setTitle(R.string.logout_confirm)
+                        .setMessage(R.string.logout_tip_message)
+                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mListener.onLoginStatusChanged(false);
+                                getActivity().onBackPressed();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .create()
+                        .show();
                 break;
 
             default:

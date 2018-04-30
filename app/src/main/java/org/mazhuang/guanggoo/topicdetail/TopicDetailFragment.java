@@ -1,5 +1,6 @@
 package org.mazhuang.guanggoo.topicdetail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -33,6 +35,7 @@ import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.router.FragmentFactory;
+import org.mazhuang.guanggoo.ui.widget.PreImeEditText;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import butterknife.BindView;
@@ -60,7 +63,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     @BindView(R.id.comments_count) TextView mCommentsCountTextView;
     @BindView(R.id.comments) RecyclerView mCommentsRecyclerView;
     @BindView(R.id.load_more) TextView mLoadMoreTextView;
-    @BindView(R.id.comment) EditText mCommentEditText;
+    @BindView(R.id.comment) PreImeEditText mCommentEditText;
     @BindView(R.id.submit) Button mSubmitButton;
     @BindView(R.id.comment_view) View mCommentsView;
     @BindView(R.id.favorite) ImageView mFavoriteImageView;
@@ -116,7 +119,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mNodeTextView.setText(topicDetail.getTopic().getMeta().getNode().getTitle());
 
         // 相比 loadData，这个调用能解决中文乱码的问题
-        mContentWebView.loadDataWithBaseURL(null, topicDetail.getContent() + "<style>html,body{padding:0;margin:0;} .ui-content{margin:0;padding:0 18px 0 18px;font-size:15px; line-height:26px;} img{display:inline; height:auto; max-width:100%;} a{word-break:break-all; word-wrap:break-word;} pre, code, pre code{word-wrap:normal; overflow:auto;} pre{padding:16px; bordor-radius:3px; border:1px solid #ccc;}</style>", "text/html", "UTF-8", null);
+        mContentWebView.loadDataWithBaseURL(null, topicDetail.getContent() + "<style>html,body{padding:0;margin:0;} .ui-content{margin:0;padding:0 18px 0 18px;font-size:15px; line-height:22px;} img{display:inline; height:auto; max-width:100%;} a{word-break:break-all; word-wrap:break-word;} pre, code, pre code{word-wrap:normal; overflow:auto;} pre{padding:16px; bordor-radius:3px; border:1px solid #ccc;}</style>", "text/html", "UTF-8", null);
 
         mAdapter.setData(mTopicDetail.getComments());
 
@@ -156,6 +159,19 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
                 mSubmitButton.setEnabled(!TextUtils.isEmpty(editable));
             }
         });
+        mCommentEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+                } else {
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(),0);
+                }
+            }
+        });
+        mCommentEditText.setParentView(mCommentsView);
     }
 
     @OnClick({R.id.load_more, R.id.submit, R.id.author, R.id.avatar,

@@ -45,5 +45,5 @@
     <dimen name="icon_interval">32dp</dimen>
     <dimen name="split_height">1px</dimen>
 
-    <item name="line_spacing_multiplier" type="dimen" format="float">1.4</item>
+    <item name="line_spacing_multiplier" type="dimen" format="float">1.2</item>
 </resources>

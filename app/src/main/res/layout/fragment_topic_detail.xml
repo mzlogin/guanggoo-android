@@ -133,7 +133,7 @@
             android:background="@color/white"
             android:visibility="gone">
 
-            <EditText
+            <org.mazhuang.guanggoo.ui.widget.PreImeEditText
                 android:id="@+id/comment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

@@ -7,5 +7,5 @@
     android:paddingTop="@dimen/small_margin"
     android:paddingBottom="@dimen/small_margin"
     android:background="@drawable/shape_gray"
-    android:textColor="@color/major"
-    android:textSize="@dimen/font_smallest"/>
+    android:textColor="@color/minor"
+    android:textSize="@dimen/font_small"/>

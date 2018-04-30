@@ -33,8 +33,7 @@
                 android:id="@+id/no_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/no_content" />
+                android:layout_gravity="center"/>
         </ScrollView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
