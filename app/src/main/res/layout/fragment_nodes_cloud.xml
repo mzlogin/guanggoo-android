@@ -4,6 +4,7 @@
     android:id="@+id/nodes_cloud"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
     android:scrollbars="none"
     android:layout_marginBottom="@dimen/normal_margin"/>
