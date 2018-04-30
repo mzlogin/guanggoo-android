@@ -2,6 +2,7 @@ package org.mazhuang.guanggoo.topicdetail;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
@@ -37,6 +38,8 @@ import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.ui.widget.PreImeEditText;
 import org.mazhuang.guanggoo.util.ConstantUtil;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -118,8 +121,22 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mAuthorTextView.setText(topicDetail.getTopic().getMeta().getAuthor().getUsername());
         mNodeTextView.setText(topicDetail.getTopic().getMeta().getNode().getTitle());
 
+        int lineHeight = 22;
+        try {
+            float lineHeightOrigin = 18.5714f * getResources().getDimension(R.dimen.line_spacing_multiplier);
+            lineHeight = Math.round(lineHeightOrigin);
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String style = new StringBuilder()
+                .append("<style>html,body{padding:0;margin:0;} .ui-content{margin:0;padding:0 18px 0 18px;font-size:15px; line-height:")
+                .append(lineHeight)
+                .append("px;} img{display:inline; height:auto; max-width:100%;} a{word-break:break-all; word-wrap:break-word;} pre, code, pre code{word-wrap:normal; overflow:auto;} pre{padding:16px; bordor-radius:3px; border:1px solid #ccc;}</style>")
+                .toString();
+
         // 相比 loadData，这个调用能解决中文乱码的问题
-        mContentWebView.loadDataWithBaseURL(null, topicDetail.getContent() + "<style>html,body{padding:0;margin:0;} .ui-content{margin:0;padding:0 18px 0 18px;font-size:15px; line-height:22px;} img{display:inline; height:auto; max-width:100%;} a{word-break:break-all; word-wrap:break-word;} pre, code, pre code{word-wrap:normal; overflow:auto;} pre{padding:16px; bordor-radius:3px; border:1px solid #ccc;}</style>", "text/html", "UTF-8", null);
+        mContentWebView.loadDataWithBaseURL(null, topicDetail.getContent() + style, "text/html", "UTF-8", null);
 
         mAdapter.setData(mTopicDetail.getComments());
 

@@ -1,5 +1,6 @@
 package org.mazhuang.guanggoo.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -107,11 +109,21 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
             return;
         }
 
+        hideSoftInput();
+
         mListener.onLoginStatusChanged(true);
 
         getActivity().onBackPressed();
         if (mListener != null && !ConstantUtil.LOGIN_URL.equals(mUrl)) {
             mListener.openPage(mUrl, mTitle);
+        }
+    }
+
+    private void hideSoftInput() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        boolean isOpen = imm != null && imm.isActive();
+        if (isOpen) {
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 
