@@ -150,7 +150,7 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
                     break;
 
                 case R.id.vote:
-                    mListener.onVote(mItem.getMeta().getVote().getUrl(), new OnResponseListener<Boolean>() {
+                    mListener.onVote(mItem.getMeta().getReplier().getUsername(), mItem.getMeta().getVote().getUrl(), new OnResponseListener<Boolean>() {
                         @Override
                         public void onSucceed(Boolean succeed) {
                             Comment.Vote vote = mItem.getMeta().getVote();

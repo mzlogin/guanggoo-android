@@ -24,8 +24,9 @@ public interface CommentsActionListener {
 
     /**
      * 给评论点赞
+     * @param username 要点赞的评论的作者
      * @param url 点赞 URL
      * @param listener 点赞结果回调
      */
-    void onVote(String url, OnResponseListener<Boolean> listener);
+    void onVote(String username, String url, OnResponseListener<Boolean> listener);
 }

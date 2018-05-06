@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.UserManager;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -451,7 +452,12 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     }
 
     @Override
-    public void onVote(String url, OnResponseListener<Boolean> listener) {
+    public void onVote(String username, String url, OnResponseListener<Boolean> listener) {
+        if (AuthInfoManager.getInstance().getUsername().equals(username)) {
+            toast(getString(R.string.cannot_vote_self));
+            return;
+        }
+
         if (TextUtils.isEmpty(url)) {
             return;
         }
