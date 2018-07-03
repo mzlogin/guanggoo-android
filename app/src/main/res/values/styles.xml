@@ -17,6 +17,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="LoginTheme" parent="AppTheme">
+        <item name="colorAccent">@color/main</item>
+    </style>
+
     <style name="Splash" parent="AppTheme.NoActionBar">
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
