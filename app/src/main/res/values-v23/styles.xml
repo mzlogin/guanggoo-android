@@ -9,6 +9,10 @@
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
+    <style name="LoginTheme" parent="AppTheme">
+        <item name="colorAccent">@color/main</item>
+    </style>
+
     <style name="AppTheme.AlertDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/main</item>
     </style>
