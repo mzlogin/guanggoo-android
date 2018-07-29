@@ -31,7 +31,7 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
     @Override
     public void getTopicDetail() {
         mView.startLoading();
-        NetworkTaskScheduler.getInstance().execute(new GetTopicDetailTask(getUrl(), new OnResponseListener<TopicDetail>() {
+        NetworkTaskScheduler.getInstance().execute(new GetTopicDetailTask(UrlUtil.appendPage(getUrl(), 1), new OnResponseListener<TopicDetail>() {
             @Override
             public void onSucceed(TopicDetail data) {
                 mView.stopLoading();

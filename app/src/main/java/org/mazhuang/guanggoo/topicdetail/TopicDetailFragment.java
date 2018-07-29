@@ -142,7 +142,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
         mAdapter.setData(mTopicDetail.getComments());
 
-        if (mAdapter.getSmallestFloor() > 1) {
+        if (mAdapter.getItemCount() < mTopicDetail.getCommentsCount()) {
             mLoadMoreTextView.setVisibility(View.VISIBLE);
             mLoadMoreTextView.setEnabled(true);
         }
@@ -202,11 +202,11 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         switch (v.getId()) {
             case R.id.load_more: {
                 mLoadMoreTextView.setEnabled(false);
-                int page = (mAdapter.getSmallestFloor() - 1) /ConstantUtil.COMMENTS_PER_PAGE;
-                if (page == 0) {
+                if (mAdapter.getItemCount() >= mTopicDetail.getCommentsCount()) {
                     mLoadMoreTextView.setVisibility(View.GONE);
                     return;
                 }
+                int page = mTopicDetail.getComments().size() / ConstantUtil.COMMENTS_PER_PAGE + 1;
                 mPresenter.getMoreComments(page);
             }
                 break;
@@ -370,8 +370,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     @Override
     public void onGetMoreCommentsSucceed(TopicDetail topicDetail) {
         mAdapter.addData(topicDetail.getComments());
-        int page = (mAdapter.getSmallestFloor() - 1) /ConstantUtil.COMMENTS_PER_PAGE;
-        if (page == 0) {
+        if (mAdapter.getItemCount() >= mTopicDetail.getCommentsCount()) {
             mLoadMoreTextView.setVisibility(View.GONE);
         } else {
             mLoadMoreTextView.setEnabled(true);

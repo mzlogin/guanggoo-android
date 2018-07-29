@@ -48,21 +48,6 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
         notifyDataSetChanged();
     }
 
-    public int getSmallestFloor() {
-        int ret = 0;
-        if (mData != null && mData.size() != 0) {
-            int count = 0;
-            for (Integer i : mData.keySet()) {
-                count++;
-                if (count == mData.keySet().size()) {
-                    ret = i;
-                    break;
-                }
-            }
-        }
-        return ret;
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())

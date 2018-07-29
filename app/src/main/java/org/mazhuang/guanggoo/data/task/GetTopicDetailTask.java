@@ -1,5 +1,7 @@
 package org.mazhuang.guanggoo.data.task;
 
+import android.text.TextUtils;
+
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.mazhuang.guanggoo.data.OnResponseListener;
@@ -78,6 +80,16 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
         topicDetail.setContent(elements.first().outerHtml());
 
         Elements commentsElements = doc.select("div.topic-reply");
+
+        Elements commentsHeaderElements = commentsElements.select("div.ui-header");
+
+        if (!commentsHeaderElements.isEmpty()) {
+            String commentsCountText = commentsHeaderElements.first().text();
+            if (!TextUtils.isEmpty(commentsCountText)) {
+                commentsCountText = commentsCountText.replaceAll("[^\\d]", "");
+                topicDetail.setCommentsCount(Integer.valueOf(commentsCountText));
+            }
+        }
 
         Map<Integer, Comment> comments = GetCommentsTask.getCommentsFromElements(commentsElements);
 

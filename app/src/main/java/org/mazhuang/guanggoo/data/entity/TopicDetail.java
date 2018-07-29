@@ -13,6 +13,7 @@ public class TopicDetail {
     private Favorite favorite;
     private Topic topic;
     private String content;
+    private int commentsCount;
     private Map<Integer, Comment> comments;
 
     public String getContent() {
@@ -46,17 +47,11 @@ public class TopicDetail {
         this.favorite = favorite;
     }
 
+    public void setCommentsCount(int commentsCount) {
+        this.commentsCount = commentsCount;
+    }
+
     public int getCommentsCount() {
-        if (comments == null || comments.isEmpty()) {
-            return 0;
-        }
-
-        Integer max = 0;
-
-        for (Integer i : comments.keySet()) {
-            max = Math.max(i, max);
-        }
-
-        return max;
+        return commentsCount;
     }
 }

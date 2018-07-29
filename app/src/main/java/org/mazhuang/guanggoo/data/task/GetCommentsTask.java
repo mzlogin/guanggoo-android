@@ -50,7 +50,8 @@ public class GetCommentsTask extends BaseTask<Map<Integer, Comment>> {
             comments.put(comment.getMeta().getFloor(), comment);
         }
 
-        return comments.descendingMap();
+        return comments;
+//        return comments.descendingMap();
     }
 
     public static Comment getCommentFromElement(Element element) {
