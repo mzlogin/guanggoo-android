@@ -1,13 +1,11 @@
 package org.mazhuang.guanggoo.topicdetail;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.UserManager;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,13 +15,11 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,8 +36,6 @@ import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.ui.widget.PreImeEditText;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.SoftInputUtil;
-
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,12 +68,18 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     @BindView(R.id.favorite) ImageView mFavoriteImageView;
     @BindView(R.id.follow) Button mFollowButton;
 
+    private View mRoot;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_topic_detail, container, false);
+        if (mRoot != null) {
+            return mRoot;
+        }
 
-        ButterKnife.bind(this, root);
+        mRoot = inflater.inflate(R.layout.fragment_topic_detail, container, false);
+
+        ButterKnife.bind(this, mRoot);
 
         initParams();
 
@@ -91,7 +91,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
             setViewData(mTopicDetail);
         }
 
-        return root;
+        return mRoot;
     }
 
     private void shareCurrentLink() {
