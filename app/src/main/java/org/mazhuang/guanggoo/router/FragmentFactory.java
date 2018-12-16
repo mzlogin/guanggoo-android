@@ -1,7 +1,5 @@
 package org.mazhuang.guanggoo.router;
 
-import android.app.Fragment;
-
 import org.mazhuang.guanggoo.about.AboutFragment;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
@@ -13,6 +11,8 @@ import org.mazhuang.guanggoo.newtopic.NewTopicPresenter;
 import org.mazhuang.guanggoo.newtopic.SelectNodeFragment;
 import org.mazhuang.guanggoo.nodescloud.NodesCloudFragment;
 import org.mazhuang.guanggoo.nodescloud.NodesCloudPresenter;
+import org.mazhuang.guanggoo.notifications.NotificationsFragment;
+import org.mazhuang.guanggoo.notifications.NotificationsPresenter;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailFragment;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailPresenter;
 import org.mazhuang.guanggoo.topicdetail.viewimage.ViewImageFragment;
@@ -69,6 +69,8 @@ public class FragmentFactory {
         NEW_TOPIC,
         // 查看图片
         VIEW_IMAGE,
+        // 查看消息提醒
+        VIEW_NOTIFICATIONS,
     }
 
     public static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com[/]?$");
@@ -112,7 +114,7 @@ public class FragmentFactory {
             case USER_FAVORS:
                 if (AuthInfoManager.getInstance().isLoginIn()) {
                     fragment = new TopicListFragment();
-                    new TopicListPresenter((TopicListFragment) fragment);
+                    new TopicListPresenter((TopicListFragment) fragment, ConstantUtil.FAVORITE_PER_PAGE);
                 } else {
                     fragment = new LoginFragment();
                     new LoginPresenter((LoginFragment)fragment);
@@ -188,6 +190,16 @@ public class FragmentFactory {
                 fragment = new AboutFragment();
                 break;
 
+            case VIEW_NOTIFICATIONS:
+                if (AuthInfoManager.getInstance().isLoginIn()) {
+                    fragment = new NotificationsFragment();
+                    new NotificationsPresenter((NotificationsFragment) fragment);
+                } else {
+                    fragment = new LoginFragment();
+                    new LoginPresenter((LoginFragment) fragment);
+                }
+                break;
+
             default:
                 fragment = null;
                 break;
@@ -251,6 +263,10 @@ public class FragmentFactory {
 
         if (ConstantUtil.HOME_URL.equals(url)) {
             return PageType.HOME;
+        }
+
+        if (ConstantUtil.NOTIFICATIONS_URL.equals(url)) {
+            return PageType.VIEW_NOTIFICATIONS;
         }
 
         if (ConstantUtil.ABOUT_URL.equals(url)) {

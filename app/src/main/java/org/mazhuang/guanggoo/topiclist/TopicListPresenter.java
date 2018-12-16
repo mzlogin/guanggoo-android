@@ -2,12 +2,13 @@ package org.mazhuang.guanggoo.topiclist;
 
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
-import org.mazhuang.guanggoo.data.entity.TopicList;
+import org.mazhuang.guanggoo.data.entity.ListResult;
+import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.task.BaseTask;
 import org.mazhuang.guanggoo.data.task.GetTopicListTask;
+import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
-import java.util.List;
 
 /**
  *
@@ -21,9 +22,16 @@ public class TopicListPresenter implements TopicListContract.Presenter {
 
     private BaseTask mCurrentTask;
 
+    private int mPagination = ConstantUtil.TOPICS_PER_PAGE;
+
     public TopicListPresenter(TopicListContract.View view) {
         mView = view;
         view.setPresenter(this);
+    }
+
+    public TopicListPresenter(TopicListContract.View view, int pagination) {
+        this(view);
+        mPagination = pagination;
     }
 
     @Override
@@ -33,9 +41,9 @@ public class TopicListPresenter implements TopicListContract.Presenter {
         }
 
         mCurrentTask = new GetTopicListTask(mView.getUrl(),
-                new OnResponseListener<TopicList>() {
+                new OnResponseListener<ListResult<Topic>>() {
                     @Override
-                    public void onSucceed(TopicList data) {
+                    public void onSucceed(ListResult<Topic> data) {
                         mView.onGetTopicListSucceed(data);
                         mCurrentTask = null;
                     }
@@ -57,9 +65,9 @@ public class TopicListPresenter implements TopicListContract.Presenter {
         }
 
         mCurrentTask = new GetTopicListTask(UrlUtil.appendPage(mView.getUrl(), page),
-                new OnResponseListener<TopicList>() {
+                new OnResponseListener<ListResult<Topic>>() {
                     @Override
-                    public void onSucceed(TopicList data) {
+                    public void onSucceed(ListResult<Topic> data) {
                         mView.onGetMoreTopicSucceed(data);
                         mCurrentTask = null;
                     }
@@ -72,5 +80,10 @@ public class TopicListPresenter implements TopicListContract.Presenter {
                 });
 
         NetworkTaskScheduler.getInstance().execute(mCurrentTask);
+    }
+
+    @Override
+    public int getPagination() {
+        return mPagination;
     }
 }

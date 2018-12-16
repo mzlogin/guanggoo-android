@@ -2,8 +2,8 @@ package org.mazhuang.guanggoo.userprofile.replies;
 
 import org.mazhuang.guanggoo.base.BasePresenter;
 import org.mazhuang.guanggoo.base.BaseView;
-import org.mazhuang.guanggoo.data.entity.ReplyList;
-
+import org.mazhuang.guanggoo.data.entity.ListResult;
+import org.mazhuang.guanggoo.data.entity.Reply;
 /**
  *
  * @author mazhuang
@@ -29,7 +29,7 @@ public interface ReplyListContract {
          * 获取评论列表成功
          * @param replyList 评论内容
          */
-        void onGetReplyListSucceed(ReplyList replyList);
+        void onGetReplyListSucceed(ListResult<Reply> replyList);
 
         /**
          * 获取评论列表失败
@@ -41,7 +41,7 @@ public interface ReplyListContract {
          * 获取更多评论成功
          * @param replyList 评论内容
          */
-        void onGetMoreReplySucceed(ReplyList replyList);
+        void onGetMoreReplySucceed(ListResult<Reply> replyList);
 
         /**
          * 获取更多评论失败

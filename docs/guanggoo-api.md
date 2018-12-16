@@ -17,6 +17,9 @@
 * [发表新主题](#发表新主题)
 * [评论点赞](#评论点赞)
 * [关注/取消关注](#关注取消关注)
+* [消息提醒](#消息提醒)
+    * [判断是否有新消息提醒](#判断是否有新消息提醒)
+    * [消息提醒列表](#消息提醒列表)
 
 <!-- vim-markdown-toc -->
 
@@ -430,5 +433,80 @@ Web 上会自动跳转到个人信息页，已经关注的情况：
       </dl>
     </div>
   </div>
+</div>
+```
+
+## 消息提醒
+
+### 判断是否有新消息提醒
+
+这个不需要在特定的页面判断，基本所有页面都带有这个信息，实际编码的时候，选部分页面加入判断逻辑和发出通知即可。
+
+```xml
+<body>
+<nav class="navbar navbar-default top-navbar">
+<div class="container-fluid container">
+<a href="/notifications" class="notification-indicator tooltipped downwards contextually-unread" title="mzlogin，你有4条未读提醒，去看看吧">
+<span class="mail-status unread"></span>
+</a>
+</div>
+</nav>
+</body>
+```
+
+有未读消息时，a 标签才会有 `contextually-unread` 类，在 title 里有未读消息条数信息。
+
+### 消息提醒列表
+
+消息提醒分两种类型:
+
+1. 别人 AT 你；
+
+2. 别人回复了你的主题；
+
+```xml
+<div class="notifications container-box">
+<div class="ui-content">
+<div class="notification-item">
+    <a href="/u/kanqn">
+        <img src="http://cdn.guanggoo.com//static/avatar/60/m_a649dc2e-cdd0-11e7-a0b7-00163e020f08.png" alt="" class="avatar">
+    </a>
+    <div class="main">
+        <span class="title"><a href="/u/kanqn">kanqn</a> 回复了你的主题 <a href="/t/36049">一份简明的 Markdown 笔记与教程</a></span>
+        <div class="content"><p>这几天在朋友圈看到推文了<br>
+            嗯，学好了，又可以去装逼了。<br>
+            就是这样(๑•̀ㅁ•́๑)✧</p>
+        </div>
+    </div>
+</div>
+<div class="notification-item">
+    <a href="/u/jiujiujiu">
+        <img src="http://cdn.guanggoo.com//static/avatar/84/m_7d822faa-51cd-11e7-a0b7-00163e020f08.png" alt="" class="avatar">
+    </a>
+    <div class="main">
+        <span class="title"><a href="/u/jiujiujiu">jiujiujiu</a> 回复了你的主题 <a href="/t/36049">一份简明的 Markdown 笔记与教程</a></span>
+        <div class="content"><p>感谢！学习！</p>
+        </div>
+    </div>
+</div>
+<div class="notification-item">
+    <a href="/u/binjoo">
+        <img src="http://cdn.guanggoo.com//static/avatar/13/m_51e9b48c-b8ca-11e5-a0b7-00163e020f08.png" alt="" class="avatar">
+    </a>
+    <div class="main">
+        <span class="title"><a href="/u/binjoo">binjoo</a> 回复了你的主题 <a href="/t/36049">一份简明的 Markdown 笔记与教程</a></span>
+        <div class="content"><p>用markdown有几年了，才知道后面加空格还能换行的。</p>
+        </div>
+    </div>
+</div>
+<div class="notification-item">
+    <a href="/u/kanqn">
+    <img src="http://cdn.guanggoo.com//static/avatar/60/m_a649dc2e-cdd0-11e7-a0b7-00163e020f08.png" alt="" class="avatar">
+    </a>
+    <div class="main">
+        <span class="title"><a href="/u/kanqn">kanqn</a> 在 <a href="/t/35624">Visio学习视频有吗？</a> 中提到了你</span>
+        <div class="content"><p><a target="_blank" href="/u/mzlogin" class="user-mention">@mzlogin</a> 那三个是下午和傍晚总共花了一个半小时画的</p>
+        </div>
+    </div>
 </div>
 ```

@@ -4,10 +4,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.mazhuang.guanggoo.data.OnResponseListener;
+import org.mazhuang.guanggoo.data.entity.ListResult;
 import org.mazhuang.guanggoo.data.entity.Meta;
 import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.Topic;
-import org.mazhuang.guanggoo.data.entity.TopicList;
 import org.mazhuang.guanggoo.data.entity.User;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
@@ -21,11 +21,11 @@ import java.util.List;
  * @date 2017/9/16
  */
 
-public class GetTopicListTask extends BaseTask<TopicList> implements Runnable {
+public class GetTopicListTask extends BaseTask<ListResult<Topic>> implements Runnable {
 
     private String mUrl;
 
-    public GetTopicListTask(String url, OnResponseListener<TopicList> listener) {
+    public GetTopicListTask(String url, OnResponseListener<ListResult<Topic>> listener) {
         super(listener);
         mUrl = url;
     }
@@ -65,8 +65,8 @@ public class GetTopicListTask extends BaseTask<TopicList> implements Runnable {
         }
 
         if (succeed) {
-            TopicList topicList = new TopicList();
-            topicList.setTopics(topics);
+            ListResult<Topic> topicList = new ListResult<>();
+            topicList.setData(topics);
             topicList.setHasMore(hasMore);
             successOnUI(topicList);
         } else {

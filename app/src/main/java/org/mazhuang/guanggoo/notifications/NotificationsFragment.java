@@ -1,12 +1,12 @@
-package org.mazhuang.guanggoo.userprofile.replies;
+package org.mazhuang.guanggoo.notifications;
 
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +15,8 @@ import android.widget.Toast;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.entity.ListResult;
-import org.mazhuang.guanggoo.data.entity.Reply;
+import org.mazhuang.guanggoo.data.entity.Notification;
+import org.mazhuang.guanggoo.userprofile.replies.ReplyListAdapter;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import butterknife.BindView;
@@ -23,11 +24,11 @@ import butterknife.ButterKnife;
 
 /**
  * @author mazhuang
+ * @date 2018/8/18
  */
-public class ReplyListFragment extends BaseFragment<ReplyListContract.Presenter> implements ReplyListContract.View,
-    SwipeRefreshLayout.OnRefreshListener {
+public class NotificationsFragment extends BaseFragment<NotificationsContract.Presenter> implements NotificationsContract.View, SwipeRefreshLayout.OnRefreshListener {
 
-    private ReplyListAdapter mAdapter;
+    private NotificationsAdapter mAdapter;
     private boolean mLoadable = false;
     int pastVisibleItems, visibleItemCount, totalItemCount;
 
@@ -37,10 +38,10 @@ public class ReplyListFragment extends BaseFragment<ReplyListContract.Presenter>
 
     private boolean mFirstFetchFinished = false;
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_reply_list, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
 
         initParams();
 
@@ -49,7 +50,7 @@ public class ReplyListFragment extends BaseFragment<ReplyListContract.Presenter>
         initViews();
 
         if (!mAdapter.isFilled()) {
-            mPresenter.getReplyList();
+            mPresenter.getNotificationList();
         }
 
         return root;
@@ -75,7 +76,7 @@ public class ReplyListFragment extends BaseFragment<ReplyListContract.Presenter>
             }
         });
         if (mAdapter == null) {
-            mAdapter = new ReplyListAdapter(mListener);
+            mAdapter = new NotificationsAdapter(mListener);
         }
         mRecyclerView.setAdapter(mAdapter);
 
@@ -92,8 +93,8 @@ public class ReplyListFragment extends BaseFragment<ReplyListContract.Presenter>
                     if (mLoadable) {
                         if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                             mLoadable = false;
-                            if (totalItemCount >= ConstantUtil.REPLIES_PER_PAGE && totalItemCount <= ConstantUtil.MAX_TOPICS) {
-                                mPresenter.getMoreReply(totalItemCount / ConstantUtil.REPLIES_PER_PAGE + 1);
+                            if (totalItemCount >= ConstantUtil.NOTIFICATIONS_PER_PAGE && totalItemCount <= ConstantUtil.MAX_TOPICS) {
+                                mPresenter.getMoreNotification(totalItemCount / ConstantUtil.NOTIFICATIONS_PER_PAGE + 1);
                             } else {
                                 Toast.makeText(getActivity(), "1024", Toast.LENGTH_SHORT).show();
                             }
@@ -114,36 +115,6 @@ public class ReplyListFragment extends BaseFragment<ReplyListContract.Presenter>
         swipeRefreshLayout.setColorSchemeResources(R.color.main);
     }
 
-    @Override
-    public void onGetReplyListSucceed(ListResult<Reply> replyList) {
-
-        finishRefresh();
-
-        if (getContext() == null) {
-            return;
-        }
-
-        mLoadable = replyList.isHasMore();
-
-        mAdapter.setData(replyList.getData());
-
-        handleEmptyList();
-    }
-
-    @Override
-    public void onGetReplyListFailed(String msg) {
-
-        finishRefresh();
-
-        if (getContext() == null) {
-            return;
-        }
-
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-
-        handleEmptyList();
-    }
-
     private void handleEmptyList() {
         if (mAdapter.getItemCount() == 0) {
             mEmptyLayout.setVisibility(View.VISIBLE);
@@ -156,26 +127,51 @@ public class ReplyListFragment extends BaseFragment<ReplyListContract.Presenter>
 
     @Override
     public String getTitle() {
-        if (TextUtils.isEmpty(mTitle)) {
-            return getString(R.string.reply_list);
-        } else {
-            return mTitle;
-        }
+        return getString(R.string.notifications);
     }
 
     @Override
-    public void onGetMoreReplySucceed(ListResult<Reply> replyList) {
+    public void onGetNotificationListSucceed(ListResult<Notification> notificationList) {
+
+        finishRefresh();
+
         if (getContext() == null) {
             return;
         }
 
-        mLoadable = replyList.isHasMore();
+        mLoadable = notificationList.isHasMore();
 
-        mAdapter.addData(replyList.getData());
+        mAdapter.setData(notificationList.getData());
+
+        handleEmptyList();
     }
 
     @Override
-    public void onGetMoreReplyFailed(String msg) {
+    public void onGetNotificationListFailed(String msg) {
+        finishRefresh();
+
+        if (getContext() == null) {
+            return;
+        }
+
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+
+        handleEmptyList();
+    }
+
+    @Override
+    public void onGetMoreNotificationSucceed(ListResult<Notification> notificationList) {
+        if (getContext() == null) {
+            return;
+        }
+
+        mLoadable = notificationList.isHasMore();
+
+        mAdapter.addData(notificationList.getData());
+    }
+
+    @Override
+    public void onGetMoreNotificationFailed(String msg) {
         if (getContext() == null) {
             return;
         }
@@ -189,7 +185,7 @@ public class ReplyListFragment extends BaseFragment<ReplyListContract.Presenter>
             return;
         }
 
-        mPresenter.getReplyList();
+        mPresenter.getNotificationList();
     }
 
     private void finishRefresh() {

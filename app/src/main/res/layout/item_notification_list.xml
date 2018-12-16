@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingTop="@dimen/normal_margin"
+    android:paddingLeft="@dimen/normal_margin"
+    android:paddingRight="@dimen/normal_margin">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/avatar_size_small"
+        android:layout_height="@dimen/avatar_size_small"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/m_default"/>
+
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/avatar"
+        android:layout_marginLeft="@dimen/inner_margin"
+        android:layout_alignBaseline="@id/avatar"
+        android:textColor="@color/major"
+        android:textSize="@dimen/font_small"/>
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/author"
+        android:layout_marginLeft="@dimen/inner_margin"
+        android:layout_alignBaseline="@id/avatar"
+        android:textColor="@color/advance"
+        android:textSize="@dimen/font_small"
+        android:text="@string/mentioned_you"/>
+
+    <org.sufficientlysecure.htmltextview.HtmlTextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/avatar"
+        android:layout_marginTop="@dimen/middle_margin"
+        android:layout_marginBottom="@dimen/middle_margin"
+        android:textSize="@dimen/font_comment"
+        android:textColor="@color/major"
+        android:textColorLink="@color/main"
+        android:lineSpacingMultiplier="@dimen/line_spacing_multiplier"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/middle_margin"
+        android:layout_below="@id/content"
+        android:layout_marginTop="@dimen/middle_margin"
+        android:layout_marginBottom="@dimen/normal_margin"
+        android:background="@color/notification_topic_background"
+        android:textColor="@color/minor"
+        android:lineSpacingMultiplier="@dimen/line_spacing_multiplier"
+        android:textSize="@dimen/font_small"/>
+
+</RelativeLayout>

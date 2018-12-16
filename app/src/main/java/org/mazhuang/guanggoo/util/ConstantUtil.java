@@ -30,14 +30,19 @@ public class ConstantUtil {
     public static final String USER_REPLIES_BASE_URL = BASE_URL + "/u/%s/replies";
     public static final String FOLLOW_USER_BASE_URL = BASE_URL + "/f/user/%s";
     public static final String NEW_TOPIC_BASE_URL = BASE_URL + "/t/create/%s";
+    public static final String NOTIFICATIONS_URL = BASE_URL + "/notifications";
 
     public static final String ABOUT_URL = "INNER_PAGE_ABOUT";
 
     public static final int TOPICS_PER_PAGE = 36;
 
+    public static final int FAVORITE_PER_PAGE = 16;
+
     public static final int COMMENTS_PER_PAGE = 106;
 
     public static final int REPLIES_PER_PAGE = 16;
+
+    public static final int NOTIFICATIONS_PER_PAGE = 16;
 
     public static final String KEY_COOKIE = "cookie";
     public static final String KEY_XSRF = "_xsrf";

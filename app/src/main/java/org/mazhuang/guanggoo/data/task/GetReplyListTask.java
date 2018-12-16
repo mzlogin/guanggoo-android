@@ -4,8 +4,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.mazhuang.guanggoo.data.OnResponseListener;
+import org.mazhuang.guanggoo.data.entity.ListResult;
 import org.mazhuang.guanggoo.data.entity.Reply;
-import org.mazhuang.guanggoo.data.entity.ReplyList;
 import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
@@ -19,11 +19,11 @@ import java.util.List;
  * @date 2017/10/6
  */
 
-public class GetReplyListTask extends BaseTask<ReplyList> {
+public class GetReplyListTask extends BaseTask<ListResult<Reply>> {
 
     private String mUrl;
 
-    public GetReplyListTask(String url, OnResponseListener<ReplyList> listener) {
+    public GetReplyListTask(String url, OnResponseListener<ListResult<Reply>> listener) {
         super(listener);
         mUrl = url;
     }
@@ -83,8 +83,8 @@ public class GetReplyListTask extends BaseTask<ReplyList> {
         }
 
         if (succeed) {
-            ReplyList replyList = new ReplyList();
-            replyList.setReplies(replies);
+            ListResult<Reply> replyList = new ListResult<>();
+            replyList.setData(replies);
             replyList.setHasMore(hasMore);
             successOnUI(replyList);
         } else {

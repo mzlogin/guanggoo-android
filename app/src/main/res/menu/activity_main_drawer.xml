@@ -7,11 +7,6 @@
             android:icon="@drawable/ic_menu_personal"
             android:title="@string/personal_center" />
         <item
-            android:id="@+id/nav_notifications"
-            android:icon="@drawable/ic_menu_notifications"
-            android:title="@string/notifications"
-            android:visible="false"/>
-        <item
             android:id="@+id/nav_favors"
             android:icon="@drawable/ic_menu_favors"
             android:title="@string/my_favors"/>

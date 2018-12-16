@@ -95,6 +95,8 @@
     <string name="logout_confirm">确认退出？</string>
     <string name="logout_tip_message">退出后缓存将被清空，大部分功能需要重新登录后才能使用，确认退出吗？</string>
     <string name="cannot_vote_self">不能对自己的评论点赞</string>
+    <string name="mentioned_you">提到你</string>
+    <string name="reply_you">回复了你的主题</string>
 
     <string-array name="home_tab_names">
         <item>@string/default_order_topics</item>

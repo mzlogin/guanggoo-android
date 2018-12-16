@@ -2,7 +2,8 @@ package org.mazhuang.guanggoo.userprofile.replies;
 
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
-import org.mazhuang.guanggoo.data.entity.ReplyList;
+import org.mazhuang.guanggoo.data.entity.ListResult;
+import org.mazhuang.guanggoo.data.entity.Reply;
 import org.mazhuang.guanggoo.data.task.GetReplyListTask;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
@@ -24,9 +25,9 @@ public class ReplyListPresenter implements ReplyListContract.Presenter {
     @Override
     public void getReplyList() {
         NetworkTaskScheduler.getInstance().execute(new GetReplyListTask(mView.getUrl(),
-                new OnResponseListener<ReplyList>() {
+                new OnResponseListener<ListResult<Reply>>() {
                     @Override
-                    public void onSucceed(ReplyList data) {
+                    public void onSucceed(ListResult<Reply> data) {
                         mView.onGetReplyListSucceed(data);
                     }
 
@@ -40,9 +41,9 @@ public class ReplyListPresenter implements ReplyListContract.Presenter {
     @Override
     public void getMoreReply(int page) {
         NetworkTaskScheduler.getInstance().execute(new GetReplyListTask(UrlUtil.appendPage(mView.getUrl(), page),
-                new OnResponseListener<ReplyList>() {
+                new OnResponseListener<ListResult<Reply>>() {
                     @Override
-                    public void onSucceed(ReplyList data) {
+                    public void onSucceed(ListResult<Reply> data) {
                         mView.onGetMoreReplySucceed(data);
                     }
 

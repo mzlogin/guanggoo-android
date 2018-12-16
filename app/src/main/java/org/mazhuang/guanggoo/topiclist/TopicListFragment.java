@@ -1,30 +1,24 @@
 package org.mazhuang.guanggoo.topiclist;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.mazhuang.guanggoo.data.entity.ListResult;
+import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
-import org.mazhuang.guanggoo.data.entity.TopicList;
 import org.mazhuang.guanggoo.util.ConstantUtil;
-import org.mazhuang.guanggoo.util.DimensUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
 import butterknife.BindView;
@@ -105,8 +99,11 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
                     if (mLoadable) {
                         if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                             mLoadable = false;
-                            if (totalItemCount >= ConstantUtil.TOPICS_PER_PAGE && totalItemCount <= ConstantUtil.MAX_TOPICS) {
-                                mPresenter.getMoreTopic(totalItemCount / ConstantUtil.TOPICS_PER_PAGE + 1);
+
+                            int pagination = mPresenter.getPagination();
+
+                            if (totalItemCount >= pagination && totalItemCount <= ConstantUtil.MAX_TOPICS) {
+                                mPresenter.getMoreTopic(totalItemCount / pagination + 1);
                             } else {
                                 Toast.makeText(getActivity(), "1024", Toast.LENGTH_SHORT).show();
                             }
@@ -162,7 +159,7 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
     }
 
     @Override
-    public void onGetTopicListSucceed(TopicList topicList) {
+    public void onGetTopicListSucceed(ListResult<Topic> topicList) {
 
         finishRefresh();
 
@@ -170,13 +167,13 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
             return;
         }
 
-        if (topicList.getTopics().isEmpty()) {
+        if (topicList.getData().isEmpty()) {
             mNoContentTextView.setText(R.string.no_content);
         }
 
         mLoadable = topicList.isHasMore();
 
-        mAdapter.setData(topicList.getTopics());
+        mAdapter.setData(topicList.getData());
 
         handleEmptyList();
     }
@@ -217,14 +214,14 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
     }
 
     @Override
-    public void onGetMoreTopicSucceed(TopicList topicList) {
+    public void onGetMoreTopicSucceed(ListResult<Topic> topicList) {
         if (getContext() == null) {
             return;
         }
 
         mLoadable = topicList.isHasMore();
 
-        mAdapter.addData(topicList.getTopics());
+        mAdapter.addData(topicList.getData());
     }
 
     @Override

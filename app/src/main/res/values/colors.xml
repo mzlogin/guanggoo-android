@@ -35,4 +35,6 @@
     <color name="loading_center">#88258DF5</color>
     <color name="loading_end">#FF258DF5</color>
 
+    <color name="notification_topic_background">#FFF7F8FA</color>
+
 </resources>
