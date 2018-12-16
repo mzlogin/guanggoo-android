@@ -136,4 +136,15 @@ public abstract class BaseTask<T> implements Runnable {
         }
         return element;
     }
+
+    protected void checkNotification(Document doc) {
+        Elements elements = doc.select("a.contextually-unread");
+        final boolean hasNotifications = !elements.isEmpty();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                App.getInstance().mGlobal.hasNotifications.setValue(hasNotifications);
+            }
+        });
+    }
 }

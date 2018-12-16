@@ -1,9 +1,12 @@
 package org.mazhuang.guanggoo.home;
 
 
+import android.arch.lifecycle.Observer;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,10 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.mazhuang.guanggoo.App;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.router.annotations.ClearTop;
 import org.mazhuang.guanggoo.router.annotations.StartsWithAppBar;
+import org.mazhuang.guanggoo.ui.widget.MenuItemBadge;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
 import butterknife.BindView;
@@ -70,6 +75,23 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.home, menu);
+
+        final MenuItem menuItemNotification = menu.findItem(R.id.action_notifications);
+        MenuItemBadge.update(getActivity(), menuItemNotification, new MenuItemBadge.Builder()
+                .iconDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_menu_notifications))
+                .iconTintColor(Color.WHITE));
+
+        App.getInstance().mGlobal.hasNotifications.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if (aBoolean) {
+                    MenuItemBadge.getBadgeTextView(menuItemNotification).setHighLightMode(true);
+                } else {
+                    MenuItemBadge.getBadgeTextView(menuItemNotification).clearHighLightMode();
+                }
+            }
+        });
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 

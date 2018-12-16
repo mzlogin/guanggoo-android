@@ -20,6 +20,7 @@ android {
         manifestPlaceholders = [
                 appChannel: "unknown"
         ]
+        multiDexEnabled true
     }
 
     flavorDimensions 'channel'
@@ -133,4 +134,5 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     compileOnly 'org.projectlombok:lombok:1.18.2'
     annotationProcessor 'org.projectlombok:lombok:1.18.2'
+    implementation 'com.android.support:multidex:1.0.3'
 }
