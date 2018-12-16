@@ -8,7 +8,7 @@ import android.view.inputmethod.InputMethodManager;
  * 软键盘操作工具类。
  *
  * @author mazhuang
- * @date 2018 /4/30
+ * @date 2018/4/30
  */
 public class SoftInputUtil {
     private SoftInputUtil() {}
