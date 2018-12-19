@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity
 
     private ImageView mAvatarImageView;
     private TextView mUsernameTextView;
+    private ImageView mSearchImageView;
     @BindView(R.id.progress) ProgressBar mProgressBar;
     @BindView(R.id.main_appbar) AppBarLayout mMainAppBar;
 
@@ -94,16 +95,30 @@ public class MainActivity extends AppCompatActivity
         // 设置抽屉菜单图标为图片原色
         navigationView.setItemIconTintList(null);
 
-        mAvatarImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.avatar);
-        mUsernameTextView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.username);
+        mAvatarImageView = navigationView.getHeaderView(0).findViewById(R.id.avatar);
+        mUsernameTextView = navigationView.getHeaderView(0).findViewById(R.id.username);
+        mSearchImageView = navigationView.getHeaderView(0).findViewById(R.id.search);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openUserProfile();
+                switch (view.getId()) {
+                    case R.id.avatar:
+                    case R.id.username:
+                        openUserProfile();
+                        break;
+
+                    case R.id.search:
+                        openPage(ConstantUtil.SEARCH_URL, null);
+                        break;
+
+                    default:
+                        break;
+                }
             }
         };
         mAvatarImageView.setOnClickListener(listener);
         mUsernameTextView.setOnClickListener(listener);
+        mSearchImageView.setOnClickListener(listener);
 
         openPage(ConstantUtil.HOME_URL, getString(R.string.app_name));
 

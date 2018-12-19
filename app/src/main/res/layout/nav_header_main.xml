@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/main"
     android:paddingLeft="@dimen/nav_header_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -12,7 +13,8 @@
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginBottom="@dimen/large_middle_margin"
         android:text="@string/not_logged_in"
         android:textColor="@color/white"
@@ -22,8 +24,19 @@
         android:id="@+id/avatar"
         android:layout_width="@dimen/avatar_size"
         android:layout_height="@dimen/avatar_size"
-        android:layout_above="@id/username"
+        app:layout_constraintBottom_toTopOf="@id/username"
         android:layout_marginBottom="@dimen/middle_margin"
         android:src="@drawable/m_default" />
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/avatar"
+        android:src="@drawable/ic_search"
+        android:tint="@color/white"
+        android:background="@null"
+        android:contentDescription="@string/search" />
+
+</android.support.constraint.ConstraintLayout>

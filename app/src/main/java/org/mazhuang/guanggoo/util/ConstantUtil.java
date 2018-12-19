@@ -33,6 +33,7 @@ public class ConstantUtil {
     public static final String NOTIFICATIONS_URL = BASE_URL + "/notifications";
 
     public static final String ABOUT_URL = "INNER_PAGE_ABOUT";
+    public static final String SEARCH_URL = "SEARCH_URL";
 
     public static final int TOPICS_PER_PAGE = 36;
 

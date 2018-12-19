@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/normal_margin">
+
+    <EditText
+        android:id="@+id/keyword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/please_input_user_id"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textCursorDrawable="@drawable/edittext_cursor"
+        android:background="@drawable/edittext_background"/>
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/keyword"
+        android:layout_marginTop="@dimen/normal_margin"
+        android:background="@drawable/blue_button"
+        android:text="@string/search"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_button"/>
+
+</android.support.constraint.ConstraintLayout>
