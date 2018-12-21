@@ -18,7 +18,7 @@
     <dimen name="titleText">16sp</dimen>
     <dimen name="comment_edit_height">64dp</dimen>
     <dimen name="button_height">36dp</dimen>
-    <dimen name="comment_button_width">44dp</dimen>
+    <dimen name="comment_button_width">48dp</dimen>
     <dimen name="small_margin">4dp</dimen>
     <dimen name="linear_item_height">54dp</dimen>
     <dimen name="linear_item_font_size">16sp</dimen>

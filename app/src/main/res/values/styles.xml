@@ -54,4 +54,10 @@
         <item name="android:listPreferredItemHeightSmall">56dp</item>
         <item name="listPreferredItemHeightSmall">56dp</item>
     </style>
+
+    <style name="DefaultEditText">
+        <item name="android:padding">@dimen/inner_margin</item>
+        <item name="android:textCursorDrawable">@drawable/edittext_cursor</item>
+        <item name="android:background">@drawable/edittext_background</item>
+    </style>
 </resources>

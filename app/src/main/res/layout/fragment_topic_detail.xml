@@ -78,7 +78,6 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         app:cardElevation="8dp"
         app:cardBackgroundColor="@color/colorAccent">
 
@@ -135,13 +134,11 @@
 
             <org.mazhuang.guanggoo.ui.widget.PreImeEditText
                 android:id="@+id/comment"
+                style="@style/DefaultEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/edittext_background"
                 android:layout_margin="@dimen/inner_margin"
-                android:padding="@dimen/inner_margin"
-                android:textCursorDrawable="@drawable/edittext_cursor"
                 android:hint="@string/add_comment"
                 android:inputType="textMultiLine" />
 
