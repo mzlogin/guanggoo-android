@@ -3,7 +3,9 @@ package org.mazhuang.guanggoo.userprofile;
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.UserProfile;
+import org.mazhuang.guanggoo.data.task.FollowUserTask;
 import org.mazhuang.guanggoo.data.task.GetUserProfileTask;
+import org.mazhuang.guanggoo.util.ConstantUtil;
 
 /**
  *
@@ -34,6 +36,57 @@ public class UserProfilePresenter implements UserProfileContract.Presenter {
             public void onFailed(String msg) {
                 mView.stopLoading();
                 mView.onGetUserProfileFailed(msg);
+            }
+        }));
+    }
+
+
+    @Override
+    public void followUser(String username) {
+        mView.startLoading();
+
+        String url = String.format(ConstantUtil.FOLLOW_USER_BASE_URL, username);
+
+        NetworkTaskScheduler.getInstance().execute(new FollowUserTask(url, new OnResponseListener<Boolean>() {
+            @Override
+            public void onSucceed(Boolean data) {
+                mView.stopLoading();
+                if (data) {
+                    mView.onFollowUserSucceed();
+                } else {
+                    mView.onUnfollowUserSucceed();
+                }
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                mView.stopLoading();
+                mView.onFollowUserFailed(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void unfollowUser(String username) {
+        mView.startLoading();
+
+        String url = String.format(ConstantUtil.FOLLOW_USER_BASE_URL, username);
+
+        NetworkTaskScheduler.getInstance().execute(new FollowUserTask(url, new OnResponseListener<Boolean>() {
+            @Override
+            public void onSucceed(Boolean data) {
+                mView.stopLoading();
+                if (!data) {
+                    mView.onUnfollowUserSucceed();
+                } else {
+                    mView.onFollowUserSucceed();
+                }
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                mView.stopLoading();
+                mView.onUnfollowUserFailed(msg);
             }
         }));
     }

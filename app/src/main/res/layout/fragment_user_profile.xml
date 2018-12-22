@@ -109,4 +109,16 @@
         android:text="@string/logout"
         android:visibility="gone"/>
 
+    <TextView
+        android:id="@+id/follow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/linear_item_height"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:textColor="@color/main"
+        android:textSize="@dimen/font_normal"
+        android:text="@string/follow"
+        android:visibility="gone"/>
+
 </LinearLayout>

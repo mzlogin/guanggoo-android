@@ -36,6 +36,7 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
     @BindView(R.id.username) TextView mUsernameTextView;
     @BindView(R.id.number) TextView mNumberTextView;
     @BindView(R.id.logout) TextView mLogoutTextView;
+    @BindView(R.id.follow) TextView mFollowTextView;
     @BindView(R.id.title_favorite) TextView mFavoriteTextView;
     @BindView(R.id.title_topic) TextView mTopicTextView;
     @BindView(R.id.title_reply) TextView mReplyTextView;
@@ -62,7 +63,11 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
     public void initParams() {
         super.initParams();
 
-        if (ConstantUtil.USER_PROFILE_SELF_FAKE_URL.equals(mUrl)) {
+        boolean isSelf = ConstantUtil.USER_PROFILE_SELF_FAKE_URL.equals(mUrl) ||
+                (AuthInfoManager.getInstance().isLoginIn() &&
+                        String.format(ConstantUtil.USER_PROFILE_BASE_URL, AuthInfoManager.getInstance().getUsername()).equals(mUrl));
+
+        if (isSelf) {
             // 处理登录后进入自己页面的情况
             mUrl = String.format(ConstantUtil.USER_PROFILE_BASE_URL, AuthInfoManager.getInstance().getUsername());
 
@@ -70,6 +75,9 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
             mFavoriteTextView.setText(R.string.my_favorite);
             mTopicTextView.setText(R.string.my_topic);
             mReplyTextView.setText(R.string.my_reply);
+        } else if (AuthInfoManager.getInstance().isLoginIn()) {
+            // 已登录，打开的不是自己的页面
+            mFollowTextView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -91,6 +99,8 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
                 .crossFade()
                 .into(mAvatarImageView);
         mNumberTextView.setText(userProfile.getNumber());
+        mFollowTextView.setText(
+                getString(userProfile.isFollowed() ? R.string.unfollow : R.string.follow));
     }
 
     @Override
@@ -111,7 +121,7 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
         }
     }
 
-    @OnClick({R.id.user_favors, R.id.user_topics, R.id.user_replies, R.id.logout})
+    @OnClick({R.id.user_favors, R.id.user_topics, R.id.user_replies, R.id.logout, R.id.follow})
     public void onClick(View v) {
         if (mListener == null || mUserProfile == null) {
             return;
@@ -149,8 +159,52 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
                         .show();
                 break;
 
+            case R.id.follow: {
+                String username = mUserProfile.getUsername();
+                if (!mUserProfile.isFollowed()) {
+                    mPresenter.followUser(username);
+                } else {
+                    mPresenter.unfollowUser(username);
+                }
+                break;
+            }
+
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onFollowUserSucceed() {
+        if (getContext() == null) {
+            return;
+        }
+
+        mUserProfile.setFollowed(true);
+
+        toast("关注成功");
+        mFollowTextView.setText(R.string.unfollow);
+    }
+
+    @Override
+    public void onFollowUserFailed(String msg) {
+        toast(msg);
+    }
+
+    @Override
+    public void onUnfollowUserSucceed() {
+        if (getContext() == null) {
+            return;
+        }
+
+        mUserProfile.setFollowed(false);
+
+        toast("取消关注成功");
+        mFollowTextView.setText(R.string.follow);
+    }
+
+    @Override
+    public void onUnfollowUserFailed(String msg) {
+        toast(msg);
     }
 }
