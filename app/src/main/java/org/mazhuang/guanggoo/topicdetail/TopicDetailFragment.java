@@ -334,9 +334,13 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 FragmentFactory.PageType pageType = FragmentFactory.getPageTypeByUrl(url);
-                if (mListener != null && pageType == FragmentFactory.PageType.VIEW_IMAGE) {
-                    mListener.openPage(url, getString(R.string.view_image));
-                    return true;
+                if (mListener != null) {
+                    if (pageType == FragmentFactory.PageType.VIEW_IMAGE ||
+                            pageType == FragmentFactory.PageType.TOPIC_DETAIL ||
+                            pageType == FragmentFactory.PageType.USER_PROFILE) {
+                        mListener.openPage(url, null);
+                        return true;
+                    }
                 }
 
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
