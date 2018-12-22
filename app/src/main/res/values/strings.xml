@@ -100,6 +100,7 @@
     <string name="search">搜索</string>
     <string name="please_input_user_id">请输入用户ID</string>
     <string name="search_user">搜索用户</string>
+    <string name="please_login_first">请先登录</string>
 
     <string-array name="home_tab_names">
         <item>@string/default_order_topics</item>

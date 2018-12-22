@@ -63,15 +63,21 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
     public void initParams() {
         super.initParams();
 
-        boolean isSelf = ConstantUtil.USER_PROFILE_SELF_FAKE_URL.equals(mUrl) ||
-                (AuthInfoManager.getInstance().isLoginIn() &&
+        // 是否是进自己个人中心的明确意图
+        boolean isToViewSelfProfile = ConstantUtil.USER_PROFILE_SELF_FAKE_URL.equals(mUrl);
+
+        // 是否已登录且意图查看自己资料
+        boolean isSelf = (AuthInfoManager.getInstance().isLoginIn() &&
                         String.format(ConstantUtil.USER_PROFILE_BASE_URL, AuthInfoManager.getInstance().getUsername()).equals(mUrl));
 
-        if (isSelf) {
+        if (isToViewSelfProfile) {
+            mLogoutTextView.setVisibility(View.VISIBLE);
+        }
+
+        if (isToViewSelfProfile || isSelf) {
             // 处理登录后进入自己页面的情况
             mUrl = String.format(ConstantUtil.USER_PROFILE_BASE_URL, AuthInfoManager.getInstance().getUsername());
 
-            mLogoutTextView.setVisibility(View.VISIBLE);
             mFavoriteTextView.setText(R.string.my_favorite);
             mTopicTextView.setText(R.string.my_topic);
             mReplyTextView.setText(R.string.my_reply);

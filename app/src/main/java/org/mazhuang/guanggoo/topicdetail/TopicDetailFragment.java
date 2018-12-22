@@ -243,6 +243,11 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
                 break;
 
             case R.id.favorite:
+                if (!AuthInfoManager.getInstance().isLoginIn()) {
+                    toast(getString(R.string.please_login_first));
+                    return;
+                }
+
                 if (isSelfOwnTopic()) {
                     toast(getString(R.string.cannot_favorite_self_own_topic));
                     return;
@@ -259,6 +264,11 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
                 break;
 
             case R.id.follow: {
+                if (!AuthInfoManager.getInstance().isLoginIn()) {
+                    toast(getString(R.string.please_login_first));
+                    return;
+                }
+
                 if (isSelfOwnTopic()) {
                     toast(getString(R.string.cannot_follow_self));
                     return;
