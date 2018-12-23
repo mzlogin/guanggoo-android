@@ -20,7 +20,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:background="@color/white"
-        app:theme="@style/NavigationDrawerStyle"
+        android:theme="@style/NavigationDrawerStyle"
         app:itemIconTint="@null"
         app:itemTextColor="@color/major"
         app:itemBackground="@drawable/drawer_item_background"

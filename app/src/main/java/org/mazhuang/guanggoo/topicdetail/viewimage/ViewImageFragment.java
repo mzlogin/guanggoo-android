@@ -17,8 +17,10 @@ import android.view.ViewGroup;
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 
+import org.mazhuang.guanggoo.GlideApp;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
+import org.mazhuang.guanggoo.util.GlideUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,7 +69,7 @@ public class ViewImageFragment extends BaseFragment<ViewImageContract.Presenter>
     }
 
     private void loadImage() {
-        Glide.with(this)
+        GlideApp.with(this)
                 .load(mUrl)
                 .into(mImageView);
     }

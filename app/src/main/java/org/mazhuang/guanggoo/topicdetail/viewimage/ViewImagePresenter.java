@@ -1,9 +1,9 @@
 package org.mazhuang.guanggoo.topicdetail.viewimage;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 
 import com.bm.library.PhotoView;
-import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 
 import org.mazhuang.guanggoo.util.FileUtils;
 
@@ -25,7 +25,7 @@ public class ViewImagePresenter implements ViewImageContract.Presenter {
     @Override
     public void saveImage(final PhotoView photoViewTemp) {
         if (photoViewTemp != null) {
-            GlideBitmapDrawable glideBitmapDrawable = (GlideBitmapDrawable) photoViewTemp.getDrawable();
+            BitmapDrawable glideBitmapDrawable = (BitmapDrawable) photoViewTemp.getDrawable();
             if (glideBitmapDrawable == null) {
                 return;
             }

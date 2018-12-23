@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.mazhuang.guanggoo.GlideApp;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
@@ -35,6 +36,7 @@ import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.ui.widget.PreImeEditText;
 import org.mazhuang.guanggoo.util.ConstantUtil;
+import org.mazhuang.guanggoo.util.GlideUtil;
 import org.mazhuang.guanggoo.util.SoftInputUtil;
 
 import butterknife.BindView;
@@ -114,11 +116,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     private void setViewData(TopicDetail topicDetail) {
         setFavoriteState(topicDetail.getFavorite().isFavorite());
         mTitleTextView.setText(topicDetail.getTopic().getTitle());
-        Glide.with(getContext())
-                .load(topicDetail.getTopic().getAvatar())
-                .centerCrop()
-                .crossFade()
-                .into(mAvatarImageView);
+        GlideUtil.loadImage(mAvatarImageView, topicDetail.getTopic().getAvatar());
         mCreatedTimeTExtView.setText(topicDetail.getTopic().getMeta().getCreatedTime());
         mAuthorTextView.setText(topicDetail.getTopic().getMeta().getAuthor().getUsername());
         mNodeTextView.setText(topicDetail.getTopic().getMeta().getNode().getTitle());

@@ -11,10 +11,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.mazhuang.guanggoo.GlideApp;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.FragmentCallBack;
 import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.Topic;
+import org.mazhuang.guanggoo.util.GlideUtil;
 
 import java.util.List;
 
@@ -59,11 +61,7 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.View
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mData.get(position);
         holder.mTitleTextView.setText(mData.get(position).getTitle());
-        Glide.with(holder.mAvatarImageView.getContext())
-                .load(holder.mItem.getAvatar())
-                .centerCrop()
-                .crossFade()
-                .into(holder.mAvatarImageView);
+        GlideUtil.loadImage(holder.mAvatarImageView, holder.mItem.getAvatar());
         holder.mAuthorTextView.setText(holder.mItem.getMeta().getAuthor().getUsername());
         holder.mNodeTextView.setText(holder.mItem.getMeta().getNode().getTitle());
         holder.mCommentsInfoTextView.setText(getTopicCommentsInfo(holder.mCommentsInfoTextView.getContext(), holder.mItem));

@@ -35,6 +35,7 @@ import org.mazhuang.guanggoo.router.annotations.FinishWhenCovered;
 import org.mazhuang.guanggoo.router.annotations.StartsWithAppBar;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.DimensUtil;
+import org.mazhuang.guanggoo.util.GlideUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,11 +70,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initLoginInUserInfo() {
         if (AuthInfoManager.getInstance().isLoginIn()) {
-            Glide.with(this)
-                    .load(AuthInfoManager.getInstance().getAvatar())
-                    .centerCrop()
-                    .crossFade()
-                    .into(mAvatarImageView);
+            GlideUtil.loadImage(mAvatarImageView, AuthInfoManager.getInstance().getAvatar());
 
             mUsernameTextView.setText(AuthInfoManager.getInstance().getUsername());
         }

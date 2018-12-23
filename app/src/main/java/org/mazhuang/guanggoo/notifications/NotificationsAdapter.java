@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.mazhuang.guanggoo.GlideApp;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.FragmentCallBack;
 import org.mazhuang.guanggoo.data.entity.Notification;
+import org.mazhuang.guanggoo.util.GlideUtil;
 import org.mazhuang.guanggoo.util.MyHtmlHttpImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
@@ -77,11 +79,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
             holder.mTypeTextView.setText(context.getString(R.string.reply_you));
         }
         holder.mAuthorTextView.setText(holder.mItem.getUser().getUsername());
-        Glide.with(holder.mAvatarImageView.getContext())
-                .load(holder.mItem.getUser().getAvatar())
-                .centerCrop()
-                .crossFade()
-                .into(holder.mAvatarImageView);
+        GlideUtil.loadImage(holder.mAvatarImageView, holder.mItem.getUser().getAvatar());
     }
 
     @Override

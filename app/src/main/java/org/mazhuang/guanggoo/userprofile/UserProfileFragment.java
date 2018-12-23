@@ -15,11 +15,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.mazhuang.guanggoo.GlideApp;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.data.entity.UserProfile;
 import org.mazhuang.guanggoo.util.ConstantUtil;
+import org.mazhuang.guanggoo.util.GlideUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -99,11 +101,7 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
 
     private void setViewData(UserProfile userProfile) {
         mUsernameTextView.setText(userProfile.getUsername());
-        Glide.with(getContext())
-                .load(userProfile.getAvatar())
-                .centerCrop()
-                .crossFade()
-                .into(mAvatarImageView);
+        GlideUtil.loadImage(mAvatarImageView, userProfile.getAvatar());
         mNumberTextView.setText(userProfile.getNumber());
         mFollowTextView.setText(
                 getString(userProfile.isFollowed() ? R.string.unfollow : R.string.follow));

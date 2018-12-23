@@ -9,9 +9,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.mazhuang.guanggoo.GlideApp;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Comment;
+import org.mazhuang.guanggoo.util.GlideUtil;
 import org.mazhuang.guanggoo.util.MyHtmlHttpImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
@@ -72,11 +74,7 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = getItem(position);
         holder.mLastTouchedTextView.setText(holder.mItem.getMeta().getTime());
-        Glide.with(holder.mAvatarImageView.getContext())
-                .load(holder.mItem.getAvatar())
-                .centerCrop()
-                .crossFade()
-                .into(holder.mAvatarImageView);
+        GlideUtil.loadImage(holder.mAvatarImageView, holder.mItem.getAvatar());
         holder.mAuthorTextView.setText(holder.mItem.getMeta().getReplier().getUsername());
         holder.mFloorTextView.setText("#" + holder.mItem.getMeta().getFloor());
         MyHtmlHttpImageGetter imageGetter = new MyHtmlHttpImageGetter(holder.mContentTextView);
