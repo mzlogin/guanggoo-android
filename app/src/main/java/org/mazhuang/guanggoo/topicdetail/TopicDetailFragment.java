@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.mazhuang.guanggoo.App;
 import org.mazhuang.guanggoo.GlideApp;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
@@ -37,6 +38,7 @@ import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.ui.widget.PreImeEditText;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.GlideUtil;
+import org.mazhuang.guanggoo.util.PrefsUtil;
 import org.mazhuang.guanggoo.util.SoftInputUtil;
 
 import butterknife.BindView;
@@ -63,12 +65,15 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     @BindView(R.id.content) WebView mContentWebView;
     @BindView(R.id.comments_count) TextView mCommentsCountTextView;
     @BindView(R.id.comments) RecyclerView mCommentsRecyclerView;
-    @BindView(R.id.load_more) TextView mLoadMoreTextView;
     @BindView(R.id.comment) PreImeEditText mCommentEditText;
     @BindView(R.id.submit) Button mSubmitButton;
     @BindView(R.id.comment_view) View mCommentsView;
     @BindView(R.id.favorite) ImageView mFavoriteImageView;
     @BindView(R.id.follow) Button mFollowButton;
+    @BindView(R.id.load_more_before) TextView mLoadMoreBeforeTextView;
+    @BindView(R.id.load_more_after) TextView mLoadMoreAfterTextView;
+
+    private TextView mLoadMoreTextView;
 
     private View mRoot;
 
@@ -140,6 +145,8 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
         mAdapter.setData(mTopicDetail.getComments());
 
+        mLoadMoreTextView = PrefsUtil.getBoolean(App.getInstance(), ConstantUtil.KEY_COMMENTS_ORDER_DESC, false) ? mLoadMoreBeforeTextView : mLoadMoreAfterTextView;
+
         if (mAdapter.getItemCount() < mTopicDetail.getCommentsCount()) {
             mLoadMoreTextView.setVisibility(View.VISIBLE);
             mLoadMoreTextView.setEnabled(true);
@@ -189,7 +196,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mCommentEditText.setParentView(mCommentsView);
     }
 
-    @OnClick({R.id.load_more, R.id.submit, R.id.author, R.id.avatar,
+    @OnClick({R.id.load_more_before, R.id.load_more_after, R.id.submit, R.id.author, R.id.avatar,
             R.id.node, R.id.edit, R.id.edit_text, R.id.favorite, R.id.share,
     R.id.follow})
     public void onClick(View v) {
@@ -198,7 +205,8 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         }
 
         switch (v.getId()) {
-            case R.id.load_more: {
+            case R.id.load_more_before:
+            case R.id.load_more_after: {
                 mLoadMoreTextView.setEnabled(false);
                 if (mAdapter.getItemCount() >= mTopicDetail.getCommentsCount()) {
                     mLoadMoreTextView.setVisibility(View.GONE);

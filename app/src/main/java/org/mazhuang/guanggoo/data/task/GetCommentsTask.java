@@ -4,9 +4,12 @@ import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.mazhuang.guanggoo.App;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Comment;
 import org.mazhuang.guanggoo.data.entity.User;
+import org.mazhuang.guanggoo.util.ConstantUtil;
+import org.mazhuang.guanggoo.util.PrefsUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -50,8 +53,11 @@ public class GetCommentsTask extends BaseTask<Map<Integer, Comment>> {
             comments.put(comment.getMeta().getFloor(), comment);
         }
 
-        return comments;
-//        return comments.descendingMap();
+        if (PrefsUtil.getBoolean(App.getInstance(), ConstantUtil.KEY_COMMENTS_ORDER_DESC, false)) {
+            return comments.descendingMap();
+        } else {
+            return comments;
+        }
     }
 
     public static Comment getCommentFromElement(Element element) {

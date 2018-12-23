@@ -15,6 +15,7 @@ import org.mazhuang.guanggoo.notifications.NotificationsFragment;
 import org.mazhuang.guanggoo.notifications.NotificationsPresenter;
 import org.mazhuang.guanggoo.search.SearchFragment;
 import org.mazhuang.guanggoo.search.SearchPresenter;
+import org.mazhuang.guanggoo.settings.SettingsFragment;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailFragment;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailPresenter;
 import org.mazhuang.guanggoo.topicdetail.viewimage.ViewImageFragment;
@@ -75,6 +76,8 @@ public class FragmentFactory {
         VIEW_NOTIFICATIONS,
         // 搜索页面
         SEARCH,
+        // 设置页面
+        SETTINGS,
     }
 
     public static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com[/]?$");
@@ -209,6 +212,10 @@ public class FragmentFactory {
                 new SearchPresenter((SearchFragment)fragment);
                 break;
 
+            case SETTINGS:
+                fragment = new SettingsFragment();
+                break;
+
             default:
                 fragment = null;
                 break;
@@ -284,6 +291,10 @@ public class FragmentFactory {
 
         if (ConstantUtil.SEARCH_URL.equals(url)) {
             return PageType.SEARCH;
+        }
+
+        if (ConstantUtil.SETTINGS_URL.equals(url)) {
+            return PageType.SETTINGS;
         }
 
         return PageType.NONE;

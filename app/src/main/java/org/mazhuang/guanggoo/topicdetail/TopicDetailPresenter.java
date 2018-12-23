@@ -48,14 +48,17 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
 
     @Override
     public void getMoreComments(int page) {
+        mView.startLoading();
         NetworkTaskScheduler.getInstance().execute(new GetTopicDetailTask(UrlUtil.appendPage(getUrl(), page), new OnResponseListener<TopicDetail>() {
             @Override
             public void onSucceed(TopicDetail data) {
+                mView.stopLoading();
                 mView.onGetMoreCommentsSucceed(data);
             }
 
             @Override
             public void onFailed(String msg) {
+                mView.stopLoading();
                 mView.onGetMoreCommentsFailed(msg);
             }
         }));
