@@ -148,7 +148,8 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
         }
     }
 
-    @OnClick({R.id.user_favors, R.id.user_topics, R.id.user_replies, R.id.logout, R.id.follow})
+    @OnClick({R.id.user_favors, R.id.user_topics, R.id.user_replies, R.id.logout, R.id.follow,
+        R.id.avatar})
     public void onClick(View v) {
         if (mListener == null || mUserProfile == null) {
             return;
@@ -195,6 +196,10 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
                 }
                 break;
             }
+
+            case R.id.avatar:
+                mListener.openPage(mUserProfile.getAvatar(), null);
+                break;
 
             default:
                 break;
