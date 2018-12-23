@@ -2,9 +2,13 @@ package org.mazhuang.guanggoo;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.os.Build;
+import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
 import com.tencent.bugly.Bugly;
+
+import org.mazhuang.guanggoo.util.ConfigUtil;
 
 /**
  *
@@ -23,9 +27,16 @@ public class App extends MultiDexApplication {
 
         sInstance = this;
 
-        Bugly.init(getApplicationContext(), "6ace1b5b58", false);
+        if (ConfigUtil.isDebug() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectNonSdkApiUsage()
+                    .penaltyLog()
+                    .build());
+        }
 
         mGlobal = new GlobalData();
+
+        Bugly.init(getApplicationContext(), "6ace1b5b58", false);
     }
 
     public static App getInstance() {
