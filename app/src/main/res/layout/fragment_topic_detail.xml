@@ -54,16 +54,6 @@
                 android:textColor="@color/minor"
                 android:textSize="@dimen/font_small"/>
 
-            <TextView
-                android:id="@+id/load_more_before"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/normal_margin"
-                android:text="@string/load_more_comments"
-                android:textColor="@color/enable_text"
-                android:visibility="gone" />
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/comments"
                 android:layout_width="match_parent"
@@ -73,7 +63,7 @@
                 android:background="@color/split"/>
 
             <TextView
-                android:id="@+id/load_more_after"
+                android:id="@+id/load_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

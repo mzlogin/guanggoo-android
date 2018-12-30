@@ -2,6 +2,7 @@ package org.mazhuang.guanggoo.topicdetail;
 
 import com.vdurmont.emoji.EmojiParser;
 
+import org.mazhuang.guanggoo.App;
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
@@ -11,6 +12,7 @@ import org.mazhuang.guanggoo.data.task.FollowUserTask;
 import org.mazhuang.guanggoo.data.task.GetTopicDetailTask;
 import org.mazhuang.guanggoo.data.task.VoteCommentTask;
 import org.mazhuang.guanggoo.util.ConstantUtil;
+import org.mazhuang.guanggoo.util.PrefsUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
 /**
@@ -23,15 +25,19 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
 
     private TopicDetailContract.View mView;
 
+    private boolean mCommentsDesc;
+
     public TopicDetailPresenter(TopicDetailContract.View view) {
         mView = view;
         mView.setPresenter(this);
+        mCommentsDesc = PrefsUtil.getBoolean(App.getInstance(), ConstantUtil.KEY_COMMENTS_ORDER_DESC, false);
     }
 
     @Override
     public void getTopicDetail() {
         mView.startLoading();
-        NetworkTaskScheduler.getInstance().execute(new GetTopicDetailTask(UrlUtil.appendPage(getUrl(), 1), new OnResponseListener<TopicDetail>() {
+        String url = mCommentsDesc ? getUrl() : UrlUtil.appendPage(getUrl(), 1);
+        NetworkTaskScheduler.getInstance().execute(new GetTopicDetailTask(url, new OnResponseListener<TopicDetail>() {
             @Override
             public void onSucceed(TopicDetail data) {
                 mView.stopLoading();

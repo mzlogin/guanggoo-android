@@ -70,10 +70,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
     @BindView(R.id.comment_view) View mCommentsView;
     @BindView(R.id.favorite) ImageView mFavoriteImageView;
     @BindView(R.id.follow) Button mFollowButton;
-    @BindView(R.id.load_more_before) TextView mLoadMoreBeforeTextView;
-    @BindView(R.id.load_more_after) TextView mLoadMoreAfterTextView;
-
-    private TextView mLoadMoreTextView;
+    @BindView(R.id.load_more) TextView mLoadMoreTextView;
 
     private View mRoot;
 
@@ -145,8 +142,6 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
 
         mAdapter.setData(mTopicDetail.getComments());
 
-        mLoadMoreTextView = PrefsUtil.getBoolean(App.getInstance(), ConstantUtil.KEY_COMMENTS_ORDER_DESC, false) ? mLoadMoreBeforeTextView : mLoadMoreAfterTextView;
-
         if (mAdapter.getItemCount() < mTopicDetail.getCommentsCount()) {
             mLoadMoreTextView.setVisibility(View.VISIBLE);
             mLoadMoreTextView.setEnabled(true);
@@ -196,7 +191,7 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mCommentEditText.setParentView(mCommentsView);
     }
 
-    @OnClick({R.id.load_more_before, R.id.load_more_after, R.id.submit, R.id.author, R.id.avatar,
+    @OnClick({R.id.load_more, R.id.submit, R.id.author, R.id.avatar,
             R.id.node, R.id.edit, R.id.edit_text, R.id.favorite, R.id.share,
     R.id.follow})
     public void onClick(View v) {
@@ -205,14 +200,18 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         }
 
         switch (v.getId()) {
-            case R.id.load_more_before:
-            case R.id.load_more_after: {
+            case R.id.load_more: {
                 mLoadMoreTextView.setEnabled(false);
                 if (mAdapter.getItemCount() >= mTopicDetail.getCommentsCount()) {
                     mLoadMoreTextView.setVisibility(View.GONE);
                     return;
                 }
-                int page = mTopicDetail.getComments().size() / ConstantUtil.COMMENTS_PER_PAGE + 1;
+                int page;
+                if (PrefsUtil.getBoolean(App.getInstance(), ConstantUtil.KEY_COMMENTS_ORDER_DESC, false)) {
+                    page = (mTopicDetail.getCommentsCount() - mTopicDetail.getComments().size()) / ConstantUtil.COMMENTS_PER_PAGE;
+                } else {
+                    page = mTopicDetail.getComments().size() / ConstantUtil.COMMENTS_PER_PAGE + 1;
+                }
                 mPresenter.getMoreComments(page);
             }
                 break;
