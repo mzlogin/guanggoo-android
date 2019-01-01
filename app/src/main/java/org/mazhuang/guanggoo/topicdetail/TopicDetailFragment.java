@@ -40,6 +40,7 @@ import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.GlideUtil;
 import org.mazhuang.guanggoo.util.PrefsUtil;
 import org.mazhuang.guanggoo.util.SoftInputUtil;
+import org.mazhuang.guanggoo.util.UrlUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -348,11 +349,11 @@ public class TopicDetailFragment extends BaseFragment<TopicDetailContract.Presen
         mContentWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                url = UrlUtil.removeQuery(url);
+
                 FragmentFactory.PageType pageType = FragmentFactory.getPageTypeByUrl(url);
                 if (mListener != null) {
-                    if (pageType == FragmentFactory.PageType.VIEW_IMAGE ||
-                            pageType == FragmentFactory.PageType.TOPIC_DETAIL ||
-                            pageType == FragmentFactory.PageType.USER_PROFILE) {
+                    if (pageType != FragmentFactory.PageType.NONE) {
                         mListener.openPage(url, null);
                         return true;
                     }

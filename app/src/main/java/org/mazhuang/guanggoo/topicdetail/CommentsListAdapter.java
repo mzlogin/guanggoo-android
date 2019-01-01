@@ -1,6 +1,9 @@
 package org.mazhuang.guanggoo.topicdetail;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +16,10 @@ import org.mazhuang.guanggoo.GlideApp;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Comment;
+import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.util.GlideUtil;
 import org.mazhuang.guanggoo.util.MyHtmlHttpImageGetter;
+import org.mazhuang.guanggoo.util.UrlUtil;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.Map;
@@ -23,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
+import me.saket.bettermovementmethod.BetterLinkMovementMethod;
 
 /**
  * @author mazhuang
@@ -31,6 +37,23 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
 
     private Map<Integer, Comment> mData;
     private final CommentsActionListener mListener;
+    private BetterLinkMovementMethod.OnLinkClickListener mOnLinkClickListener = new BetterLinkMovementMethod.OnLinkClickListener() {
+        @Override
+        public boolean onClick(TextView textView, String url) {
+            if (mListener == null || TextUtils.isEmpty(url)) {
+                return false;
+            }
+
+            url = UrlUtil.removeQuery(url);
+
+            if (FragmentFactory.PageType.NONE != FragmentFactory.getPageTypeByUrl(url)) {
+                mListener.openPage(url, null);
+                return true;
+            }
+
+            return false;
+        }
+    };
 
     public CommentsListAdapter(CommentsActionListener listener) {
         mListener = listener;
@@ -79,7 +102,12 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
         holder.mFloorTextView.setText("#" + holder.mItem.getMeta().getFloor());
         MyHtmlHttpImageGetter imageGetter = new MyHtmlHttpImageGetter(holder.mContentTextView);
         imageGetter.enableCompressImage(true, 30);
+
         holder.mContentTextView.setHtml(holder.mItem.getContent(), imageGetter);
+        BetterLinkMovementMethod
+                .linkifyHtml(holder.mContentTextView)
+                .setOnLinkClickListener(mOnLinkClickListener);
+
         holder.mVoteImageView.setEnabled(!holder.mItem.getMeta().getVote().isVoted());
         holder.mVoteCountTextView.setText(String.valueOf(holder.mItem.getMeta().getVote().getCount()));
 

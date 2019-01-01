@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 
-def Properties mVersionProps = getVersionProperties()
+Properties mVersionProps = getVersionProperties()
 
 def mVersionCode = getVersionCode()
 
@@ -12,7 +12,7 @@ android {
     buildToolsVersion '28.0.2'
     defaultConfig {
         applicationId "org.mazhuang.guanggoo"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode mVersionCode
         versionName mVersionName
@@ -46,7 +46,7 @@ android {
 
         }
         release {
-            def Properties signingProps = getSignProperties()
+            Properties signingProps = getSignProperties()
             if (signingProps != null) {
                 storeFile file(signingProps['STORE_FILE'])
                 storePassword signingProps['STORE_PASSWORD']
@@ -80,7 +80,7 @@ android {
 }
 
 def getVersionProperties() {
-    def Properties versionProps = new Properties()
+    Properties versionProps = new Properties()
     versionProps.load(new FileInputStream(file('../config/version.properties')))
     return versionProps
 }
@@ -88,17 +88,17 @@ def getVersionProperties() {
 static def getVersionCode() {
     try {
         String output = 'git rev-list HEAD --count '.execute().text.trim()
-        return Integer.valueOf(output);
+        return Integer.valueOf(output)
     } catch (Exception e) {
-        System.out.println(e.getMessage());
+        System.out.println(e.getMessage())
     }
-    return 1;
+    return 1
 }
 
 def getSignProperties() {
     File signingPropertiesFile = file('../config/signing.properties')
     if (signingPropertiesFile.exists()) {
-        def Properties signingProperties = new Properties()
+        Properties signingProperties = new Properties()
         signingProperties.load(new FileInputStream(signingPropertiesFile))
         if (signingProperties.containsKey('STORE_FILE') &&
                 signingProperties.containsKey('STORE_PASSWORD') &&
@@ -125,7 +125,8 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
-    implementation 'org.sufficientlysecure:html-textview:3.5'
+    implementation 'org.sufficientlysecure:html-textview:3.6'
+    implementation 'me.saket:better-link-movement-method:2.2.0'
     implementation 'com.tencent.bugly:crashreport_upgrade:1.3.5'
     testImplementation 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
