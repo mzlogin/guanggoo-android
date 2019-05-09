@@ -77,6 +77,11 @@ android {
             outputFileName = "guanggoo_${variant.productFlavors[0].name}_v${defaultConfig.versionName}_${variant.buildType.name}.apk"
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 def getVersionProperties() {
