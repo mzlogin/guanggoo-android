@@ -1,18 +1,13 @@
 package org.mazhuang.guanggoo.topicdetail;
 
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
-import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
-import org.mazhuang.guanggoo.GlideApp;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Comment;

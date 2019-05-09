@@ -2,12 +2,11 @@ package org.mazhuang.guanggoo.userprofile;
 
 
 import android.app.AlertDialog;
-import android.arch.lifecycle.Observer;
+import androidx.lifecycle.Observer;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.Nullable;
+
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -20,15 +19,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-
-import org.mazhuang.guanggoo.App;
-import org.mazhuang.guanggoo.GlideApp;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.data.entity.UserProfile;
-import org.mazhuang.guanggoo.ui.widget.MenuItemBadge;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.GlideUtil;
 

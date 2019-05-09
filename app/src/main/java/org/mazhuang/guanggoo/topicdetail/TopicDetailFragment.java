@@ -6,9 +6,9 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -24,10 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-
 import org.mazhuang.guanggoo.App;
-import org.mazhuang.guanggoo.GlideApp;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.AuthInfoManager;

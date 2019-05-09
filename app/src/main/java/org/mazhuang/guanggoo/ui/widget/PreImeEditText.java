@@ -9,7 +9,7 @@ import android.view.View;
  * @author mazhuang
  * @date 2018/4/29
  */
-public class PreImeEditText extends android.support.v7.widget.AppCompatEditText {
+public class PreImeEditText extends androidx.appcompat.widget.AppCompatEditText {
 
     private View mParentView;
 

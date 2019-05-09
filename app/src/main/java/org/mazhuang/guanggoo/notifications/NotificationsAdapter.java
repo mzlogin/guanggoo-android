@@ -1,16 +1,13 @@
 package org.mazhuang.guanggoo.notifications;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
-import org.mazhuang.guanggoo.GlideApp;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.FragmentCallBack;
 import org.mazhuang.guanggoo.data.entity.Notification;

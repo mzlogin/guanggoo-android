@@ -3,9 +3,9 @@ package org.mazhuang.guanggoo.topicdetail.viewimage;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,12 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bm.library.PhotoView;
-import com.bumptech.glide.Glide;
 
 import org.mazhuang.guanggoo.GlideApp;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
-import org.mazhuang.guanggoo.util.GlideUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

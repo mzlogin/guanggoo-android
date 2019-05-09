@@ -14,7 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
+import androidx.core.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -26,7 +26,7 @@ import org.mazhuang.guanggoo.R;
 /**
  * Created by matrixxun on 2016/8/30.
  */
-public class MaterialBadgeTextView extends android.support.v7.widget.AppCompatTextView {
+public class MaterialBadgeTextView extends androidx.appcompat.widget.AppCompatTextView {
 
     private static final int DEFAULT_FILL_TYPE = 0;
 

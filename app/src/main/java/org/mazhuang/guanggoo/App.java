@@ -1,10 +1,10 @@
 package org.mazhuang.guanggoo;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import android.os.Build;
 import android.os.StrictMode;
-import android.support.multidex.MultiDexApplication;
+import androidx.multidex.MultiDexApplication;
 
 import com.tencent.bugly.Bugly;
 
