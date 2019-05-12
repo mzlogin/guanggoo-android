@@ -10,10 +10,13 @@ import org.mazhuang.guanggoo.data.task.CommentTask;
 import org.mazhuang.guanggoo.data.task.FavouriteTask;
 import org.mazhuang.guanggoo.data.task.FollowUserTask;
 import org.mazhuang.guanggoo.data.task.GetTopicDetailTask;
+import org.mazhuang.guanggoo.data.task.UploadImageTask;
 import org.mazhuang.guanggoo.data.task.VoteCommentTask;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.PrefsUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
+
+import java.io.InputStream;
 
 /**
  *
@@ -199,6 +202,25 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
             public void onFailed(String msg) {
                 mView.stopLoading();
                 mView.onUnfollowUserFailed(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void uploadImage(InputStream inputStream) {
+        mView.startLoading();
+
+        NetworkTaskScheduler.getInstance().execute(new UploadImageTask(inputStream, new OnResponseListener<String>() {
+            @Override
+            public void onSucceed(String url) {
+                mView.stopLoading();
+                mView.onUploadImageSucceed(url);
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                mView.stopLoading();
+                mView.onUploadImageFailed(msg);
             }
         }));
     }

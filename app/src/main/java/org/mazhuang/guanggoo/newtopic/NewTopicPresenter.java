@@ -6,6 +6,9 @@ import org.mazhuang.guanggoo.base.BasePresenter;
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.task.NewTopicTask;
+import org.mazhuang.guanggoo.data.task.UploadImageTask;
+
+import java.io.InputStream;
 
 /**
  *
@@ -44,6 +47,25 @@ public class NewTopicPresenter implements NewTopicContract.Presenter {
                         mView.stopLoading();
                         mView.onNewTopicFailed(msg);
                     }
+        }));
+    }
+
+    @Override
+    public void uploadImage(InputStream inputStream) {
+        mView.startLoading();
+
+        NetworkTaskScheduler.getInstance().execute(new UploadImageTask(inputStream, new OnResponseListener<String>() {
+            @Override
+            public void onSucceed(String url) {
+                mView.stopLoading();
+                mView.onUploadImageSucceed(url);
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                mView.stopLoading();
+                mView.onUploadImageFailed(msg);
+            }
         }));
     }
 }

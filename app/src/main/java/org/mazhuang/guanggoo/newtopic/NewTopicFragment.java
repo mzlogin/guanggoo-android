@@ -13,9 +13,13 @@ import android.widget.EditText;
 
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
+import org.mazhuang.guanggoo.base.BaseUploadImageFragment;
+
+import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  *
@@ -23,7 +27,7 @@ import butterknife.ButterKnife;
  * @date 2017/10/10
  */
 
-public class NewTopicFragment extends BaseFragment<NewTopicContract.Presenter> implements NewTopicContract.View {
+public class NewTopicFragment extends BaseUploadImageFragment<NewTopicContract.Presenter> implements NewTopicContract.View {
 
     @BindView(R.id.title) EditText mTitleEditText;
     @BindView(R.id.content) EditText mContentEditText;
@@ -130,5 +134,31 @@ public class NewTopicFragment extends BaseFragment<NewTopicContract.Presenter> i
         } else {
             return getString(R.string.new_topic);
         }
+    }
+
+    @OnClick(R.id.add_image)
+    public void onAddImage() {
+        chooseImage();
+    }
+
+    @Override
+    public void doUploadImage(InputStream inputStream) {
+        mPresenter.uploadImage(inputStream);
+    }
+
+    @Override
+    public void onUploadImageSucceed(String url) {
+        if (!TextUtils.isEmpty(url)) {
+            String text = TextUtils.isEmpty(mContentEditText.getText()) ?
+                    String.format("![](%s)", url) :
+                    String.format("%s\n![](%s)", mContentEditText.getText(), url);
+            mContentEditText.setText(text);
+            mContentEditText.setSelection(mContentEditText.getText().length());
+        }
+    }
+
+    @Override
+    public void onUploadImageFailed(String msg) {
+        toast(msg);
     }
 }

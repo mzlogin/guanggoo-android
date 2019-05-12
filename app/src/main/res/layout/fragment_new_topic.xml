@@ -31,4 +31,14 @@
         android:textSize="16sp"
         android:hint="@string/please_input_content"/>
 
+    <ImageButton
+        android:id="@+id/add_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/small_margin"
+        android:layout_marginBottom="@dimen/inner_margin"
+        android:background="@null"
+        android:src="@drawable/ic_image" />
+
 </LinearLayout>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -88,7 +89,8 @@
             android:layout_marginLeft="@dimen/normal_margin"
             android:layout_marginRight="@dimen/normal_margin"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:visibility="gone">
 
             <ImageView
                 android:id="@+id/edit"
@@ -130,15 +132,26 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="@color/white"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageButton
+                android:id="@+id/add_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="@dimen/small_margin"
+                android:layout_marginBottom="@dimen/inner_margin"
+                android:background="@null"
+                android:src="@drawable/ic_image" />
 
             <org.mazhuang.guanggoo.ui.widget.PreImeEditText
                 android:id="@+id/comment"
                 style="@style/DefaultEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_margin="@dimen/inner_margin"
+                android:layout_weight="1"
                 android:hint="@string/add_comment"
                 android:inputType="textMultiLine" />
 
@@ -147,15 +160,14 @@
                 android:layout_width="@dimen/comment_button_width"
                 android:layout_height="@dimen/button_height"
                 android:layout_gravity="bottom"
-                android:background="@drawable/blue_button"
-                android:paddingLeft="@dimen/inner_margin"
-                android:paddingRight="@dimen/inner_margin"
                 android:layout_marginRight="@dimen/inner_margin"
                 android:layout_marginBottom="@dimen/small_margin"
+                android:background="@drawable/blue_button"
                 android:enabled="false"
-                android:textColor="@color/blue_button"
-                android:text="@string/comment"/>
-
+                android:paddingLeft="@dimen/inner_margin"
+                android:paddingRight="@dimen/inner_margin"
+                android:text="@string/comment"
+                android:textColor="@color/blue_button" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
