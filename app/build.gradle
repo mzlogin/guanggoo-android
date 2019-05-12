@@ -29,9 +29,7 @@ android {
         playstore {}
         github {}
         coolapk {}
-        qq {}
         xiaomi {}
-        three60 {}
     }
 
     productFlavors.all {
