@@ -80,6 +80,7 @@ public abstract class BaseTask<T> implements Runnable {
 
     protected Document get(String url) throws IOException {
         Document doc = getConnection(url).get();
+        checkNotification(doc);
         return fixLink(doc);
     }
 

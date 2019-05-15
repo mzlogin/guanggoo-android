@@ -46,8 +46,6 @@ public class GetTopicListTask extends BaseTask<ListResult<Topic>> implements Run
                 topics.add(topic);
             }
 
-            checkNotification(doc);
-
             succeed = true;
 
             Elements paginationElements = doc.select("ul.pagination");
