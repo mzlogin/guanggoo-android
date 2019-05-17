@@ -30,6 +30,7 @@ android {
         github {}
         coolapk {}
         xiaomi {}
+        qq {}
     }
 
     productFlavors.all {
