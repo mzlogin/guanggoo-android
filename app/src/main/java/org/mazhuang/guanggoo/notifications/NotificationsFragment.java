@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.mazhuang.guanggoo.App;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.entity.ListResult;
@@ -137,6 +138,9 @@ public class NotificationsFragment extends BaseFragment<NotificationsContract.Pr
         if (getContext() == null) {
             return;
         }
+
+        // 获取消息提醒列表成功，则可以消除小红点了
+        App.getInstance().mGlobal.hasNotifications.setValue(false);
 
         mLoadable = notificationList.isHasMore();
 
