@@ -12,6 +12,7 @@ import com.tencent.bugly.beta.Beta;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.util.ConstantUtil;
+import org.mazhuang.guanggoo.util.ShareUtil;
 import org.mazhuang.guanggoo.util.VersionUtil;
 
 import mehdi.sakout.aboutpage.AboutPage;
@@ -32,20 +33,19 @@ public class AboutFragment extends BaseFragment {
         Element checkUpdateElement = new Element();
         checkUpdateElement.setTitle(getString(R.string.check_updates))
                 .setIconDrawable(R.drawable.ic_update)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Beta.checkUpgrade(true, false);
-                    }
-                });
+                .setOnClickListener(v -> Beta.checkUpgrade(true, false));
 
         Element qrcodeElement = new Element();
-        qrcodeElement.setTitle(getString(R.string.qrcode))
-                .setIconDrawable(R.drawable.ic_apps)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mListener.openPage(ConstantUtil.QRCODE_URL, getString(R.string.qrcode));
+        qrcodeElement.setTitle(getString(R.string.feedback))
+                .setIconDrawable(R.drawable.ic_feedback)
+                .setOnClickListener(v -> mListener.openPage(ConstantUtil.QRCODE_URL, getString(R.string.feedback)));
+
+        Element shareElement = new Element();
+        shareElement.setTitle(getString(R.string.share_to_friend))
+                .setIconDrawable(R.drawable.ic_menu_share)
+                .setOnClickListener(v -> {
+                    if (getActivity() != null) {
+                        ShareUtil.shareLink(getActivity(), ConstantUtil.DOWNLOAD_URL_COOLAPK);
                     }
                 });
 
@@ -53,13 +53,9 @@ public class AboutFragment extends BaseFragment {
                 .isRTL(false)
                 .setImage(R.drawable.guanggoo_new)
                 .setDescription(getString(R.string.app_description, VersionUtil.getVersion(getContext())))
-                // .addWebsite(getString(R.string.issue_address), getString(R.string.feedback))
                 .addItem(checkUpdateElement)
                 .addItem(qrcodeElement)
-                // .addGroup(getString(R.string.contact_me))
-                .addEmail(getString(R.string.author_email), getString(R.string.contact_me))
-                // .addWebsite(getString(R.string.author_website), getString(R.string.author_website))
-                // .addGitHub(getString(R.string.author_github), getString(R.string.follow_github))
+                .addItem(shareElement)
                 .addGitHub(getString(R.string.source_code_address), getString(R.string.source_code))
                 .create();
     }

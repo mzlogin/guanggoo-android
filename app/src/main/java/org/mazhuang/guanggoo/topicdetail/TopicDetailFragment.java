@@ -12,6 +12,8 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,6 +48,7 @@ import org.mazhuang.guanggoo.ui.widget.PreImeEditText;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.GlideUtil;
 import org.mazhuang.guanggoo.util.PrefsUtil;
+import org.mazhuang.guanggoo.util.ShareUtil;
 import org.mazhuang.guanggoo.util.SoftInputUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
@@ -112,23 +115,6 @@ public class TopicDetailFragment extends BaseUploadImageFragment<TopicDetailCont
         }
 
         return mRoot;
-    }
-
-    private void shareCurrentLink() {
-        if (TextUtils.isEmpty(mUrl)) {
-            Toast.makeText(getContext(), R.string.cannot_share, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-        intent.putExtra(Intent.EXTRA_TEXT, mUrl);
-        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivity(Intent.createChooser(intent, getString(R.string.share_to)));
-        } else {
-            Toast.makeText(getContext(), R.string.cannot_share, Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void setViewData(TopicDetail topicDetail) {
@@ -281,7 +267,7 @@ public class TopicDetailFragment extends BaseUploadImageFragment<TopicDetailCont
                 break;
 
             case R.id.share:
-                shareCurrentLink();
+                ShareUtil.shareLink(getActivity(), mUrl);
                 break;
 
             case R.id.follow: {

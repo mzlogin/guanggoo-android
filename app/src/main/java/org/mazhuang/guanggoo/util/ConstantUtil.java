@@ -58,5 +58,6 @@ public class ConstantUtil {
 
     public static final int MAX_TOPICS = 1024;
 
-    public static final String QRCODE_URL = "http://mazhuang.org/guanggoo-android/qrcode.png";
+    public static final String QRCODE_URL = "http://mazhuang.org/guanggoo-android/qrcode-asset.png";
+    public static final String DOWNLOAD_URL_COOLAPK = "https://www.coolapk.com/apk/164523";
 }
