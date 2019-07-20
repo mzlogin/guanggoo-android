@@ -47,6 +47,10 @@ public class NotificationsFragment extends BaseFragment<NotificationsContract.Pr
 
         ButterKnife.bind(this, root);
 
+        if (mPresenter == null) {
+            mPresenter = new NotificationsPresenter(this);
+        }
+
         initViews();
 
         if (!mAdapter.isFilled()) {

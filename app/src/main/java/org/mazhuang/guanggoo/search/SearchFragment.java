@@ -41,6 +41,10 @@ public class SearchFragment extends BaseFragment<SearchContract.Presenter> imple
 
         ButterKnife.bind(this, root);
 
+        if (mPresenter == null) {
+            mPresenter = new SearchPresenter(this);
+        }
+
         initParams();
 
         return root;

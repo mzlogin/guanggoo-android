@@ -55,6 +55,10 @@ public class ViewImageFragment extends BaseFragment<ViewImageContract.Presenter>
 
         ButterKnife.bind(this, root);
 
+        if (mPresenter == null) {
+            mPresenter = new ViewImagePresenter(this);
+        }
+
         initPhotoView();
 
         loadImage();

@@ -37,6 +37,10 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
 
         ButterKnife.bind(this, root);
 
+        if (mPresenter == null) {
+            mPresenter = new LoginPresenter(this);
+        }
+
         initParams();
 
         return root;

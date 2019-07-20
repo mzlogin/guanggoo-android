@@ -104,6 +104,10 @@ public class TopicDetailFragment extends BaseUploadImageFragment<TopicDetailCont
 
         ButterKnife.bind(this, mRoot);
 
+        if (mPresenter == null) {
+            mPresenter = new TopicDetailPresenter(this);
+        }
+
         initParams();
 
         initViews();

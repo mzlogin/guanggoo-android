@@ -40,6 +40,10 @@ public class NewTopicFragment extends BaseUploadImageFragment<NewTopicContract.P
 
         ButterKnife.bind(this, root);
 
+        if (mPresenter == null) {
+            mPresenter = new NewTopicPresenter(this);
+        }
+
         initParams();
 
         return root;

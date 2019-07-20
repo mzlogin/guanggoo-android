@@ -5,27 +5,17 @@ import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.home.HomeFragment;
 import org.mazhuang.guanggoo.login.LoginFragment;
-import org.mazhuang.guanggoo.login.LoginPresenter;
 import org.mazhuang.guanggoo.newtopic.NewTopicFragment;
-import org.mazhuang.guanggoo.newtopic.NewTopicPresenter;
 import org.mazhuang.guanggoo.newtopic.SelectNodeFragment;
 import org.mazhuang.guanggoo.nodescloud.NodesCloudFragment;
-import org.mazhuang.guanggoo.nodescloud.NodesCloudPresenter;
 import org.mazhuang.guanggoo.notifications.NotificationsFragment;
-import org.mazhuang.guanggoo.notifications.NotificationsPresenter;
 import org.mazhuang.guanggoo.search.SearchFragment;
-import org.mazhuang.guanggoo.search.SearchPresenter;
 import org.mazhuang.guanggoo.settings.SettingsFragment;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailFragment;
-import org.mazhuang.guanggoo.topicdetail.TopicDetailPresenter;
 import org.mazhuang.guanggoo.topicdetail.viewimage.ViewImageFragment;
-import org.mazhuang.guanggoo.topicdetail.viewimage.ViewImagePresenter;
 import org.mazhuang.guanggoo.topiclist.TopicListFragment;
-import org.mazhuang.guanggoo.topiclist.TopicListPresenter;
 import org.mazhuang.guanggoo.userprofile.UserProfileFragment;
-import org.mazhuang.guanggoo.userprofile.UserProfilePresenter;
 import org.mazhuang.guanggoo.userprofile.replies.ReplyListFragment;
-import org.mazhuang.guanggoo.userprofile.replies.ReplyListPresenter;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
@@ -80,18 +70,18 @@ public class FragmentFactory {
         SETTINGS,
     }
 
-    public static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com[/]?$");
-    public static final Pattern TOPIC_DETAIL_PATTERN = Pattern.compile("^http://www.guanggoo.com/t/\\d+$");
-    public static final Pattern NODES_CLOUD_PATTERN = Pattern.compile("^http://www.guanggoo.com/nodes$");
-    public static final Pattern SELECT_NODE_PATTERN = Pattern.compile("^http://www.guanggoo.com/nodes $");
-    public static final Pattern NODE_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com/node/[^/]+$");
-    public static final Pattern LOGIN_PATTERN = Pattern.compile("^http://www.guanggoo.com/login$");
-    public static final Pattern USER_PROFILE_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+$");
-    public static final Pattern USER_FAVORS_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/favorites$");
-    public static final Pattern USER_TOPICS_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/topics$");
-    public static final Pattern USER_REPLIES_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/replies$");
-    public static final Pattern NEW_TOPIC_PATTERN = Pattern.compile("^http://www.guanggoo.com/t/create/\\w+$");
-    public static final Pattern VIEW_IMAGE_PATTERN = Pattern.compile("^http[s]?://.+\\.(png|jpg|jpeg)$");
+    private static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com[/]?$");
+    private static final Pattern TOPIC_DETAIL_PATTERN = Pattern.compile("^http://www.guanggoo.com/t/\\d+$");
+    private static final Pattern NODES_CLOUD_PATTERN = Pattern.compile("^http://www.guanggoo.com/nodes$");
+    private static final Pattern SELECT_NODE_PATTERN = Pattern.compile("^http://www.guanggoo.com/nodes $");
+    private static final Pattern NODE_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com/node/[^/]+$");
+    private static final Pattern LOGIN_PATTERN = Pattern.compile("^http://www.guanggoo.com/login$");
+    private static final Pattern USER_PROFILE_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+$");
+    private static final Pattern USER_FAVORS_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/favorites$");
+    private static final Pattern USER_TOPICS_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/topics$");
+    private static final Pattern USER_REPLIES_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/replies$");
+    private static final Pattern NEW_TOPIC_PATTERN = Pattern.compile("^http://www.guanggoo.com/t/create/\\w+$");
+    private static final Pattern VIEW_IMAGE_PATTERN = Pattern.compile("^http[s]?://.+\\.(png|jpg|jpeg)$");
 
 
     public static BaseFragment getFragmentByUrl(String url) {
@@ -99,7 +89,7 @@ public class FragmentFactory {
         return getFragmentByPageType(getPageTypeByUrl(url));
     }
 
-    public static BaseFragment getFragmentByPageType(PageType type) {
+    private static BaseFragment getFragmentByPageType(PageType type) {
 
         BaseFragment fragment;
         switch (type) {
@@ -110,87 +100,70 @@ public class FragmentFactory {
 
             case HOME_TOPIC_LIST:
                 fragment = new TopicListFragment();
-                new TopicListPresenter((TopicListFragment)fragment);
                 break;
 
             case NODE_TOPIC_LIST:
                 fragment = new TopicListFragment();
-                new TopicListPresenter((TopicListFragment)fragment);
                 break;
 
             case USER_FAVORS:
                 if (AuthInfoManager.getInstance().isLoginIn()) {
                     fragment = new TopicListFragment();
-                    new TopicListPresenter((TopicListFragment) fragment, ConstantUtil.FAVORITE_PER_PAGE);
                 } else {
                     fragment = new LoginFragment();
-                    new LoginPresenter((LoginFragment)fragment);
                 }
                 break;
 
             case USER_TOPICS:
                 fragment = new TopicListFragment();
-                new TopicListPresenter((TopicListFragment) fragment);
                 break;
 
             case TOPIC_DETAIL:
                 if (AuthInfoManager.getInstance().isLoginIn()) {
                     fragment = new TopicDetailFragment();
-                    new TopicDetailPresenter((TopicDetailFragment)fragment);
                 } else {
                     fragment = new LoginFragment();
-                    new LoginPresenter((LoginFragment)fragment);
                 }
                 break;
 
             case NODES_CLOUD:
                 fragment = new NodesCloudFragment();
-                new NodesCloudPresenter((NodesCloudFragment)fragment);
                 break;
 
             case SELECT_NODE:
                 fragment = new SelectNodeFragment();
-                new NodesCloudPresenter((SelectNodeFragment)fragment);
                 break;
 
             case LOGIN:
                 fragment = new LoginFragment();
-                new LoginPresenter((LoginFragment)fragment);
                 break;
 
             case USER_PROFILE:
                 if (AuthInfoManager.getInstance().isLoginIn()) {
                     fragment = new UserProfileFragment();
-                    new UserProfilePresenter((UserProfileFragment) fragment);
                 } else {
                     fragment = new LoginFragment();
-                    new LoginPresenter((LoginFragment)fragment);
                 }
                 break;
 
             case USER_REPLIES:
                 if (AuthInfoManager.getInstance().isLoginIn()) {
                     fragment = new ReplyListFragment();
-                    new ReplyListPresenter((ReplyListFragment) fragment);
                 } else {
                     fragment = new LoginFragment();
-                    new LoginPresenter((LoginFragment) fragment);
                 }
                 break;
 
             case NEW_TOPIC:
                 if (AuthInfoManager.getInstance().isLoginIn()) {
                     fragment = new NewTopicFragment();
-                    new NewTopicPresenter((NewTopicFragment) fragment);
                 } else {
                     fragment = new LoginFragment();
-                    new LoginPresenter((LoginFragment) fragment);
                 }
                 break;
 
             case VIEW_IMAGE:
                 fragment = new ViewImageFragment();
-                new ViewImagePresenter((ViewImageFragment) fragment);
                 break;
 
             case ABOUT:
@@ -200,16 +173,13 @@ public class FragmentFactory {
             case VIEW_NOTIFICATIONS:
                 if (AuthInfoManager.getInstance().isLoginIn()) {
                     fragment = new NotificationsFragment();
-                    new NotificationsPresenter((NotificationsFragment) fragment);
                 } else {
                     fragment = new LoginFragment();
-                    new LoginPresenter((LoginFragment) fragment);
                 }
                 break;
 
             case SEARCH:
                 fragment = new SearchFragment();
-                new SearchPresenter((SearchFragment)fragment);
                 break;
 
             case SETTINGS:

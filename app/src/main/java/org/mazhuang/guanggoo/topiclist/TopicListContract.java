@@ -29,6 +29,12 @@ public interface TopicListContract {
          * @return 单面数量
          */
         int getPagination();
+
+        /**
+         * 设置分页数
+         * @param pagination 单面数量
+         */
+        void setPagination(int pagination);
     }
 
     interface View extends BaseView<Presenter> {

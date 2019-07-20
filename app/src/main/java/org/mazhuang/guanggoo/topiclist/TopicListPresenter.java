@@ -9,6 +9,8 @@ import org.mazhuang.guanggoo.data.task.GetTopicListTask;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
+import lombok.Setter;
+
 
 /**
  *
@@ -22,16 +24,11 @@ public class TopicListPresenter implements TopicListContract.Presenter {
 
     private BaseTask mCurrentTask;
 
-    private int mPagination = ConstantUtil.TOPICS_PER_PAGE;
+    private int mPagination;
 
     public TopicListPresenter(TopicListContract.View view) {
         mView = view;
         view.setPresenter(this);
-    }
-
-    public TopicListPresenter(TopicListContract.View view, int pagination) {
-        this(view);
-        mPagination = pagination;
     }
 
     @Override
@@ -85,5 +82,10 @@ public class TopicListPresenter implements TopicListContract.Presenter {
     @Override
     public int getPagination() {
         return mPagination;
+    }
+
+    @Override
+    public void setPagination(int pagination) {
+        mPagination = pagination;
     }
 }

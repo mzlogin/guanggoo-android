@@ -35,6 +35,10 @@ public class NodesCloudFragment extends BaseFragment<NodesCloudContract.Presente
 
         ButterKnife.bind(this, root);
 
+        if (mPresenter == null) {
+            mPresenter = new NodesCloudPresenter(this);
+        }
+
         initParams();
 
         initViews();

@@ -34,7 +34,7 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
 
     private TopicListAdapter mAdapter;
     private boolean mLoadable = false;
-    int pastVisibleItems, visibleItemCount, totalItemCount;
+    private int pastVisibleItems, visibleItemCount, totalItemCount;
 
     @BindView(R.id.list) RecyclerView mRecyclerView;
     @BindView(R.id.refresh_layout) SwipeRefreshLayout mRefreshLayout;
@@ -50,6 +50,15 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
         View root = inflater.inflate(R.layout.fragment_topic_list, container, false);
 
         ButterKnife.bind(this, root);
+
+        if (mPresenter == null) {
+            mPresenter = new TopicListPresenter(this);
+            if (getPageType() == FragmentFactory.PageType.USER_FAVORS) {
+                mPresenter.setPagination(ConstantUtil.FAVORITE_PER_PAGE);
+            } else {
+                mPresenter.setPagination(ConstantUtil.TOPICS_PER_PAGE);
+            }
+        }
 
         initViews();
 

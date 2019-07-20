@@ -70,6 +70,10 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
 
         ButterKnife.bind(this, mRoot);
 
+        if (mPresenter == null) {
+            mPresenter = new UserProfilePresenter(this);
+        }
+
         initViews();
 
         if (mUserProfile == null) {

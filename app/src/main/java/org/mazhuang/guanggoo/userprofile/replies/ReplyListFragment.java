@@ -46,6 +46,10 @@ public class ReplyListFragment extends BaseFragment<ReplyListContract.Presenter>
 
         ButterKnife.bind(this, root);
 
+        if (mPresenter == null) {
+            mPresenter = new ReplyListPresenter(this);
+        }
+
         initViews();
 
         if (!mAdapter.isFilled()) {
