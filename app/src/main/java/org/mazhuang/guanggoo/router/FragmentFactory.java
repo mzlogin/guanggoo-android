@@ -1,6 +1,7 @@
 package org.mazhuang.guanggoo.router;
 
 import org.mazhuang.guanggoo.about.AboutFragment;
+import org.mazhuang.guanggoo.about.FeedbackFragment;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.home.HomeFragment;
@@ -68,6 +69,8 @@ public class FragmentFactory {
         SEARCH,
         // 设置页面
         SETTINGS,
+        // 建议与反馈
+        FEEDBACK
     }
 
     private static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com[/]?$");
@@ -186,6 +189,10 @@ public class FragmentFactory {
                 fragment = new SettingsFragment();
                 break;
 
+            case FEEDBACK:
+                fragment = new FeedbackFragment();
+                break;
+
             default:
                 fragment = null;
                 break;
@@ -265,6 +272,10 @@ public class FragmentFactory {
 
         if (ConstantUtil.SETTINGS_URL.equals(url)) {
             return PageType.SETTINGS;
+        }
+
+        if (ConstantUtil.FEEDBACK_URL.equals(url)) {
+            return PageType.FEEDBACK;
         }
 
         return PageType.NONE;

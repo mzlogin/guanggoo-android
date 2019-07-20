@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 
 public class ViewImageFragment extends BaseFragment<ViewImageContract.Presenter> implements ViewImageContract.View {
 
-    @BindView(R.id.image) PhotoView mImageView;
+    @BindView(R.id.image) protected PhotoView mImageView;
 
     private static final int PERMISSIONS_REQUEST_CODE = 100;
 
@@ -70,7 +70,7 @@ public class ViewImageFragment extends BaseFragment<ViewImageContract.Presenter>
         mImageView.enable();
     }
 
-    private void loadImage() {
+    protected void loadImage() {
         GlideApp.with(this)
                 .load(mUrl)
                 .into(mImageView);

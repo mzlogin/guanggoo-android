@@ -38,7 +38,7 @@ public class AboutFragment extends BaseFragment {
         Element qrcodeElement = new Element();
         qrcodeElement.setTitle(getString(R.string.feedback))
                 .setIconDrawable(R.drawable.ic_feedback)
-                .setOnClickListener(v -> mListener.openPage(ConstantUtil.QRCODE_URL, getString(R.string.feedback)));
+                .setOnClickListener(v -> mListener.openPage(ConstantUtil.FEEDBACK_URL, getString(R.string.feedback)));
 
         Element shareElement = new Element();
         shareElement.setTitle(getString(R.string.share_to_friend))

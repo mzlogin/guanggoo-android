@@ -35,6 +35,7 @@ public class ConstantUtil {
     public static final String ABOUT_URL = "INNER_PAGE_ABOUT";
     public static final String SEARCH_URL = "SEARCH_URL";
     public static final String SETTINGS_URL = "SETTINGS_URL";
+    public static final String FEEDBACK_URL = "FEEDBACK_URL";
 
     public static final int TOPICS_PER_PAGE = 36;
 
@@ -58,6 +59,5 @@ public class ConstantUtil {
 
     public static final int MAX_TOPICS = 1024;
 
-    public static final String QRCODE_URL = "https://mazhuang.org/guanggoo-android/qrcode-asset.png";
     public static final String DOWNLOAD_URL_COOLAPK = "https://www.coolapk.com/apk/164523";
 }
