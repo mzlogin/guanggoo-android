@@ -16,6 +16,7 @@ import org.mazhuang.guanggoo.topicdetail.TopicDetailFragment;
 import org.mazhuang.guanggoo.topicdetail.viewimage.ViewImageFragment;
 import org.mazhuang.guanggoo.topiclist.TopicListFragment;
 import org.mazhuang.guanggoo.userprofile.UserProfileFragment;
+import org.mazhuang.guanggoo.userprofile.block.BlockedUserListFragment;
 import org.mazhuang.guanggoo.userprofile.replies.ReplyListFragment;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
@@ -70,7 +71,9 @@ public class FragmentFactory {
         // 设置页面
         SETTINGS,
         // 建议与反馈
-        FEEDBACK
+        FEEDBACK,
+        // 已屏蔽用户列表
+        BLOCKED_USER_LIST
     }
 
     private static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com[/]?$");
@@ -193,6 +196,10 @@ public class FragmentFactory {
                 fragment = new FeedbackFragment();
                 break;
 
+            case BLOCKED_USER_LIST:
+                fragment = new BlockedUserListFragment();
+                break;
+
             default:
                 fragment = null;
                 break;
@@ -276,6 +283,10 @@ public class FragmentFactory {
 
         if (ConstantUtil.FEEDBACK_URL.equals(url)) {
             return PageType.FEEDBACK;
+        }
+
+        if (ConstantUtil.BLOCKED_USER_URL.equals(url)) {
+            return PageType.BLOCKED_USER_LIST;
         }
 
         return PageType.NONE;

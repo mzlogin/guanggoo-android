@@ -29,6 +29,18 @@ public interface UserProfileContract {
          * @param username 用户名
          */
         void unfollowUser(String username);
+
+        /**
+         * 屏蔽用户
+         * @param profile 用户资料
+         */
+        void blockUser(UserProfile profile);
+
+        /**
+         * 取消屏蔽
+         * @param profile 用户资料
+         */
+        void unblockUser(UserProfile profile);
     }
 
     interface View extends BaseView<Presenter> {
@@ -65,5 +77,27 @@ public interface UserProfileContract {
          * @param msg 失败提示信息
          */
         void onUnfollowUserFailed(String msg);
+
+        /**
+         * 屏蔽用户成功
+         */
+        void onBlockUserSucceed();
+
+        /**
+         * 屏蔽用户失败
+         * @param msg 失败提示消息
+         */
+        void onBlockUserFailed(String msg);
+
+        /**
+         * 取消屏蔽成功
+         */
+        void onUnblockUserSucceed();
+
+        /**
+         * 取消屏蔽失败
+         * @param msg 失败提示消息
+         */
+        void onUnblockUserFailed(String msg);
     }
 }

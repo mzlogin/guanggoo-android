@@ -20,6 +20,11 @@
 * [消息提醒](#消息提醒)
     * [判断是否有新消息提醒](#判断是否有新消息提醒)
     * [消息提醒列表](#消息提醒列表)
+* [屏蔽](#屏蔽)
+    * [已屏蔽用户列表](#已屏蔽用户列表)
+    * [判断是否屏蔽了某用户](#判断是否屏蔽了某用户)
+    * [屏蔽用户](#屏蔽用户)
+    * [取消屏蔽](#取消屏蔽)
 
 <!-- vim-markdown-toc -->
 
@@ -509,4 +514,108 @@ Web 上会自动跳转到个人信息页，已经关注的情况：
         </div>
     </div>
 </div>
+```
+
+## 屏蔽
+
+### 已屏蔽用户列表
+
+URL: http://www.guanggoo.com/setting/blockedUser
+
+```html
+<div class="member-lists container-box">
+    <div class="ui-header">
+        <span class="title">已屏蔽用户</span>
+    </div>
+    <div class="ui-content">
+        <div class="member">
+            <a href="/u/zuoluo032">
+            <img src="http://cdn.guanggoo.com//static/avatar/66/m_default.png" alt="" class="avatar">
+            </a>
+            <span class="username">
+            <a href="/u/zuoluo032">zuoluo032</a>
+            </span>
+        </div>
+        <div class="member">
+            <a href="/u/muchen">
+            <img src="http://cdn.guanggoo.com//static/avatar/4/m_60714b1c-84d5-11e8-a0b7-00163e134dca.png" alt="" class="avatar">
+            </a>
+            <span class="username">
+            <a href="/u/muchen">muchen</a>
+            </span>
+        </div>
+    </div>
+</div>
+```
+
+### 判断是否屏蔽了某用户
+
+打开用户个人资料页
+
+```html
+<div class="col-md-3 sidebar-right mt10">
+    <div class="user-page">
+    <!-- some contents -->
+        <div class="self-introduction container-box mt10">
+            <div class="ui-content">
+                <strong><a href="/u/30804/block">屏蔽此帐号</a></strong>
+            </div>
+        </div>
+
+    </div>
+</div>
+```
+
+### 屏蔽用户
+
+**request**
+
+```
+GET /u/30804/block HTTP/1.1
+Host: www.guanggoo.com
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7,fr;q=0.6,nb;q=0.5
+Cookie: _ga=GA1.2.1046187808.1560091264; _xsrf=1b707684cfa94e958081aeb741c8df0a; _dx_uzZo5y=5b18d5da2f646d27d30273c14413d1af94b32512640168269d58b8bb9310e77eba7df874; verification="NDIzNzRlODJkYjJjMWY0MDFmZGIzODRmMjczMWYxZTgxMWM1OTBhMjhmMmFlNDk2ZjhlOTI3ZGZhNTA2ZWMzZA==|1561176819|237f2d37d4ee90bccde6d5ecc04f4ae12e4b07f8"; session_id="NDI3MzVkOWU0ZGU2OGVlMjc0ZTJlNTcwNTFhNDIzOTdhOTdjZjA5YWI5ODY2MWJjNTZiYTgzNzNjZGQxOWYxNA==|1561176819|fea2f0097c76cf817e6264384d87e967223ad2be"; user="MjI4Nzg=|1561176819|98fbc5bfc4b3a21385bc147aba676907012b70d4"; _dx_app_64dbb3e602c0f5a34ad58387da5aa310=5d18c775kgRMtSyRBXkBlSFmTpKZnxND7Ffev141; _gid=GA1.2.687290872.1563660719; _gat=1
+```
+
+**response**
+
+```
+HTTP/1.1 302 Found
+Date: Sat, 20 Jul 2019 22:17:24 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+Location: /u/muchen
+Server: TornadoServer/3.2
+```
+
+### 取消屏蔽
+
+**request**
+
+```
+GET /u/30804/unblock HTTP/1.1
+Host: www.guanggoo.com
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7,fr;q=0.6,nb;q=0.5
+Cookie: _ga=GA1.2.1046187808.1560091264; _xsrf=1b707684cfa94e958081aeb741c8df0a; _dx_uzZo5y=5b18d5da2f646d27d30273c14413d1af94b32512640168269d58b8bb9310e77eba7df874; verification="NDIzNzRlODJkYjJjMWY0MDFmZGIzODRmMjczMWYxZTgxMWM1OTBhMjhmMmFlNDk2ZjhlOTI3ZGZhNTA2ZWMzZA==|1561176819|237f2d37d4ee90bccde6d5ecc04f4ae12e4b07f8"; session_id="NDI3MzVkOWU0ZGU2OGVlMjc0ZTJlNTcwNTFhNDIzOTdhOTdjZjA5YWI5ODY2MWJjNTZiYTgzNzNjZGQxOWYxNA==|1561176819|fea2f0097c76cf817e6264384d87e967223ad2be"; user="MjI4Nzg=|1561176819|98fbc5bfc4b3a21385bc147aba676907012b70d4"; _dx_app_64dbb3e602c0f5a34ad58387da5aa310=5d18c775kgRMtSyRBXkBlSFmTpKZnxND7Ffev141; _gid=GA1.2.687290872.1563660719
+```
+
+**response**
+
+```
+HTTP/1.1 302 Found
+Date: Sat, 20 Jul 2019 22:20:14 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+Location: /u/muchen
+Server: TornadoServer/3.2
 ```

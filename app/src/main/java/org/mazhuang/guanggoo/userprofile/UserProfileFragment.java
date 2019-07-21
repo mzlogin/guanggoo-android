@@ -42,9 +42,11 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
     @BindView(R.id.number) TextView mNumberTextView;
     @BindView(R.id.logout) TextView mLogoutTextView;
     @BindView(R.id.follow) TextView mFollowTextView;
+    @BindView(R.id.block) TextView mBlockTextView;
     @BindView(R.id.title_favorite) TextView mFavoriteTextView;
     @BindView(R.id.title_topic) TextView mTopicTextView;
     @BindView(R.id.title_reply) TextView mReplyTextView;
+    @BindView(R.id.blocked_user) View mBlockedUserView;
 
     private boolean mIsToViewSelfProfile = false;
 
@@ -95,6 +97,7 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
 
         if (mIsToViewSelfProfile) {
             mLogoutTextView.setVisibility(View.VISIBLE);
+            mBlockedUserView.setVisibility(View.VISIBLE);
         }
 
         if (mIsToViewSelfProfile || isSelf) {
@@ -107,6 +110,7 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
         } else if (AuthInfoManager.getInstance().isLoginIn()) {
             // 已登录，打开的不是自己的页面
             mFollowTextView.setVisibility(View.VISIBLE);
+            mBlockTextView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -126,6 +130,8 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
         mNumberTextView.setText(userProfile.getNumber());
         mFollowTextView.setText(
                 getString(userProfile.isFollowed() ? R.string.unfollow : R.string.follow));
+        mBlockTextView.setText(
+                getString(userProfile.isBlocked() ? R.string.unblock : R.string.block));
     }
 
     @Override
@@ -147,7 +153,7 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
     }
 
     @OnClick({R.id.user_favors, R.id.user_topics, R.id.user_replies, R.id.logout, R.id.follow,
-        R.id.avatar})
+        R.id.avatar, R.id.block, R.id.blocked_user})
     public void onClick(View v) {
         if (mListener == null || mUserProfile == null) {
             return;
@@ -195,8 +201,21 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
                 break;
             }
 
+            case R.id.block: {
+                if (!mUserProfile.isBlocked()) {
+                    mPresenter.blockUser(mUserProfile);
+                } else {
+                    mPresenter.unblockUser(mUserProfile);
+                }
+                break;
+            }
+
             case R.id.avatar:
                 mListener.openPage(mUserProfile.getAvatar(), null);
+                break;
+
+            case R.id.blocked_user:
+                mListener.openPage(ConstantUtil.BLOCKED_USER_URL, null);
                 break;
 
             default:
@@ -235,6 +254,40 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
 
     @Override
     public void onUnfollowUserFailed(String msg) {
+        toast(msg);
+    }
+
+    @Override
+    public void onBlockUserSucceed() {
+        if (getContext() == null) {
+            return;
+        }
+
+        mUserProfile.setBlocked(true);
+
+        toast("屏蔽成功");
+        mBlockTextView.setText(R.string.unblock);
+    }
+
+    @Override
+    public void onBlockUserFailed(String msg) {
+        toast(msg);
+    }
+
+    @Override
+    public void onUnblockUserSucceed() {
+        if (getContext() == null) {
+            return;
+        }
+
+        mUserProfile.setBlocked(false);
+
+        toast("取消屏蔽成功");
+        mBlockTextView.setText(R.string.block);
+    }
+
+    @Override
+    public void onUnblockUserFailed(String msg) {
         toast(msg);
     }
 

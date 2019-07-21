@@ -3,6 +3,7 @@ package org.mazhuang.guanggoo.userprofile;
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.UserProfile;
+import org.mazhuang.guanggoo.data.task.BlockUserTask;
 import org.mazhuang.guanggoo.data.task.FollowUserTask;
 import org.mazhuang.guanggoo.data.task.GetUserProfileTask;
 import org.mazhuang.guanggoo.util.ConstantUtil;
@@ -87,6 +88,52 @@ public class UserProfilePresenter implements UserProfileContract.Presenter {
             public void onFailed(String msg) {
                 mView.stopLoading();
                 mView.onUnfollowUserFailed(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void blockUser(UserProfile profile) {
+        mView.startLoading();
+
+        NetworkTaskScheduler.getInstance().execute(new BlockUserTask(profile, BlockUserTask.TYPE_BLOCK, new OnResponseListener<Boolean>() {
+            @Override
+            public void onSucceed(Boolean data) {
+                mView.stopLoading();
+                if (data) {
+                    mView.onBlockUserSucceed();
+                } else {
+                    mView.onBlockUserFailed("屏蔽失败");
+                }
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                mView.stopLoading();
+                mView.onUnblockUserFailed(msg);
+            }
+        }));
+    }
+
+    @Override
+    public void unblockUser(UserProfile profile) {
+        mView.startLoading();
+
+        NetworkTaskScheduler.getInstance().execute(new BlockUserTask(profile, BlockUserTask.TYPE_UNBLOCK, new OnResponseListener<Boolean>() {
+            @Override
+            public void onSucceed(Boolean data) {
+                mView.stopLoading();
+                if (data) {
+                    mView.onUnblockUserSucceed();;
+                } else {
+                    mView.onUnblockUserFailed("解除屏蔽失败");
+                }
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                mView.stopLoading();
+                mView.onUnblockUserFailed(msg);
             }
         }));
     }

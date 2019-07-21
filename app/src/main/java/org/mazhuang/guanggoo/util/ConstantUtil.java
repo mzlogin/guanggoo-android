@@ -20,6 +20,7 @@ public class ConstantUtil {
     public static final String BEGINNER_GUIDE_URL = BASE_URL + "/t/2657";
     public static final String NODES_CLOUD_URL = BASE_URL + "/nodes";
     public static final String SELECT_NODE_URL = NODES_CLOUD_URL + " ";
+    public static final String BLOCKED_USER_URL = BASE_URL + "/setting/blockedUser";
     public static final String LATEST_URL = BASE_URL + "/?tab=latest";
     public static final String ELITE_URL = BASE_URL + "/?tab=elite";
     public static final String FOLLOWS_URL = BASE_URL + "/?tab=follows";
@@ -29,6 +30,8 @@ public class ConstantUtil {
     public static final String USER_TOPICS_BASE_URL = BASE_URL + "/u/%s/topics";
     public static final String USER_REPLIES_BASE_URL = BASE_URL + "/u/%s/replies";
     public static final String FOLLOW_USER_BASE_URL = BASE_URL + "/f/user/%s";
+    public static final String BLOCK_USER_BASE_URL = BASE_URL + "/u/%s/block";
+    public static final String UNBLOCK_USER_BASE_URL = BASE_URL + "/u/%s/unblock";
     public static final String NEW_TOPIC_BASE_URL = BASE_URL + "/t/create/%s";
     public static final String NOTIFICATIONS_URL = BASE_URL + "/notifications";
 

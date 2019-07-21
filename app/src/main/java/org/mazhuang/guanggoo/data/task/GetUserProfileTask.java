@@ -1,6 +1,7 @@
 package org.mazhuang.guanggoo.data.task;
 
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.UserProfile;
@@ -56,6 +57,19 @@ public class GetUserProfileTask extends BaseTask<UserProfile> {
         Elements followStatusElements = headerElements.select("span.label-success");
         if (!followStatusElements.isEmpty()) {
             profile.setFollowed("取消关注".equals(followStatusElements.select("a").text()));
+        }
+
+        Elements blockStatusElements = doc.select("div.sidebar-right .user-page .self-introduction .ui-content");
+        if (!blockStatusElements.isEmpty()) {
+            boolean blocked = true;
+            for (Element element : blockStatusElements) {
+                if ("屏蔽此帐号".equals(element.select("a").text())) {
+                    blocked = false;
+                    break;
+                }
+            }
+
+            profile.setBlocked(blocked);
         }
 
         if (profile.isValid()) {

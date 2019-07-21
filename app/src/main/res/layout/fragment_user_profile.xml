@@ -96,6 +96,24 @@
             android:layout_height="wrap_content"
             android:src="@drawable/right"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/blocked_user"
+        style="@style/LinearClickableItem"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/title_blocked_user"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/blocked_user"
+            android:textSize="@dimen/font_normal"
+            android:textColor="@color/major"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/right"/>
+    </LinearLayout>
     
     <TextView
         android:id="@+id/logout"
@@ -119,6 +137,18 @@
         android:textColor="@color/main"
         android:textSize="@dimen/font_normal"
         android:text="@string/follow"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/block"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/linear_item_height"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:textColor="@color/assist"
+        android:textSize="@dimen/font_normal"
+        android:text="@string/block"
         android:visibility="gone"/>
 
 </LinearLayout>

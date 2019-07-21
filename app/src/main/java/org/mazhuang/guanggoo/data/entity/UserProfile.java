@@ -2,67 +2,49 @@ package org.mazhuang.guanggoo.data.entity;
 
 import android.text.TextUtils;
 
+import lombok.Data;
+
 /**
  *
  * @author Lenovo
  * @date 2017/9/29
  */
-
+@Data
 public class UserProfile {
+    /**
+     * 用户名（ID）
+     */
     private String username;
+
+    /**
+     * 个人资料页 URL
+     */
     private String url;
+
+    /**
+     * 头像图片地址
+     */
     private String avatar;
+
+    /**
+     * 社区第多少号用户
+     */
     private String number;
+
+    /**
+     * 注册时间
+     */
     private String since;
+
+    /**
+     * 是否已经关注
+     */
     private boolean followed;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public String getSince() {
-        return since;
-    }
-
-    public void setSince(String since) {
-        this.since = since;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public boolean isFollowed() {
-        return followed;
-    }
-
-    public void setFollowed(boolean followed) {
-        this.followed = followed;
-    }
+    /**
+     * 是否已经屏蔽
+     */
+    private boolean blocked;
 
     public boolean isValid() {
         return !TextUtils.isEmpty(avatar) &&
