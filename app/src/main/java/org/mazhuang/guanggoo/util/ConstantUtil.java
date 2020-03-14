@@ -55,6 +55,7 @@ public class ConstantUtil {
     public static final String KEY_COOKIE = "cookie";
     public static final String KEY_XSRF = "_xsrf";
     public static final String KEY_COMMENTS_ORDER_DESC = "comments_order_desc";
+    public static final String KEY_PRIVACY_POLICY_AGREED_VERSION = "privacy_policy_agreed_version";
 
     public static final String NEXT_PAGE = "下一页";
 
@@ -65,4 +66,5 @@ public class ConstantUtil {
     public static final int MAX_TOPICS = 1024;
 
     public static final String DOWNLOAD_URL_COOLAPK = "https://www.coolapk.com/apk/164523";
+    public static final String PRIVACY_URL = "https://mazhuang.org/guanggoo-android/policy";
 }

@@ -1,22 +1,21 @@
 package org.mazhuang.guanggoo.about;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import androidx.annotation.Nullable;
 import com.tencent.bugly.beta.Beta;
-
+import mehdi.sakout.aboutpage.AboutPage;
+import mehdi.sakout.aboutpage.Element;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.ShareUtil;
 import org.mazhuang.guanggoo.util.VersionUtil;
-
-import mehdi.sakout.aboutpage.AboutPage;
-import mehdi.sakout.aboutpage.Element;
 
 /**
  *
@@ -49,6 +48,11 @@ public class AboutFragment extends BaseFragment {
                     }
                 });
 
+        Element policyElement = new Element();
+        policyElement.setTitle(getString(R.string.privacy_and_policy))
+                .setIconDrawable(R.drawable.ic_policy)
+                .setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ConstantUtil.PRIVACY_URL))));
+
         return new AboutPage(getActivity())
                 .isRTL(false)
                 .setImage(R.drawable.guanggoo_new)
@@ -56,6 +60,7 @@ public class AboutFragment extends BaseFragment {
                 .addItem(checkUpdateElement)
                 .addItem(qrcodeElement)
                 .addItem(shareElement)
+                .addItem(policyElement)
                 .addGitHub(getString(R.string.source_code_address), getString(R.string.source_code))
                 .create();
     }
