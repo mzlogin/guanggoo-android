@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.mazhuang.guanggoo.App;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.util.ConstantUtil;
@@ -48,5 +49,28 @@ public class AuthCheckTask extends BaseTask<String> {
         AuthInfoManager.getInstance().setUsername(null);
         AuthInfoManager.getInstance().setAvatar(null);
         failedOnUI("auth failed");
+    }
+
+    @Override
+    protected void successOnUI(String data) {
+        super.successOnUI(data);
+
+        if (!mIsCanceled) {
+            Document doc;
+            try {
+                doc = get(ConstantUtil.VERIFY_TELEPHONE_URL);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            Elements elements = doc.select("button#getSmsCode");
+
+            final boolean telephoneVerified = elements.isEmpty();
+
+            mHandler.post(() -> {
+                App.getInstance().mGlobal.telephoneVerified.setValue(telephoneVerified);
+            });
+        }
     }
 }

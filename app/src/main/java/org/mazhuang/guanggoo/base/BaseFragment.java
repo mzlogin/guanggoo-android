@@ -1,11 +1,17 @@
 package org.mazhuang.guanggoo.base;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import androidx.fragment.app.Fragment;
 import android.widget.Toast;
 
+import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.router.FragmentFactory;
+import org.mazhuang.guanggoo.util.ConstantUtil;
 
 /**
  *
@@ -94,5 +100,15 @@ public abstract class BaseFragment<T> extends Fragment {
         }
 
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void alertTelephoneVerify() {
+        new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme_AlertDialog))
+                .setTitle(R.string.verify_telephone)
+                .setMessage(R.string.please_verify_telephone_first)
+                .setPositiveButton(R.string.go_to_verify_telephone, (dialog, which) -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ConstantUtil.VERIFY_TELEPHONE_URL))))
+                .setNegativeButton(R.string.cancel, null)
+                .create()
+                .show();
     }
 }

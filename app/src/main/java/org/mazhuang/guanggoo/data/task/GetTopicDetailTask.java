@@ -3,6 +3,7 @@ package org.mazhuang.guanggoo.data.task;
 import android.text.TextUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.mazhuang.guanggoo.App;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.*;
 
@@ -105,5 +106,22 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
                 successOnUI(topicDetail);
             }
         }).run();
+    }
+
+    private void checkTelephoneVerified(Document doc) {
+        final Elements replyCreateElements = doc.select("div.topic-reply-create");
+
+        if (!replyCreateElements.isEmpty()) {
+            mHandler.post(() -> {
+                Elements noRepliesElements = replyCreateElements.first().select("div.no-replies");
+                boolean telephoneVerified = true;
+                if (!noRepliesElements.isEmpty()) {
+                    if (noRepliesElements.text().contains("请绑定手机号后，再发言")) {
+                        telephoneVerified = false;
+                    }
+                }
+                App.getInstance().mGlobal.telephoneVerified.setValue(telephoneVerified);
+            });
+        }
     }
 }

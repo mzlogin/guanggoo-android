@@ -105,9 +105,7 @@ public class FragmentFactory {
                 break;
 
             case HOME_TOPIC_LIST:
-                fragment = new TopicListFragment();
-                break;
-
+            case USER_TOPICS:
             case NODE_TOPIC_LIST:
                 fragment = new TopicListFragment();
                 break;
@@ -118,10 +116,6 @@ public class FragmentFactory {
                 } else {
                     fragment = new LoginFragment();
                 }
-                break;
-
-            case USER_TOPICS:
-                fragment = new TopicListFragment();
                 break;
 
             case TOPIC_DETAIL:

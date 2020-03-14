@@ -1,6 +1,5 @@
 package org.mazhuang.guanggoo.topicdetail;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -204,13 +202,7 @@ public class TopicDetailFragment extends BaseUploadImageFragment<TopicDetailCont
                 Boolean telephoneVerified = App.getInstance().mGlobal.telephoneVerified.getValue();
 
                 if (!Boolean.TRUE.equals(telephoneVerified)) {
-                    new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme_AlertDialog))
-                            .setTitle(R.string.verify_telephone)
-                            .setMessage(R.string.please_verify_telephone_first)
-                            .setPositiveButton(R.string.go_to_verify_telephone, (dialog, which) -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ConstantUtil.VERIFY_TELEPHONE_URL))))
-                            .setNegativeButton(R.string.cancel, null)
-                            .create()
-                            .show();
+                    alertTelephoneVerify();
                     return;
                 }
 

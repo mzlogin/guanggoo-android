@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.mazhuang.guanggoo.App;
 import org.mazhuang.guanggoo.data.entity.ListResult;
 import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.router.FragmentFactory;
@@ -155,6 +156,13 @@ public class TopicListFragment extends BaseFragment<TopicListContract.Presenter>
     }
 
     private void onNewTopic() {
+        Boolean telephoneVerified = App.getInstance().mGlobal.telephoneVerified.getValue();
+
+        if (!Boolean.TRUE.equals(telephoneVerified)) {
+            alertTelephoneVerify();
+            return;
+        }
+
         if (mPageType == FragmentFactory.PageType.HOME_TOPIC_LIST) {
             if (mListener != null) {
                 mListener.openPage(ConstantUtil.SELECT_NODE_URL, getString(R.string.select_node_to_new_topic));
