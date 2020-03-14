@@ -1,16 +1,10 @@
 package org.mazhuang.guanggoo.data.task;
 
 import android.text.TextUtils;
-
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.mazhuang.guanggoo.data.OnResponseListener;
-import org.mazhuang.guanggoo.data.entity.Comment;
-import org.mazhuang.guanggoo.data.entity.Favorite;
-import org.mazhuang.guanggoo.data.entity.Topic;
-import org.mazhuang.guanggoo.data.entity.TopicDetail;
-import org.mazhuang.guanggoo.data.entity.UserProfile;
-import org.mazhuang.guanggoo.util.ConstantUtil;
+import org.mazhuang.guanggoo.data.entity.*;
 
 import java.io.IOException;
 import java.util.Map;
@@ -94,6 +88,8 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
         Map<Integer, Comment> comments = GetCommentsTask.getCommentsFromElements(commentsElements);
 
         topicDetail.setComments(comments);
+
+        checkTelephoneVerified(doc);
 
         new GetUserProfileTask(topicDetail.getTopic().getMeta().getAuthor().getUrl(), new OnResponseListener<UserProfile>() {
             @Override

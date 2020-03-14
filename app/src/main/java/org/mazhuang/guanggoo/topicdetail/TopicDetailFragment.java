@@ -1,43 +1,33 @@
 package org.mazhuang.guanggoo.topicdetail;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
-import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.CookieManager;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.webkit.*;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnLongClick;
 import org.mazhuang.guanggoo.App;
 import org.mazhuang.guanggoo.R;
-import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.base.BaseUploadImageFragment;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.data.OnResponseListener;
@@ -45,25 +35,9 @@ import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
 import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.ui.widget.PreImeEditText;
-import org.mazhuang.guanggoo.util.ConstantUtil;
-import org.mazhuang.guanggoo.util.GlideUtil;
-import org.mazhuang.guanggoo.util.PrefsUtil;
-import org.mazhuang.guanggoo.util.ShareUtil;
-import org.mazhuang.guanggoo.util.SoftInputUtil;
-import org.mazhuang.guanggoo.util.UrlUtil;
+import org.mazhuang.guanggoo.util.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.OnLongClick;
 
 /**
  *
@@ -224,6 +198,19 @@ public class TopicDetailFragment extends BaseUploadImageFragment<TopicDetailCont
 
             case R.id.submit:
                 if (mListener != null && mListener.isLoading()) {
+                    return;
+                }
+
+                Boolean telephoneVerified = App.getInstance().mGlobal.telephoneVerified.getValue();
+
+                if (!Boolean.TRUE.equals(telephoneVerified)) {
+                    new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme_AlertDialog))
+                            .setTitle(R.string.verify_telephone)
+                            .setMessage(R.string.please_verify_telephone_first)
+                            .setPositiveButton(R.string.go_to_verify_telephone, (dialog, which) -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ConstantUtil.VERIFY_TELEPHONE_URL))))
+                            .setNegativeButton(R.string.cancel, null)
+                            .create()
+                            .show();
                     return;
                 }
 

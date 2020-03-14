@@ -35,6 +35,8 @@ public class ConstantUtil {
     public static final String NEW_TOPIC_BASE_URL = BASE_URL + "/t/create/%s";
     public static final String NOTIFICATIONS_URL = BASE_URL + "/notifications";
 
+    public static final String VERIFY_TELEPHONE_URL = BASE_URL + "/setting/phoneNum";
+
     public static final String ABOUT_URL = "INNER_PAGE_ABOUT";
     public static final String SEARCH_URL = "SEARCH_URL";
     public static final String SETTINGS_URL = "SETTINGS_URL";

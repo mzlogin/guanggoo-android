@@ -141,11 +141,23 @@ public abstract class BaseTask<T> implements Runnable {
     protected void checkNotification(Document doc) {
         Elements elements = doc.select("a.contextually-unread");
         final boolean hasNotifications = !elements.isEmpty();
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                App.getInstance().mGlobal.hasNotifications.setValue(hasNotifications);
-            }
-        });
+        mHandler.post(() -> App.getInstance().mGlobal.hasNotifications.setValue(hasNotifications));
+    }
+
+    protected void checkTelephoneVerified(Document doc) {
+        final Elements replyCreateElements = doc.select("div.topic-reply-create");
+
+        if (!replyCreateElements.isEmpty()) {
+            mHandler.post(() -> {
+                Elements noRepliesElements = replyCreateElements.first().select("div.no-replies");
+                boolean telephoneVerified = true;
+                if (!noRepliesElements.isEmpty()) {
+                    if (noRepliesElements.text().contains("请绑定手机号后，再发言")) {
+                        telephoneVerified = false;
+                    }
+                }
+                App.getInstance().mGlobal.telephoneVerified.setValue(telephoneVerified);
+            });
+        }
     }
 }

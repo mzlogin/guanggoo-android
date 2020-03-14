@@ -1,13 +1,10 @@
 package org.mazhuang.guanggoo;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import android.os.Build;
 import android.os.StrictMode;
+import androidx.lifecycle.MutableLiveData;
 import androidx.multidex.MultiDexApplication;
-
 import com.tencent.bugly.Bugly;
-
 import org.mazhuang.guanggoo.util.ConfigUtil;
 
 /**
@@ -45,9 +42,11 @@ public class App extends MultiDexApplication {
 
     public static class GlobalData {
         public MutableLiveData<Boolean> hasNotifications = new MutableLiveData<>();
+        public MutableLiveData<Boolean> telephoneVerified = new MutableLiveData<>();
 
         {
             hasNotifications.setValue(false);
+            telephoneVerified.setValue(true);
         }
     }
 }

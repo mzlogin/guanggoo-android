@@ -105,6 +105,9 @@
     <string name="settings">设置</string>
     <string name="comments_order_desc">倒序显示评论</string>
     <string name="blocked_user">已屏蔽用户</string>
+    <string name="verify_telephone">绑定手机号</string>
+    <string name="go_to_verify_telephone">去绑定</string>
+    <string name="please_verify_telephone_first">请先到光谷社区网站上绑定手机号，再发言。</string>
 
     <string-array name="home_tab_names">
         <item>@string/default_order_topics</item>
