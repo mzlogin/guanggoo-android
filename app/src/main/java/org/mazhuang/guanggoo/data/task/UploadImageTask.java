@@ -1,27 +1,22 @@
 package org.mazhuang.guanggoo.data.task;
 
 import android.text.TextUtils;
-
 import com.google.gson.Gson;
-
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.UploadImageResponse;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
+import javax.net.ssl.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.HashMap;
 import java.util.Map;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.X509TrustManager;
+import java.util.UUID;
 
 /**
  * @author mazhuang
@@ -29,8 +24,8 @@ import javax.net.ssl.X509TrustManager;
  */
 public class UploadImageTask extends BaseTask<String> {
 
-    public static final String URL = "https://sm.ms/api/upload";
-    public static final String KEY = "smfile";
+    public static final String URL = "https://img.rruu.net/api/upload/upload";
+    public static final String KEY = "image";
 
     private InputStream mStream;
 
@@ -48,8 +43,8 @@ public class UploadImageTask extends BaseTask<String> {
                 Gson gson = new Gson();
                 UploadImageResponse entity = gson.fromJson(response.body(), UploadImageResponse.class);
                 if (UploadImageResponse.CODE_SUCCESS.equals(entity.getCode())) {
-                    if (entity.getData() != null && !TextUtils.isEmpty(entity.getData().getUrl())) {
-                        successOnUI(entity.getData().getUrl());
+                    if (entity.getData() != null && entity.getData().getUrl() != null && !TextUtils.isEmpty(entity.getData().getUrl().getDistribute())) {
+                        successOnUI(entity.getData().getUrl().getDistribute());
                         return;
                     }
                     errorMsg = "图片上传返回数据有误";
@@ -71,11 +66,18 @@ public class UploadImageTask extends BaseTask<String> {
         if (url.startsWith("https")) {
             trustEveryone();
         }
+
+        Map<String, String> data = new HashMap<>();
+        data.put("apiType", "ali,juejin,Huluxia,Imgbb");
+
+        String filename = UUID.randomUUID() + ".jpg";
+
         return Jsoup.connect(url)
                 .method(Connection.Method.POST)
                 .ignoreContentType(true)
-                .timeout(12000)
-                .data(key, "filename", inputStream)
+                .timeout(120000)
+                .data(key, filename, inputStream)
+                .data(data)
                 .execute();
     }
 

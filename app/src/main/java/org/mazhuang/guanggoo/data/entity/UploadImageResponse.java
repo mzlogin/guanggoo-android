@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class UploadImageResponse {
-    public static final String CODE_SUCCESS = "success";
+    public static final String CODE_SUCCESS = "200";
 
     private String code;
     private String msg;
@@ -16,10 +16,15 @@ public class UploadImageResponse {
 
     @Data
     public static class Content {
-        private int width;
-        private int height;
-        private long size;
-        private String url;
-        private String delete;
+        private UrlList url;
+    }
+
+    @Data
+    public static class UrlList {
+        private String distribute;
+        private String ali;
+        private String juejin;
+        private String huluxia;
+        private String imgbb;
     }
 }
