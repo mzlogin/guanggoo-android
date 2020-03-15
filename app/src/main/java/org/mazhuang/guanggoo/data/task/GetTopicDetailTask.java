@@ -37,6 +37,8 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
             return;
         }
 
+        tryFixAuthStatus(doc);
+
         Elements topicDetailElements = doc.select("div.topic-detail");
 
         if (topicDetailElements.isEmpty()) {

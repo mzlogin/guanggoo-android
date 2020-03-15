@@ -1,9 +1,7 @@
 package org.mazhuang.guanggoo.data.task;
 
 import android.text.TextUtils;
-
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.mazhuang.guanggoo.App;
 import org.mazhuang.guanggoo.data.AuthInfoManager;
@@ -33,12 +31,10 @@ public class AuthCheckTask extends BaseTask<String> {
             }
 
             Document doc = get(ConstantUtil.BASE_URL);
-            Elements elements = doc.select("div.usercard");
-            if (!elements.isEmpty()) {
-                Element usercardElement = elements.first();
 
-                AuthInfoManager.getInstance().setUsername(usercardElement.select("div.username").first().text());
-                AuthInfoManager.getInstance().setAvatar(usercardElement.select("img.avatar").first().attr("src"));
+            boolean succeed = checkAuth(doc);
+
+            if (succeed) {
                 successOnUI("succeed");
                 return;
             }

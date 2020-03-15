@@ -12,6 +12,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.mazhuang.guanggoo.App;
+import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.PrefsUtil;
@@ -142,5 +143,31 @@ public abstract class BaseTask<T> implements Runnable {
         Elements elements = doc.select("a.contextually-unread");
         final boolean hasNotifications = !elements.isEmpty();
         mHandler.post(() -> App.getInstance().mGlobal.hasNotifications.setValue(hasNotifications));
+    }
+
+    protected boolean checkAuth(Document doc) {
+        Elements elements = doc.select("div.usercard");
+        if (!elements.isEmpty()) {
+            Element usercardElement = elements.first();
+
+            AuthInfoManager.getInstance().setUsername(usercardElement.select("div.username").first().text());
+            AuthInfoManager.getInstance().setAvatar(usercardElement.select("img.avatar").first().attr("src"));
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 尝试补偿登录状态
+     * @param doc -
+     */
+    protected void tryFixAuthStatus(Document doc) {
+        if (doc == null) {
+            return;
+        }
+
+        if (TextUtils.isEmpty(AuthInfoManager.getInstance().getUsername())) {
+            checkAuth(doc);
+        }
     }
 }

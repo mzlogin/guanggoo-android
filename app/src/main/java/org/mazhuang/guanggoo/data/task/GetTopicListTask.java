@@ -39,6 +39,8 @@ public class GetTopicListTask extends BaseTask<ListResult<Topic>> implements Run
         try {
             Document doc = get(mUrl);
 
+            tryFixAuthStatus(doc);
+
             Elements elements = doc.select("div.topic-item");
 
             for (Element element : elements) {
