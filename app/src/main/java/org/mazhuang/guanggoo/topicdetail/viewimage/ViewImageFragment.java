@@ -3,25 +3,17 @@ package org.mazhuang.guanggoo.topicdetail.viewimage;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.bm.library.PhotoView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import com.github.chrisbanes.photoview.PhotoView;
 import org.mazhuang.guanggoo.GlideApp;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  *
@@ -67,7 +59,6 @@ public class ViewImageFragment extends BaseFragment<ViewImageContract.Presenter>
     }
 
     private void initPhotoView() {
-        mImageView.enable();
     }
 
     protected void loadImage() {

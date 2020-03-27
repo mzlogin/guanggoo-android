@@ -136,7 +136,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation 'com.github.medyo:android-about-page:1.2.1'
     implementation('com.vdurmont:emoji-java:4.0.0') { exclude group: 'org.json', module: 'json' }
-    implementation 'com.bm.photoview:library:1.4.1'
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     compileOnly 'org.projectlombok:lombok:1.18.2'

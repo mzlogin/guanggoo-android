@@ -2,9 +2,7 @@ package org.mazhuang.guanggoo.topicdetail.viewimage;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-
-import com.bm.library.PhotoView;
-
+import com.github.chrisbanes.photoview.PhotoView;
 import org.mazhuang.guanggoo.util.FileUtils;
 
 /**

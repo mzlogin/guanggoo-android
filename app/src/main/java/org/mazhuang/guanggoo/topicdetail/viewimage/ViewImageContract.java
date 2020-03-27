@@ -1,7 +1,6 @@
 package org.mazhuang.guanggoo.topicdetail.viewimage;
 
-import com.bm.library.PhotoView;
-
+import com.github.chrisbanes.photoview.PhotoView;
 import org.mazhuang.guanggoo.base.BasePresenter;
 import org.mazhuang.guanggoo.base.BaseView;
 
