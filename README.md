@@ -6,6 +6,7 @@
 <!-- vim-markdown-toc GFM -->
 
 * [下载地址](#下载地址)
+* [联系开发者](#联系开发者)
 * [屏幕截图](#屏幕截图)
 * [功能列表](#功能列表)
 * [界面特性](#界面特性)
@@ -25,11 +26,17 @@
 
 > 如需 iOS 版请移步 [相关项目](#相关项目)
 
+## 联系开发者
+
+给本项目提建议和意见，或想与我交流，可关注微信公众号「闷骚的程序员」：
+
+<img src="https://cdn.jsdelivr.net/gh/mzlogin/mzlogin.github.io/assets/images/qrcode.jpg" style="width:120px;height:120px;" >
+
 ## 屏幕截图
 
-<img width="360" src="http://mazhuang.org/guanggoo-android/screenshots/topic-list.png" align=center /> <img width="360" src="http://mazhuang.org/guanggoo-android/screenshots/topic-detail.png" align=center />
+<img width="360" src="https://cdn.jsdelivr.net/gh/mzlogin/guanggoo-android@gh-pages/screenshots/topic-list.png" align=center /> <img width="360" src="https://cdn.jsdelivr.net/gh/mzlogin/guanggoo-android@gh-pages/screenshots/topic-detail.png" align=center />
 
-<img width="360" src="http://mazhuang.org/guanggoo-android/screenshots/nodes-list.png" align=center /> <img width="360" src="http://mazhuang.org/guanggoo-android/screenshots/drawer.png" align=center />
+<img width="360" src="https://cdn.jsdelivr.net/gh/mzlogin/guanggoo-android@gh-pages/screenshots/nodes-list.png" align=center /> <img width="360" src="https://cdn.jsdelivr.net/gh/mzlogin/guanggoo-android@gh-pages/screenshots/drawer.png" align=center />
 
 ## 功能列表
 
