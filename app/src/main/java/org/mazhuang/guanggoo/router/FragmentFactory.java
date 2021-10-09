@@ -76,17 +76,17 @@ public class FragmentFactory {
         BLOCKED_USER_LIST
     }
 
-    private static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com[/]?$");
-    private static final Pattern TOPIC_DETAIL_PATTERN = Pattern.compile("^http://www.guanggoo.com/t/\\d+$");
-    private static final Pattern NODES_CLOUD_PATTERN = Pattern.compile("^http://www.guanggoo.com/nodes$");
-    private static final Pattern SELECT_NODE_PATTERN = Pattern.compile("^http://www.guanggoo.com/nodes $");
-    private static final Pattern NODE_TOPIC_LIST_PATTERN = Pattern.compile("^http://www.guanggoo.com/node/[^/]+$");
-    private static final Pattern LOGIN_PATTERN = Pattern.compile("^http://www.guanggoo.com/login$");
-    private static final Pattern USER_PROFILE_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+$");
-    private static final Pattern USER_FAVORS_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/favorites$");
-    private static final Pattern USER_TOPICS_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/topics$");
-    private static final Pattern USER_REPLIES_PATTERN = Pattern.compile("^http://www.guanggoo.com/u/\\w+/replies$");
-    private static final Pattern NEW_TOPIC_PATTERN = Pattern.compile("^http://www.guanggoo.com/t/create/\\w+$");
+    private static final Pattern HOME_TOPIC_LIST_PATTERN = Pattern.compile("^https://www.guozaoke.com[/]?$");
+    private static final Pattern TOPIC_DETAIL_PATTERN = Pattern.compile("^https://www.guozaoke.com/t/\\d+$");
+    private static final Pattern NODES_CLOUD_PATTERN = Pattern.compile("^https://www.guozaoke.com/nodes$");
+    private static final Pattern SELECT_NODE_PATTERN = Pattern.compile("^https://www.guozaoke.com/nodes $");
+    private static final Pattern NODE_TOPIC_LIST_PATTERN = Pattern.compile("^https://www.guozaoke.com/node/[^/]+$");
+    private static final Pattern LOGIN_PATTERN = Pattern.compile("^https://www.guozaoke.com/login$");
+    private static final Pattern USER_PROFILE_PATTERN = Pattern.compile("^https://www.guozaoke.com/u/\\w+$");
+    private static final Pattern USER_FAVORS_PATTERN = Pattern.compile("^https://www.guozaoke.com/u/\\w+/favorites$");
+    private static final Pattern USER_TOPICS_PATTERN = Pattern.compile("^https://www.guozaoke.com/u/\\w+/topics$");
+    private static final Pattern USER_REPLIES_PATTERN = Pattern.compile("^https://www.guozaoke.com/u/\\w+/replies$");
+    private static final Pattern NEW_TOPIC_PATTERN = Pattern.compile("^https://www.guozaoke.com/t/create/\\w+$");
     private static final Pattern VIEW_IMAGE_PATTERN = Pattern.compile("^http[s]?://.+\\.(png|jpg|jpeg)$");
 
 

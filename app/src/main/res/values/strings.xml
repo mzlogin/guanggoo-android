@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">光谷社区</string>
+    <string name="app_name">过早客</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -51,7 +51,7 @@
     <string name="no_content">暂无内容</string>
     <string name="action_register">没有账号？点此注册</string>
     <string name="about">关于我们</string>
-    <string name="app_description">光谷社区第三方客户端 %1$s\nPowered by mzlogin / colinlee</string>
+    <string name="app_description">过早客第三方客户端 %1$s\nPowered by mzlogin / colinlee</string>
     <string name="version_unknown">未知版本</string>
     <string name="version_name_format">v%1$s(%2$d)</string>
     <string name="follow_github">\@mzlogin</string>
@@ -107,7 +107,7 @@
     <string name="blocked_user">已屏蔽用户</string>
     <string name="verify_telephone">绑定手机号</string>
     <string name="go_to_verify_telephone">去绑定</string>
-    <string name="please_verify_telephone_first">请先到光谷社区网站上绑定手机号，再发言。</string>
+    <string name="please_verify_telephone_first">请先到过早客网站上绑定手机号，再发言。</string>
     <string name="agree">同意</string>
     <string name="not_agree_now">暂不使用</string>
     <string name="privacy_policy_title">使用确认</string>

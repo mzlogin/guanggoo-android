@@ -1,8 +1,6 @@
 # guanggoo-android
 
-[光谷社区](http://www.guanggoo.com) 第三方客户端。
-
-**注：** 2021/09/14 接光谷社区站长通知，光谷社区关站，本 APP 功能已无法正常使用。
+[过早客](https://www.guozaoke.com) 第三方客户端。
 
 **目录**
 <!-- vim-markdown-toc GFM -->
@@ -99,7 +97,7 @@
 
 [docs/guanggoo-api.md](./docs/guanggoo-api.md)
 
-因为光谷社区并未提供 API，所以是基于 DOM 解析获取数据。网站的前端界面改动有可能导致数据不可用，可以考虑做一个 API 监控脚本，定期测试 API 的可用性。
+因为过早客并未提供 API，所以是基于 DOM 解析获取数据。网站的前端界面改动有可能导致数据不可用，可以考虑做一个 API 监控脚本，定期测试 API 的可用性。
 
 ## 参与贡献
 
@@ -109,11 +107,11 @@
 
 * [sjjvenu/guanggoo-iOS](https://github.com/sjjvenu/guanggoo-iOS)
 
-    光谷社区 iOS 版，已经在 App Store 上架，基于 Swift。
+    过早客 iOS 版，已经在 App Store 上架，基于 Swift。
 
 * [cauil/react-native-guanggoo](https://github.com/cauil/react-native-guanggoo)
 
-    光谷社区 iOS 版，基于 React Native。
+    过早客 iOS 版，基于 React Native。
 
 ## License
 
