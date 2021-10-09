@@ -1,12 +1,12 @@
-# 光谷社区 Android 客户端
+# 过早客 Android 客户端
 
-[光谷社区][1] 第三方 Android 客户端。
+[过早客][1] 第三方 Android 客户端。
 
 ## 下载地址
 
 扫码下载
 
-![](http://mazhuang.org/guanggoo-android/qrcode.png)
+![](https://mazhuang.org/guanggoo-android/qrcode.png)
 
 下载地址
 
@@ -17,6 +17,15 @@
 <https://github.com/mzlogin/guanggoo-android>
 
 ## 版本说明
+
+### v2.3.172
+
+1. 更名为过早客；
+
+### v2.3.168
+
+1. 修复无法上传图片的问题；
+2. 修复登录状态无法长期保持的问题。
 
 ### v2.2.155
 
@@ -111,4 +120,4 @@
 7. 发表新主题
 8. 查看用户信息
 
-[1]: http://guanggoo.com
+[1]: https://guozaoke.com
