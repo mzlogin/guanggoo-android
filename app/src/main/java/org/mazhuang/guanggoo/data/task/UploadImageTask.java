@@ -4,9 +4,11 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import org.mazhuang.guanggoo.App;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.UploadImageResponse;
 import org.mazhuang.guanggoo.util.ConstantUtil;
+import org.mazhuang.guanggoo.util.PrefsUtil;
 
 import javax.net.ssl.*;
 import java.io.IOException;
@@ -14,8 +16,6 @@ import java.io.InputStream;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -24,7 +24,7 @@ import java.util.UUID;
  */
 public class UploadImageTask extends BaseTask<String> {
 
-    public static final String URL = "https://img.rruu.net/api/upload/upload";
+    public static final String UPLOAD_URL = "https://api.imgbb.com/1/upload?key=";
     public static final String KEY = "image";
 
     private InputStream mStream;
@@ -37,19 +37,27 @@ public class UploadImageTask extends BaseTask<String> {
     @Override
     public void run() {
         String errorMsg;
+
+        String apiKey = PrefsUtil.getString(App.getInstance(), ConstantUtil.KEY_IMGBB_API_KEY, "");
+        if (TextUtils.isEmpty(apiKey)) {
+            errorMsg = "请先到设置里添加 IMGBB 图床 API KEY";
+            failedOnUI(errorMsg);
+            return;
+        }
+
         try {
-            Connection.Response response = doPostFileRequest(URL, KEY, mStream);
+            Connection.Response response = doPostFileRequest(UPLOAD_URL + apiKey, KEY, mStream);
             if (response != null && response.statusCode() == ConstantUtil.HTTP_STATUS_200) {
                 Gson gson = new Gson();
                 UploadImageResponse entity = gson.fromJson(response.body(), UploadImageResponse.class);
-                if (UploadImageResponse.CODE_SUCCESS.equals(entity.getCode())) {
-                    if (entity.getData() != null && entity.getData().getUrl() != null && !TextUtils.isEmpty(entity.getData().getUrl().getDistribute())) {
-                        successOnUI(entity.getData().getUrl().getDistribute());
+                if (UploadImageResponse.CODE_SUCCESS.equals(entity.getStatus()) && entity.isSuccess()) {
+                    if (entity.getData() != null && !TextUtils.isEmpty(entity.getData().getUrl())) {
+                        successOnUI(entity.getData().getUrl());
                         return;
                     }
                     errorMsg = "图片上传返回数据有误";
                 } else {
-                    errorMsg = entity.getMsg();
+                    errorMsg = "图片上传失败：" + response.body();
                 }
             } else {
                 errorMsg = "图片上传失败";
@@ -67,9 +75,6 @@ public class UploadImageTask extends BaseTask<String> {
             trustEveryone();
         }
 
-        Map<String, String> data = new HashMap<>();
-        data.put("apiType", "ali,juejin,Huluxia,Imgbb");
-
         String filename = UUID.randomUUID() + ".jpg";
 
         return Jsoup.connect(url)
@@ -77,7 +82,6 @@ public class UploadImageTask extends BaseTask<String> {
                 .ignoreContentType(true)
                 .timeout(120000)
                 .data(key, filename, inputStream)
-                .data(data)
                 .execute();
     }
 

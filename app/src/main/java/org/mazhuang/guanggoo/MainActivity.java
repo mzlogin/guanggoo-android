@@ -254,6 +254,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void openPage(String url, String title) {
+        openPage(url, title, null);
+    }
+
+    @Override
+    public void openPage(String url, String title, Bundle bundle) {
         if (!TextUtils.isEmpty(url)) {
             Fragment fragment = getCurrentFragment();
             if (fragment instanceof BaseFragment) {
@@ -272,7 +277,9 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, getString(R.string.error_happened), Toast.LENGTH_SHORT).show();
             return;
         }
-        Bundle bundle = new Bundle();
+        if (bundle == null) {
+            bundle = new Bundle();
+        }
         bundle.putString(BaseFragment.KEY_URL, url);
         bundle.putString(BaseFragment.KEY_TITLE, title);
         fragment.setArguments(bundle);

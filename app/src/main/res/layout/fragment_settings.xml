@@ -7,13 +7,45 @@
     android:orientation="vertical"
     android:padding="@dimen/normal_margin">
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/comments_order_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/comments_order_desc"
-        android:textSize="@dimen/font_normal"
-        android:textColor="@color/defaultFontColor"
-        app:trackTint="@color/blue_switch"/>
+    <LinearLayout
+        style="@style/LinearClickableItem"
+        android:layout_marginTop="10dp">
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/comments_order_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/comments_order_desc"
+            android:textColor="@color/major"
+            android:textSize="@dimen/font_normal"
+            app:trackTint="@color/blue_switch" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/imgbb_api_key"
+        style="@style/LinearClickableItem"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:id="@+id/imgbb_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/imgbb_api_key_label"
+            android:textSize="@dimen/font_normal"
+            android:textColor="@color/major"/>
+        <TextView
+            android:id="@+id/imgbb_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="@dimen/font_normal"
+            android:hint="@string/imgbb_api_key_hint" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/right"/>
+    </LinearLayout>
 
 </LinearLayout>

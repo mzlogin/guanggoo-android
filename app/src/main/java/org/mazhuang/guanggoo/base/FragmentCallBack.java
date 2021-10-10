@@ -1,5 +1,7 @@
 package org.mazhuang.guanggoo.base;
 
+import android.os.Bundle;
+
 /**
  *
  * @author Lenovo
@@ -13,6 +15,14 @@ public interface FragmentCallBack {
      * @param title 页面标题
      */
     void openPage(String url, String title);
+
+    /**
+     * 根据 url 打开标题为 title 的 Fragment，并可传入扩展参数
+     * @param url 网页链接或自定义链接
+     * @param title 页面标题
+     * @param bundle 扩展参数集
+     */
+    void openPage(String url, String title, Bundle bundle);
 
     /**
      * 登录状态发生变化时调用

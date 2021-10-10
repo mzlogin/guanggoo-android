@@ -11,6 +11,7 @@ import org.mazhuang.guanggoo.newtopic.SelectNodeFragment;
 import org.mazhuang.guanggoo.nodescloud.NodesCloudFragment;
 import org.mazhuang.guanggoo.notifications.NotificationsFragment;
 import org.mazhuang.guanggoo.search.SearchFragment;
+import org.mazhuang.guanggoo.settings.SettingsEditFragment;
 import org.mazhuang.guanggoo.settings.SettingsFragment;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailFragment;
 import org.mazhuang.guanggoo.topicdetail.viewimage.ViewImageFragment;
@@ -70,6 +71,8 @@ public class FragmentFactory {
         SEARCH,
         // 设置页面
         SETTINGS,
+        // 设置项字符串填写页面
+        SETTINGS_EDIT,
         // 建议与反馈
         FEEDBACK,
         // 已屏蔽用户列表
@@ -186,6 +189,10 @@ public class FragmentFactory {
                 fragment = new SettingsFragment();
                 break;
 
+            case SETTINGS_EDIT:
+                fragment = new SettingsEditFragment();
+                break;
+
             case FEEDBACK:
                 fragment = new FeedbackFragment();
                 break;
@@ -273,6 +280,10 @@ public class FragmentFactory {
 
         if (ConstantUtil.SETTINGS_URL.equals(url)) {
             return PageType.SETTINGS;
+        }
+
+        if (ConstantUtil.SETTINGS_EDIT_URL.equals(url)) {
+            return PageType.SETTINGS_EDIT;
         }
 
         if (ConstantUtil.FEEDBACK_URL.equals(url)) {

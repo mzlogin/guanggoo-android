@@ -1,7 +1,6 @@
 package org.mazhuang.guanggoo;
 
 import org.jsoup.Connection;
-import org.jsoup.Jsoup;
 import org.junit.Test;
 import org.mazhuang.guanggoo.data.task.UploadImageTask;
 
@@ -20,7 +19,7 @@ public class UploadImageTaskTest {
         File file = new File("/Users/mazhuang/Downloads/0.jpeg");
         try {
             FileInputStream is = new FileInputStream(file);
-            Connection.Response response = UploadImageTask.doPostFileRequest(UploadImageTask.URL, UploadImageTask.KEY, is);
+            Connection.Response response = UploadImageTask.doPostFileRequest(UploadImageTask.UPLOAD_URL, UploadImageTask.KEY, is);
             System.out.println(response.body());
         } catch (FileNotFoundException e) {
             e.printStackTrace();

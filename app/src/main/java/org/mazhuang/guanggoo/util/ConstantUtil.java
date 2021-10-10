@@ -40,6 +40,7 @@ public class ConstantUtil {
     public static final String ABOUT_URL = "INNER_PAGE_ABOUT";
     public static final String SEARCH_URL = "SEARCH_URL";
     public static final String SETTINGS_URL = "SETTINGS_URL";
+    public static final String SETTINGS_EDIT_URL = "SETTINGS_EDIT_URL";
     public static final String FEEDBACK_URL = "FEEDBACK_URL";
 
     public static final int TOPICS_PER_PAGE = 36;
@@ -56,6 +57,7 @@ public class ConstantUtil {
     public static final String KEY_XSRF = "_xsrf";
     public static final String KEY_COMMENTS_ORDER_DESC = "comments_order_desc";
     public static final String KEY_PRIVACY_POLICY_AGREED_VERSION = "privacy_policy_agreed_version";
+    public static final String KEY_IMGBB_API_KEY = "imgbb_api_key";
 
     public static final String NEXT_PAGE = "下一页";
 

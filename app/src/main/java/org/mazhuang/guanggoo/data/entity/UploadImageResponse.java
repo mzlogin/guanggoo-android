@@ -10,21 +10,12 @@ import lombok.Data;
 public class UploadImageResponse {
     public static final String CODE_SUCCESS = "200";
 
-    private String code;
-    private String msg;
-    private Content data;
+    private String status;
+    private boolean success;
+    private Image data;
 
     @Data
-    public static class Content {
-        private UrlList url;
-    }
-
-    @Data
-    public static class UrlList {
-        private String distribute;
-        private String ali;
-        private String juejin;
-        private String huluxia;
-        private String imgbb;
+    public static class Image {
+        private String url;
     }
 }
