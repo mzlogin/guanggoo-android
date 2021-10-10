@@ -153,9 +153,10 @@ public class NewTopicFragment extends BaseUploadImageFragment<NewTopicContract.P
     @Override
     public void onUploadImageSucceed(String url) {
         if (!TextUtils.isEmpty(url)) {
+            String imageMarkdown = String.format("[![](%s)](%s)", url, url);
             String text = TextUtils.isEmpty(mContentEditText.getText()) ?
-                    String.format("![](%s)", url) :
-                    String.format("%s\n![](%s)", mContentEditText.getText(), url);
+                    imageMarkdown :
+                    String.format("%s\n%s", mContentEditText.getText(), imageMarkdown);
             mContentEditText.setText(text);
             mContentEditText.setSelection(mContentEditText.getText().length());
         }

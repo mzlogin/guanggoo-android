@@ -549,9 +549,10 @@ public class TopicDetailFragment extends BaseUploadImageFragment<TopicDetailCont
     @Override
     public void onUploadImageSucceed(String url) {
         if (!TextUtils.isEmpty(url)) {
+            String imageMarkdown = String.format("[![](%s)](%s)", url, url);
             String text = TextUtils.isEmpty(mCommentEditText.getText()) ?
-                    String.format("![](%s)", url) :
-                    String.format("%s\n![](%s)", mCommentEditText.getText(), url);
+                    imageMarkdown :
+                    String.format("%s\n%s", mCommentEditText.getText(), imageMarkdown);
             mCommentEditText.setText(text);
             mCommentEditText.setSelection(mCommentEditText.getText().length());
         }
