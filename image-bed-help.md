@@ -35,3 +35,13 @@
     API KEY 较长，建议复制粘贴，如果是在电脑上获取的 API KEY，可以在电脑上复制后发送到微信，从微信粘贴到 APP。
 
     ![](./assets/app-settings.jpeg)
+
+## 如何上传图片
+
+1. 在发表新帖或者评论时，点击左下角的图片图标；
+
+    ![](./assets/app-upload-image.jpeg)
+
+2. 选择图片或者拍照，等待上传完成之后会自动在编辑框里插入图片链接；
+
+    ![](./assets/app-select-image.jpeg)
