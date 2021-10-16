@@ -1,5 +1,7 @@
 package org.mazhuang.guanggoo.settings;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,7 +65,7 @@ public class SettingsFragment extends BaseFragment {
         PrefsUtil.putBoolean(App.getInstance(), ConstantUtil.KEY_COMMENTS_ORDER_DESC, value);
     }
 
-    @OnClick({R.id.img_bed_api_key})
+    @OnClick({R.id.img_bed_api_key, R.id.help_image_bed_api_key})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_bed_api_key: {
@@ -73,6 +75,11 @@ public class SettingsFragment extends BaseFragment {
                 mListener.openPage(ConstantUtil.SETTINGS_EDIT_URL, mImgBedLabelTextView.getText().toString(), bundle);
             }
                 break;
+
+            case R.id.help_image_bed_api_key:
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ConstantUtil.IMAGE_BED_HELP_URL)));
+                break;
+
             default:
                 break;
         }

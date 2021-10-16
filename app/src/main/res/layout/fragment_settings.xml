@@ -48,4 +48,19 @@
             android:src="@drawable/right"/>
     </LinearLayout>
 
+    <LinearLayout
+        style="@style/LinearClickableItem"
+        android:gravity="top"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/help_image_bed_api_key"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/help_image_bed_api_key"
+            android:textSize="@dimen/font_smallest"
+            android:textColor="@color/listBackground"
+            android:drawableLeft="@drawable/help_how" />
+    </LinearLayout>
+
 </LinearLayout>

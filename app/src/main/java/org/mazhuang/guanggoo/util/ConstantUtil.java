@@ -69,4 +69,5 @@ public class ConstantUtil {
 
     public static final String DOWNLOAD_URL_COOLAPK = "https://www.coolapk.com/apk/164523";
     public static final String PRIVACY_URL = "https://mazhuang.org/guanggoo-android/policy";
+    public static final String IMAGE_BED_HELP_URL = "https://mazhuang.org/guanggoo-android/image-bed-help";
 }

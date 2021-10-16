@@ -114,6 +114,7 @@
     <string name="privacy_and_policy">隐私与政策</string>
     <string name="img_bed_api_key_label">图床 API KEY</string>
     <string name="img_bed_api_key_hint">请输入 sm.ms 图床 api key</string>
+    <string name="help_image_bed_api_key">如何获取图床 API KEY</string>
 
     <string-array name="home_tab_names">
         <item>@string/default_order_topics</item>
