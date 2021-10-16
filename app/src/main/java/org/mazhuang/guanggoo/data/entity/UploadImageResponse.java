@@ -8,10 +8,11 @@ import lombok.Data;
  */
 @Data
 public class UploadImageResponse {
-    public static final String CODE_SUCCESS = "200";
+    public static final String CODE_SUCCESS = "success";
 
-    private String status;
+    private String code;
     private boolean success;
+    private String message;
     private Image data;
 
     @Data

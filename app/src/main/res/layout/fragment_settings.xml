@@ -22,18 +22,18 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/imgbb_api_key"
+        android:id="@+id/img_bed_api_key"
         style="@style/LinearClickableItem"
         android:layout_marginTop="10dp">
         <TextView
-            android:id="@+id/imgbb_label"
+            android:id="@+id/img_bed_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/imgbb_api_key_label"
+            android:text="@string/img_bed_api_key_label"
             android:textSize="@dimen/font_normal"
             android:textColor="@color/major"/>
         <TextView
-            android:id="@+id/imgbb_content"
+            android:id="@+id/img_bed_content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -41,7 +41,7 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textSize="@dimen/font_normal"
-            android:hint="@string/imgbb_api_key_hint" />
+            android:hint="@string/img_bed_api_key_hint" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -57,7 +57,7 @@ public class ConstantUtil {
     public static final String KEY_XSRF = "_xsrf";
     public static final String KEY_COMMENTS_ORDER_DESC = "comments_order_desc";
     public static final String KEY_PRIVACY_POLICY_AGREED_VERSION = "privacy_policy_agreed_version";
-    public static final String KEY_IMGBB_API_KEY = "imgbb_api_key";
+    public static final String KEY_IMG_BED_API_KEY = "img_bed_api_key";
 
     public static final String NEXT_PAGE = "下一页";
 

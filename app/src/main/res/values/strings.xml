@@ -112,8 +112,8 @@
     <string name="not_agree_now">暂不使用</string>
     <string name="privacy_policy_title">使用确认</string>
     <string name="privacy_and_policy">隐私与政策</string>
-    <string name="imgbb_api_key_label">图床 API KEY</string>
-    <string name="imgbb_api_key_hint">请输入 imgbb 图床 api key</string>
+    <string name="img_bed_api_key_label">图床 API KEY</string>
+    <string name="img_bed_api_key_hint">请输入 sm.ms 图床 api key</string>
 
     <string-array name="home_tab_names">
         <item>@string/default_order_topics</item>

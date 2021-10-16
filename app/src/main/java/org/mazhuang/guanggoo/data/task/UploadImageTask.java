@@ -24,8 +24,8 @@ import java.util.UUID;
  */
 public class UploadImageTask extends BaseTask<String> {
 
-    public static final String UPLOAD_URL = "https://api.imgbb.com/1/upload?key=";
-    public static final String KEY = "image";
+    public static final String UPLOAD_URL = "https://sm.ms/api/v2/upload";
+    public static final String KEY = "smfile";
 
     private InputStream mStream;
 
@@ -38,19 +38,19 @@ public class UploadImageTask extends BaseTask<String> {
     public void run() {
         String errorMsg;
 
-        String apiKey = PrefsUtil.getString(App.getInstance(), ConstantUtil.KEY_IMGBB_API_KEY, "");
+        String apiKey = PrefsUtil.getString(App.getInstance(), ConstantUtil.KEY_IMG_BED_API_KEY, "");
         if (TextUtils.isEmpty(apiKey)) {
-            errorMsg = "请先到设置里添加 IMGBB 图床 API KEY";
+            errorMsg = "请先到设置里添加图床 API KEY";
             failedOnUI(errorMsg);
             return;
         }
 
         try {
-            Connection.Response response = doPostFileRequest(UPLOAD_URL + apiKey, KEY, mStream);
+            Connection.Response response = doPostFileRequest(UPLOAD_URL, apiKey, KEY, mStream);
             if (response != null && response.statusCode() == ConstantUtil.HTTP_STATUS_200) {
                 Gson gson = new Gson();
                 UploadImageResponse entity = gson.fromJson(response.body(), UploadImageResponse.class);
-                if (UploadImageResponse.CODE_SUCCESS.equals(entity.getStatus()) && entity.isSuccess()) {
+                if (UploadImageResponse.CODE_SUCCESS.equals(entity.getCode()) && entity.isSuccess()) {
                     if (entity.getData() != null && !TextUtils.isEmpty(entity.getData().getUrl())) {
                         successOnUI(entity.getData().getUrl());
                         return;
@@ -69,7 +69,7 @@ public class UploadImageTask extends BaseTask<String> {
         failedOnUI(errorMsg);
     }
 
-    public static Connection.Response doPostFileRequest(String url, String key, InputStream inputStream) throws IOException {
+    public static Connection.Response doPostFileRequest(String url, String token, String key, InputStream inputStream) throws IOException {
         // Https请求
         if (url.startsWith("https")) {
             trustEveryone();
@@ -78,6 +78,7 @@ public class UploadImageTask extends BaseTask<String> {
         String filename = UUID.randomUUID() + ".jpg";
 
         return Jsoup.connect(url)
+                .header("Authorization", token)
                 .method(Connection.Method.POST)
                 .ignoreContentType(true)
                 .timeout(120000)

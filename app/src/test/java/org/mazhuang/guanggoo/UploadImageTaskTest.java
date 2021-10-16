@@ -19,7 +19,7 @@ public class UploadImageTaskTest {
         File file = new File("/Users/mazhuang/Downloads/0.jpeg");
         try {
             FileInputStream is = new FileInputStream(file);
-            Connection.Response response = UploadImageTask.doPostFileRequest(UploadImageTask.UPLOAD_URL, UploadImageTask.KEY, is);
+            Connection.Response response = UploadImageTask.doPostFileRequest(UploadImageTask.UPLOAD_URL, "xxx", UploadImageTask.KEY, is);
             System.out.println(response.body());
         } catch (FileNotFoundException e) {
             e.printStackTrace();

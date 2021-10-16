@@ -28,8 +28,8 @@ import butterknife.OnClick;
 public class SettingsFragment extends BaseFragment {
 
     @BindView(R.id.comments_order_desc) SwitchCompat mCommentsOrderDescSwitch;
-    @BindView(R.id.imgbb_label) TextView mImgbbLabelTextView;
-    @BindView(R.id.imgbb_content) TextView mImgbbContentTextView;
+    @BindView(R.id.img_bed_label) TextView mImgBedLabelTextView;
+    @BindView(R.id.img_bed_content) TextView mImgBedContentTextView;
 
     @Nullable
     @Override
@@ -49,8 +49,8 @@ public class SettingsFragment extends BaseFragment {
         boolean commentsOrderDesc = PrefsUtil.getBoolean(App.getInstance(), ConstantUtil.KEY_COMMENTS_ORDER_DESC, false);
         mCommentsOrderDescSwitch.setChecked(commentsOrderDesc);
 
-        String imgBbApiKey = PrefsUtil.getString(App.getInstance(), ConstantUtil.KEY_IMGBB_API_KEY, "");
-        mImgbbContentTextView.setText(imgBbApiKey);
+        String imgBedApiKey = PrefsUtil.getString(App.getInstance(), ConstantUtil.KEY_IMG_BED_API_KEY, "");
+        mImgBedContentTextView.setText(imgBedApiKey);
     }
 
     @Override
@@ -63,14 +63,14 @@ public class SettingsFragment extends BaseFragment {
         PrefsUtil.putBoolean(App.getInstance(), ConstantUtil.KEY_COMMENTS_ORDER_DESC, value);
     }
 
-    @OnClick({R.id.imgbb_api_key})
+    @OnClick({R.id.img_bed_api_key})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.imgbb_api_key: {
+            case R.id.img_bed_api_key: {
                 Bundle bundle = new Bundle();
-                bundle.putString(SettingsEditFragment.SETTINGS_KEY, ConstantUtil.KEY_IMGBB_API_KEY);
-                bundle.putString(SettingsEditFragment.SETTINGS_HINT, getString(R.string.imgbb_api_key_hint));
-                mListener.openPage(ConstantUtil.SETTINGS_EDIT_URL, mImgbbLabelTextView.getText().toString(), bundle);
+                bundle.putString(SettingsEditFragment.SETTINGS_KEY, ConstantUtil.KEY_IMG_BED_API_KEY);
+                bundle.putString(SettingsEditFragment.SETTINGS_HINT, getString(R.string.img_bed_api_key_hint));
+                mListener.openPage(ConstantUtil.SETTINGS_EDIT_URL, mImgBedLabelTextView.getText().toString(), bundle);
             }
                 break;
             default:
