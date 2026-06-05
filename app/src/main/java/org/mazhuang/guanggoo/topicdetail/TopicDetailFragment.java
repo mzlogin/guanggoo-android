@@ -1,5 +1,6 @@
 package org.mazhuang.guanggoo.topicdetail;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -356,7 +357,11 @@ public class TopicDetailFragment extends BaseUploadImageFragment<TopicDetailCont
                     }
                 }
 
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), "没有可以打开该链接的应用", Toast.LENGTH_SHORT).show();
+                }
                 return true;
             }
         });
