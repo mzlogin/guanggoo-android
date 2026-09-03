@@ -45,7 +45,12 @@ public class GetTopicListTask extends BaseTask<ListResult<Topic>> implements Run
 
             for (Element element : elements) {
                 Topic topic = createTopicFromElement(element);
-                topics.add(topic);
+                // Ignore malformed/placeholder cards rather than crashing the
+                // whole list when the site adds an announcement with a
+                // different layout.
+                if (topic != null) {
+                    topics.add(topic);
+                }
             }
 
             succeed = true;
@@ -90,6 +95,9 @@ public class GetTopicListTask extends BaseTask<ListResult<Topic>> implements Run
                 topic.setTitle(titleElement.text());
             }
         }
+        if (titleElement == null) {
+            return null;
+        }
         topic.setUrl(titleElement.absUrl("href"));
 
         topic.setAvatar(element.select("img.avatar").attr("src"));
@@ -110,19 +118,25 @@ public class GetTopicListTask extends BaseTask<ListResult<Topic>> implements Run
     private static Meta createMetaFromElement(Element element) {
         Meta meta = new Meta();
 
-        Element nodeElement = element.select("span.node").select("a").first();
-        Node node = new Node();
-        node.setTitle(nodeElement.text());
-        node.setUrl(nodeElement.absUrl("href"));
+        if (element == null) {
+            return meta;
+        }
 
-        meta.setNode(node);
+        Element nodeElement = element.select("span.node").select("a").first();
+        if (nodeElement != null) {
+            Node node = new Node();
+            node.setTitle(nodeElement.text());
+            node.setUrl(nodeElement.absUrl("href"));
+            meta.setNode(node);
+        }
 
         Element userElement = element.select("span.username").select("a").first();
-        User user = new User();
-        user.setUsername(userElement.text());
-        user.setUrl(userElement.absUrl("href"));
-
-        meta.setAuthor(user);
+        if (userElement != null) {
+            User user = new User();
+            user.setUsername(userElement.text());
+            user.setUrl(userElement.absUrl("href"));
+            meta.setAuthor(user);
+        }
 
         // 主题列表页
         Elements lastTouchedElement = element.select("span.last-touched");

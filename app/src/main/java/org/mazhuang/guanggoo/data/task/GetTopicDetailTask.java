@@ -57,11 +57,16 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
 
         final Topic topic = GetTopicListTask.createTopicFromElement(elements.first());
 
+        if (topic == null || topic.getMeta() == null || topic.getMeta().getAuthor() == null) {
+            failedOnUI("主题元信息不完整");
+            return;
+        }
+
         topicDetail.setTopic(topic);
         // 解析收藏
         Favorite favorite = new Favorite();
         Elements favouriteElement = doc.select(".J_topicFavorite");
-        if(favouriteElement!=null){
+        if(!favouriteElement.isEmpty()){
             String dataType = favouriteElement.attr("data-type");
             favorite.setFavorite(!Favorite.TYPE_NOT_FAVORITE.equals(dataType));
         }

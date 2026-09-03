@@ -38,8 +38,20 @@ public class AuthCheckTask extends BaseTask<String> {
                 successOnUI("succeed");
                 return;
             }
+
+            // ESA/WAF and transient site changes can return a valid HTTP page
+            // without the user card. Do not destroy a known session unless the
+            // page explicitly exposes the unauthenticated login entry point.
+            Elements loginElements = doc.select("a[href$='/login'], form[action$='/login']");
+            if (loginElements.isEmpty() && !TextUtils.isEmpty(getCookieValue("user"))) {
+                failedOnUI("auth check inconclusive");
+                return;
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            // A network timeout must not log the user out locally.
+            failedOnUI("auth check failed");
+            return;
         }
 
         AuthInfoManager.getInstance().setUsername(null);

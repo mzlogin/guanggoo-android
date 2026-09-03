@@ -3,6 +3,7 @@ package org.mazhuang.guanggoo.data.task;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.webkit.CookieManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,7 +70,11 @@ public abstract class BaseTask<T> implements Runnable {
     }
 
     protected Connection getConnection(String url) {
-        Connection connection = Jsoup.connect(url);
+        Connection connection = Jsoup.connect(url)
+                .userAgent("Mozilla/5.0 (Linux; Android 9; Mobile) AppleWebKit/537.36 "
+                        + "Chrome/120.0.0.0 Mobile Safari/537.36")
+                .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
+                .header("Accept-Language", "zh-CN,zh;q=0.9,en;q=0.8");
 
         Map<String, String> cookies = getCookies();
         if (cookies.size() > 0) {
@@ -87,6 +92,7 @@ public abstract class BaseTask<T> implements Runnable {
 
     protected Map<String, String> getCookies() {
         Map<String, String> cookies = new HashMap<>();
+        syncWebViewCookies();
         String cookieString = PrefsUtil.getString(App.getInstance(), ConstantUtil.KEY_COOKIE, "");
         if (!TextUtils.isEmpty(cookieString)) {
 
@@ -104,6 +110,38 @@ public abstract class BaseTask<T> implements Runnable {
         }
 
         return cookies;
+    }
+
+    /**
+     * The redesigned login runs in WebView. Its cookies survive an app restart,
+     * but older builds only copied them after the login callback, leaving the
+     * native side apparently logged out. Import the browser cookie jar before
+     * every native request so an existing WebView session is restored too.
+     */
+    private void syncWebViewCookies() {
+        String header = CookieManager.getInstance().getCookie(ConstantUtil.BASE_URL);
+        if (TextUtils.isEmpty(header) || !header.contains("user=")) {
+            return;
+        }
+        try {
+            JSONObject json = new JSONObject();
+            for (String item : header.split(";")) {
+                String cookie = item.trim();
+                int separator = cookie.indexOf('=');
+                if (separator > 0) {
+                    json.put(cookie.substring(0, separator), cookie.substring(separator + 1));
+                }
+            }
+            if (json.has("user")) {
+                PrefsUtil.putString(App.getInstance(), ConstantUtil.KEY_COOKIE, json.toString());
+                if (json.has(ConstantUtil.KEY_XSRF)) {
+                    PrefsUtil.putString(App.getInstance(), ConstantUtil.KEY_XSRF,
+                            json.optString(ConstantUtil.KEY_XSRF));
+                }
+            }
+        } catch (JSONException ignored) {
+            // Keep the previously persisted native cookies if WebView data is malformed.
+        }
     }
 
     protected String getCookieValue(String key) {
@@ -150,8 +188,14 @@ public abstract class BaseTask<T> implements Runnable {
         if (!elements.isEmpty()) {
             Element usercardElement = elements.first();
 
-            AuthInfoManager.getInstance().setUsername(usercardElement.select("div.username").first().text());
-            AuthInfoManager.getInstance().setAvatar(usercardElement.select("img.avatar").first().attr("src"));
+            Element usernameElement = usercardElement.select("div.username").first();
+            Element avatarElement = usercardElement.select("img.avatar").first();
+            if (usernameElement != null) {
+                AuthInfoManager.getInstance().setUsername(usernameElement.text());
+            }
+            if (avatarElement != null) {
+                AuthInfoManager.getInstance().setAvatar(avatarElement.attr("src"));
+            }
             return true;
         }
         return false;

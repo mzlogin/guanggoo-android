@@ -90,7 +90,11 @@ public class FragmentFactory {
     private static final Pattern USER_TOPICS_PATTERN = Pattern.compile("^https://www.guozaoke.com/u/\\w+/topics$");
     private static final Pattern USER_REPLIES_PATTERN = Pattern.compile("^https://www.guozaoke.com/u/\\w+/replies$");
     private static final Pattern NEW_TOPIC_PATTERN = Pattern.compile("^https://www.guozaoke.com/t/create/\\w+$");
-    private static final Pattern VIEW_IMAGE_PATTERN = Pattern.compile("^http[s]?://.+\\.(png|jpg|jpeg)$");
+    // Image links from the site may use upper-case extensions or carry a cache
+    // query string. Keep these links in the native image viewer instead of
+    // opening them as an unknown web page.
+    private static final Pattern VIEW_IMAGE_PATTERN = Pattern.compile(
+            "^https?://.+\\.(png|jpe?g|gif|webp)(?:\\?.*)?$", Pattern.CASE_INSENSITIVE);
 
 
     public static BaseFragment getFragmentByUrl(String url) {
