@@ -7,7 +7,6 @@ import org.mazhuang.guanggoo.App;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.*;
 
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -31,9 +30,9 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
 
         try {
             doc = get(mUrl);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            failedOnUI(e.getMessage());
+            failedOnUI(errorMessage(e, "操作失败，请稍后重试"));
             return;
         }
 

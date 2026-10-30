@@ -3,15 +3,14 @@ package org.mazhuang.guanggoo.util;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.media.MediaScannerConnection;
 import android.provider.MediaStore;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -96,9 +95,15 @@ public class FileUtils {
 
     private static void saveImageToExternalStorage(Context context, Bitmap bmp, String fileName,
                                                    SaveResultCallback saveResultCallback) {
+        if (bmp == null) {
+            saveResultCallback.onSavedFailed();
+            return;
+        }
+
         File appDir = new File(Environment.getExternalStorageDirectory(), APP_DIR_NAME);
-        if (!appDir.exists()) {
-            appDir.mkdir();
+        if (!appDir.exists() && !appDir.mkdirs()) {
+            saveResultCallback.onSavedFailed();
+            return;
         }
         File file = new File(appDir, fileName);
         try {
@@ -107,17 +112,19 @@ public class FileUtils {
             fos.flush();
             fos.close();
             saveResultCallback.onSavedSuccess();
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             saveResultCallback.onSavedFailed();
             e.printStackTrace();
-        } catch (IOException e) {
-            saveResultCallback.onSavedFailed();
-            e.printStackTrace();
+            return;
         }
 
-        //保存图片后发送广播通知更新数据库
-        Uri uri = Uri.fromFile(file);
-        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+        // 通知相册刷新，Android 7 起不能再通过 file:// 广播（会抛 FileUriExposedException）
+        try {
+            MediaScannerConnection.scanFile(context.getApplicationContext(),
+                    new String[]{file.getAbsolutePath()}, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public interface SaveResultCallback{

@@ -5,7 +5,6 @@ import org.jsoup.Jsoup;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +52,7 @@ public class NewTopicTask extends BaseTask<String> {
                 successOnUI("发布成功");
                 return;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

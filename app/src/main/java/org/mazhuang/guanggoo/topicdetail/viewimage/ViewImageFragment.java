@@ -1,5 +1,6 @@
 package org.mazhuang.guanggoo.topicdetail.viewimage;
 
+import android.content.Context;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -113,8 +114,13 @@ public class ViewImageFragment extends BaseFragment<ViewImageContract.Presenter>
     }
 
     private boolean hasStoragePermission() {
+        Context context = getContext();
+        if (context == null) {
+            return false;
+        }
+
         for (String permission : PERMISSIONS) {
-            if (ActivityCompat.checkSelfPermission(getContext().getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(context.getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
         }

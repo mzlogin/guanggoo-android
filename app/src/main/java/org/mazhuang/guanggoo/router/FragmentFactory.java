@@ -222,6 +222,10 @@ public class FragmentFactory {
     }
 
     public static PageType getPageTypeByUrl(String url) {
+        if (url == null) {
+            return PageType.NONE;
+        }
+
         if (HOME_TOPIC_LIST_PATTERN.matcher(url).find()) {
             return PageType.HOME_TOPIC_LIST;
         }

@@ -8,7 +8,6 @@ import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.NodeCategory;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +28,9 @@ public class GetNodesCloudTask extends BaseTask<List<NodeCategory>> {
 
         try {
             doc = get(ConstantUtil.NODES_CLOUD_URL);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            failedOnUI(e.getMessage());
+            failedOnUI(errorMessage(e, "操作失败，请稍后重试"));
             return;
         }
 

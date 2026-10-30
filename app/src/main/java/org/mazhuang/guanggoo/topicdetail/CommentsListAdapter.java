@@ -65,7 +65,14 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
     }
 
     public void addData(Map<Integer, Comment> data) {
-        mData.putAll(data);
+        if (data == null || data.isEmpty()) {
+            return;
+        }
+        if (mData == null) {
+            mData = data;
+        } else {
+            mData.putAll(data);
+        }
         notifyDataSetChanged();
     }
 
@@ -92,6 +99,9 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = getItem(position);
+        if (holder.mItem == null || holder.mItem.getMeta() == null) {
+            return;
+        }
         holder.mLastTouchedTextView.setText(holder.mItem.getMeta().getTime());
         GlideUtil.loadImage(holder.mAvatarImageView, holder.mItem.getAvatar());
         holder.mAuthorTextView.setText(holder.mItem.getMeta().getReplier().getUsername());

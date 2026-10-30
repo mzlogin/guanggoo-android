@@ -84,35 +84,64 @@ public class UpdateManager {
      * 每天第一次进入主界面时静默检测一次。
      */
     public void checkDaily(Activity activity) {
-        mActivityRef = new WeakReference<>(activity);
-
-        Context appContext = activity.getApplicationContext();
-        String today = new SimpleDateFormat("yyyyMMdd", Locale.US).format(new Date());
-        // 强制更新未完成时，每次启动都重新检测
-        boolean forceUpdatePending =
-                PrefsUtil.getBoolean(appContext, KEY_FORCE_UPDATE_PENDING, false);
-        if (!forceUpdatePending
-                && today.equals(PrefsUtil.getString(appContext, KEY_LAST_CHECK_DATE, ""))) {
+        if (activity == null) {
             return;
         }
-        PrefsUtil.putString(appContext, KEY_LAST_CHECK_DATE, today);
-        checkForUpdate(appContext, false);
+        mActivityRef = new WeakReference<>(activity);
+
+        try {
+            Context appContext = activity.getApplicationContext();
+            String today = new SimpleDateFormat("yyyyMMdd", Locale.US).format(new Date());
+            // 强制更新未完成时，每次启动都重新检测
+            boolean forceUpdatePending =
+                    PrefsUtil.getBoolean(appContext, KEY_FORCE_UPDATE_PENDING, false);
+            if (!forceUpdatePending
+                    && today.equals(PrefsUtil.getString(appContext, KEY_LAST_CHECK_DATE, ""))) {
+                return;
+            }
+            PrefsUtil.putString(appContext, KEY_LAST_CHECK_DATE, today);
+            checkForUpdate(appContext, false);
+        } catch (Exception e) {
+            // 升级检测自身不能影响应用正常使用
+            e.printStackTrace();
+        }
     }
 
     /**
      * 用户主动检查更新，会给出检测结果提示。
      */
     public void checkManually(Activity activity) {
+        if (activity == null) {
+            return;
+        }
         mActivityRef = new WeakReference<>(activity);
-        checkForUpdate(activity.getApplicationContext(), true);
+
+        try {
+            checkForUpdate(activity.getApplicationContext(), true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            toast(activity.getApplicationContext(), R.string.update_check_failed);
+        }
     }
 
     /**
      * 界面回到前台时恢复未完成的安装流程。
      */
     public void onActivityResumed(Activity activity) {
+        if (activity == null) {
+            return;
+        }
         mActivityRef = new WeakReference<>(activity);
 
+        try {
+            handleActivityResumed(activity);
+        } catch (Exception e) {
+            // 恢复升级流程失败不能影响应用正常使用
+            e.printStackTrace();
+        }
+    }
+
+    private void handleActivityResumed(Activity activity) {
         if (mPendingInstallPath != null) {
             // 从“安装未知应用”设置页返回，权限已授予则继续安装
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O
@@ -259,10 +288,16 @@ public class UpdateManager {
             builder.setNegativeButton(R.string.update_later, null);
         }
 
-        AlertDialog dialog = builder.create();
-        dialog.setOnDismissListener(d -> mDialogShowing = false);
-        mDialogShowing = true;
-        dialog.show();
+        try {
+            AlertDialog dialog = builder.create();
+            dialog.setOnDismissListener(d -> mDialogShowing = false);
+            mDialogShowing = true;
+            dialog.show();
+        } catch (Exception e) {
+            // 界面不可见时弹框会抛 BadTokenException，忽略即可，下次进入前台会重试
+            e.printStackTrace();
+            mDialogShowing = false;
+        }
     }
 
     /**
@@ -528,15 +563,20 @@ public class UpdateManager {
             return;
         }
 
-        DialogUtil.builder(activity)
-                .setTitle(R.string.update_download_failed_title)
-                .setMessage(R.string.update_download_failed)
-                .setCancelable(false)
-                .setPositiveButton(R.string.retry,
-                        (dialog, which) -> checkForUpdate(appContext, true))
-                .setNegativeButton(R.string.exit_app,
-                        (dialog, which) -> activity.finishAffinity())
-                .show();
+        try {
+            DialogUtil.builder(activity)
+                    .setTitle(R.string.update_download_failed_title)
+                    .setMessage(R.string.update_download_failed)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.retry,
+                            (dialog, which) -> checkForUpdate(appContext, true))
+                    .setNegativeButton(R.string.exit_app,
+                            (dialog, which) -> activity.finishAffinity())
+                    .show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            toast(appContext, R.string.update_download_failed);
+        }
     }
 
     private void clearPendingInstall(Context appContext) {
@@ -606,13 +646,22 @@ public class UpdateManager {
 
     private Activity getActivity() {
         Activity activity = mActivityRef == null ? null : mActivityRef.get();
-        if (activity == null || activity.isFinishing()) {
+        if (activity == null || activity.isFinishing()
+                || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1
+                && activity.isDestroyed())) {
             return null;
         }
         return activity;
     }
 
     private void toast(Context context, int resId) {
-        Toast.makeText(context, resId, Toast.LENGTH_SHORT).show();
+        if (context == null) {
+            return;
+        }
+        try {
+            Toast.makeText(context, resId, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

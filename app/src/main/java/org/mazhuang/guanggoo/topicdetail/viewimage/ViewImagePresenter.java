@@ -2,6 +2,7 @@ package org.mazhuang.guanggoo.topicdetail.viewimage;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 
 import com.bm.library.PhotoView;
 
@@ -25,10 +26,13 @@ public class ViewImagePresenter implements ViewImageContract.Presenter {
     @Override
     public void saveImage(final PhotoView photoViewTemp) {
         if (photoViewTemp != null) {
-            BitmapDrawable glideBitmapDrawable = (BitmapDrawable) photoViewTemp.getDrawable();
-            if (glideBitmapDrawable == null) {
+            Drawable drawable = photoViewTemp.getDrawable();
+            if (!(drawable instanceof BitmapDrawable)) {
+                // 图片还没加载完成（占位图）时类型不匹配，直接提示而不是崩溃
+                mView.onSaveImageFailed("图片还没加载完成，请稍后重试");
                 return;
             }
+            BitmapDrawable glideBitmapDrawable = (BitmapDrawable) drawable;
             Bitmap bitmap = glideBitmapDrawable.getBitmap();
             if (bitmap == null) {
                 return;

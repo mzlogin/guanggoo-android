@@ -1,6 +1,5 @@
 package org.mazhuang.guanggoo.data.task;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -10,7 +9,6 @@ import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.PrefsUtil;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -73,7 +71,7 @@ public class LoginTask extends BaseTask<String> {
                     return;
                 }
             }
-        } catch (IOException|JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

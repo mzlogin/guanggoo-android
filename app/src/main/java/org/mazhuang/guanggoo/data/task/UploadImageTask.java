@@ -38,13 +38,10 @@ public class UploadImageTask extends BaseTask<String> {
             return;
         } catch (ImgchrClient.SessionExpiredException e) {
             ImgchrAccount.clear(App.getInstance());
-            errorMsg = e.getMessage();
+            errorMsg = errorMessage(e, "图床登录已失效，请重新登录");
         } catch (Exception e) {
             e.printStackTrace();
-            errorMsg = e.getMessage();
-            if (TextUtils.isEmpty(errorMsg)) {
-                errorMsg = "图片上传失败";
-            }
+            errorMsg = errorMessage(e, "图片上传失败");
         }
 
         failedOnUI(errorMsg);

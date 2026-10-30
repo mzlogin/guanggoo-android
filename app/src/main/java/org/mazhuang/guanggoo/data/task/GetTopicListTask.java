@@ -11,7 +11,6 @@ import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.data.entity.User;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +61,7 @@ public class GetTopicListTask extends BaseTask<ListResult<Topic>> implements Run
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -90,7 +89,9 @@ public class GetTopicListTask extends BaseTask<ListResult<Topic>> implements Run
                 topic.setTitle(titleElement.text());
             }
         }
-        topic.setUrl(titleElement.absUrl("href"));
+        if (titleElement != null) {
+            topic.setUrl(titleElement.absUrl("href"));
+        }
 
         topic.setAvatar(element.select("img.avatar").attr("src"));
 
@@ -101,48 +102,63 @@ public class GetTopicListTask extends BaseTask<ListResult<Topic>> implements Run
 
         Elements countElements = element.select("div.count");
         if (!countElements.isEmpty()) {
-            topic.setCount(Integer.valueOf(countElements.first().select("a").first().text()));
+            Element countLink = countElements.first().select("a").first();
+            topic.setCount(parseCount(countLink == null ? countElements.first().text() : countLink.text()));
         }
 
         return topic;
     }
 
+    private static int parseCount(String text) {
+        try {
+            return Integer.parseInt(text.replaceAll("[^\\d]", ""));
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
     private static Meta createMetaFromElement(Element element) {
         Meta meta = new Meta();
 
-        Element nodeElement = element.select("span.node").select("a").first();
         Node node = new Node();
-        node.setTitle(nodeElement.text());
-        node.setUrl(nodeElement.absUrl("href"));
+        User user = new User();
+
+        if (element != null) {
+            Element nodeElement = element.select("span.node").select("a").first();
+            if (nodeElement != null) {
+                node.setTitle(nodeElement.text());
+                node.setUrl(nodeElement.absUrl("href"));
+            }
+
+            Element userElement = element.select("span.username").select("a").first();
+            if (userElement != null) {
+                user.setUsername(userElement.text());
+                user.setUrl(userElement.absUrl("href"));
+            }
+
+            // 主题列表页
+            Elements lastTouchedElement = element.select("span.last-touched");
+            if (lastTouchedElement.isEmpty()) {
+                // 主题详情页
+                lastTouchedElement = element.select("span.last-reply-time");
+            }
+            meta.setLastTouched(lastTouchedElement.text());
+
+            Elements createdTimeElement = element.select("span.created-time");
+            meta.setCreatedTime(createdTimeElement.text());
+
+            Element lastReplyUserElement = element.select("span.last-reply-username").select("a").first();
+            if (lastReplyUserElement != null) {
+                User lastReplyUser = new User();
+                lastReplyUser.setUsername(lastReplyUserElement.select("strong").text());
+                lastReplyUser.setUrl(lastReplyUserElement.absUrl("href"));
+
+                meta.setLastReplyUser(lastReplyUser);
+            }
+        }
 
         meta.setNode(node);
-
-        Element userElement = element.select("span.username").select("a").first();
-        User user = new User();
-        user.setUsername(userElement.text());
-        user.setUrl(userElement.absUrl("href"));
-
         meta.setAuthor(user);
-
-        // 主题列表页
-        Elements lastTouchedElement = element.select("span.last-touched");
-        if (lastTouchedElement.isEmpty()) {
-            // 主题详情页
-            lastTouchedElement = element.select("span.last-reply-time");
-        }
-        meta.setLastTouched(lastTouchedElement.text());
-
-        Elements createdTimeElement = element.select("span.created-time");
-        meta.setCreatedTime(createdTimeElement.text());
-
-        Element lastReplyUserElement = element.select("span.last-reply-username").select("a").first();
-        if (lastReplyUserElement != null) {
-            User lastReplyUser = new User();
-            lastReplyUser.setUsername(lastReplyUserElement.select("strong").text());
-            lastReplyUser.setUrl(lastReplyUserElement.absUrl("href"));
-
-            meta.setLastReplyUser(lastReplyUser);
-        }
 
         return meta;
     }

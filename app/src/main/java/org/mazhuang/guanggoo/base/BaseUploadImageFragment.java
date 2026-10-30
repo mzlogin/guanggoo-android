@@ -31,7 +31,12 @@ public abstract class BaseUploadImageFragment<T> extends BaseFragment<T> {
 
     protected void chooseImage() {
         CharSequence[] items = {"从相册选择", "拍照", "取消"};
-        DialogUtil.builder(getActivity())
+        Activity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
+
+        DialogUtil.builder(activity)
                 .setTitle("选择图片来源")
                 .setItems(items, (dialog, which) -> {
                     if ( which == 0 ){
@@ -44,7 +49,7 @@ public abstract class BaseUploadImageFragment<T> extends BaseFragment<T> {
                             startActivityForResult(intent, which);
                         } catch (ActivityNotFoundException e) {
                             e.printStackTrace();
-                            toast(e.getMessage());
+                            toast("没有找到可用的相册应用");
                         }
                     } else if (which == 1) {
                         try {
@@ -55,7 +60,7 @@ public abstract class BaseUploadImageFragment<T> extends BaseFragment<T> {
                             startActivityForResult(intent, which);
                         } catch (Exception e) {
                             e.printStackTrace();
-                            toast(e.getMessage());
+                            toast("没有找到可用的相机应用");
                         }
                     }
                 })
@@ -80,12 +85,16 @@ public abstract class BaseUploadImageFragment<T> extends BaseFragment<T> {
 
             if (requestCode == 0) {
                 // 从相册选择
-                ContentResolver resolver = getActivity().getContentResolver();
+                Activity activity = getActivity();
+                if (activity == null || data == null) {
+                    return;
+                }
+                ContentResolver resolver = activity.getContentResolver();
                 // 照片的原始资源地址
                 Uri originalUri = data.getData();
                 try {
-                    Bitmap image = MediaStore.Images.Media.getBitmap(resolver,
-                            originalUri);
+                    Bitmap image = originalUri == null ? null
+                            : MediaStore.Images.Media.getBitmap(resolver, originalUri);
                     if (image != null) {
                         image.compress(Bitmap.CompressFormat.JPEG, 30, baos);
                         prepareUpload(baos.toByteArray());

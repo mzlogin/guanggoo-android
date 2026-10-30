@@ -1,9 +1,7 @@
 package org.mazhuang.guanggoo.topicdetail;
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -208,7 +206,7 @@ public class TopicDetailFragment extends BaseUploadImageFragment<TopicDetailCont
                 }
 
                 if (TextUtils.isEmpty(mCommentEditText.getText())) {
-                    Toast.makeText(getContext(), R.string.please_input_comment_content, Toast.LENGTH_SHORT).show();
+                    toast(R.string.please_input_comment_content);
                 } else {
                     mPresenter.comment(mCommentEditText.getText().toString());
                 }
@@ -357,7 +355,7 @@ public class TopicDetailFragment extends BaseUploadImageFragment<TopicDetailCont
                     }
                 }
 
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                IntentUtil.openUrl(getContext(), url);
                 return true;
             }
         });
@@ -378,17 +376,19 @@ public class TopicDetailFragment extends BaseUploadImageFragment<TopicDetailCont
 
     @Override
     public void onGetTopicDetailFailed(String msg) {
-        if (getContext() == null) {
-            return;
-        }
-
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+        toast(msg);
     }
 
     @Override
     public void onGetMoreCommentsSucceed(TopicDetail topicDetail) {
+        if (topicDetail == null || topicDetail.getComments() == null) {
+            mLoadMoreTextView.setEnabled(true);
+            return;
+        }
+
         mAdapter.addData(topicDetail.getComments());
-        if (mAdapter.getItemCount() >= mTopicDetail.getCommentsCount()) {
+
+        if (mTopicDetail != null && mAdapter.getItemCount() >= mTopicDetail.getCommentsCount()) {
             mLoadMoreTextView.setVisibility(View.GONE);
         } else {
             mLoadMoreTextView.setEnabled(true);
@@ -397,7 +397,7 @@ public class TopicDetailFragment extends BaseUploadImageFragment<TopicDetailCont
 
     @Override
     public void onGetMoreCommentsFailed(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+        toast(msg);
         mLoadMoreTextView.setEnabled(true);
     }
 
@@ -419,7 +419,7 @@ public class TopicDetailFragment extends BaseUploadImageFragment<TopicDetailCont
 
     @Override
     public void onCommentFailed(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+        toast(msg);
     }
 
     private void setFavoriteState(boolean favorite) {

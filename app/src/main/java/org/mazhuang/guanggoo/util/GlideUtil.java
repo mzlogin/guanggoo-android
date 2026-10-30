@@ -13,9 +13,18 @@ public class GlideUtil {
     private GlideUtil() {}
 
     public static void loadImage(ImageView imageView, String url) {
-        GlideApp.with(imageView.getContext())
-                .load(url)
-                .centerCrop()
-                .into(imageView);
+        if (imageView == null) {
+            return;
+        }
+
+        try {
+            GlideApp.with(imageView.getContext())
+                    .load(url)
+                    .centerCrop()
+                    .into(imageView);
+        } catch (Exception e) {
+            // 页面已销毁时 Glide 会抛异常，忽略即可
+            e.printStackTrace();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package org.mazhuang.guanggoo.home;
 
 
+import android.app.Activity;
 import androidx.lifecycle.Observer;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.router.annotations.ClearTop;
 import org.mazhuang.guanggoo.router.annotations.StartsWithAppBar;
+import org.mazhuang.guanggoo.ui.widget.MaterialBadgeTextView;
 import org.mazhuang.guanggoo.ui.widget.MenuItemBadge;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
@@ -76,18 +78,28 @@ public class HomeFragment extends BaseFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.home, menu);
 
+        final Activity activity = getActivity();
+        if (activity == null) {
+            super.onCreateOptionsMenu(menu, inflater);
+            return;
+        }
+
         final MenuItem menuItemNotification = menu.findItem(R.id.action_notifications);
-        MenuItemBadge.update(getActivity(), menuItemNotification, new MenuItemBadge.Builder()
-                .iconDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_menu_notifications))
+        MenuItemBadge.update(activity, menuItemNotification, new MenuItemBadge.Builder()
+                .iconDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_menu_notifications))
                 .iconTintColor(Color.WHITE));
 
         App.getInstance().mGlobal.hasNotifications.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
+                MaterialBadgeTextView badgeTextView = MenuItemBadge.getBadgeTextView(menuItemNotification);
+                if (badgeTextView == null) {
+                    return;
+                }
                 if (aBoolean) {
-                    MenuItemBadge.getBadgeTextView(menuItemNotification).setHighLightMode(true);
+                    badgeTextView.setHighLightMode(true);
                 } else {
-                    MenuItemBadge.getBadgeTextView(menuItemNotification).clearHighLightMode();
+                    badgeTextView.clearHighLightMode();
                 }
             }
         });

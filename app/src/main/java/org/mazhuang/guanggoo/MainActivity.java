@@ -114,9 +114,13 @@ public class MainActivity extends AppCompatActivity
         // 设置抽屉菜单图标为图片原色
         navigationView.setItemIconTintList(null);
 
-        mAvatarImageView = navigationView.getHeaderView(0).findViewById(R.id.avatar);
-        mUsernameTextView = navigationView.getHeaderView(0).findViewById(R.id.username);
-        mSearchImageView = navigationView.getHeaderView(0).findViewById(R.id.search);
+        View navHeader = navigationView.getHeaderView(0);
+        if (navHeader == null) {
+            navHeader = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        }
+        mAvatarImageView = navHeader.findViewById(R.id.avatar);
+        mUsernameTextView = navHeader.findViewById(R.id.username);
+        mSearchImageView = navHeader.findViewById(R.id.search);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,15 +192,25 @@ public class MainActivity extends AppCompatActivity
     }
 
     public static void addFragmentToStack(FragmentManager fm, Fragment fragment) {
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.fragment_container, fragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.addToBackStack(sStackName);
-        ft.commit();
+        try {
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.fragment_container, fragment);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.addToBackStack(sStackName);
+            // 异步回调可能晚于 onSaveInstanceState，用 commitAllowingStateLoss 避免崩溃
+            ft.commitAllowingStateLoss();
+        } catch (Exception e) {
+            // FragmentManager 已销毁时忽略本次跳转
+            e.printStackTrace();
+        }
     }
 
     public static void setOnlyFragmentToStack(FragmentManager fm, Fragment fragment) {
-        fm.popBackStackImmediate(sStackName, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        try {
+            fm.popBackStackImmediate(sStackName, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         addFragmentToStack(fm, fragment);
     }
 
@@ -332,7 +346,13 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        BaseFragment fragment = FragmentFactory.getFragmentByUrl(url);
+        BaseFragment fragment;
+        try {
+            fragment = FragmentFactory.getFragmentByUrl(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fragment = null;
+        }
         if (fragment == null) {
             Toast.makeText(this, getString(R.string.error_happened), Toast.LENGTH_SHORT).show();
             return;
