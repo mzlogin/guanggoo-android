@@ -92,6 +92,12 @@ public class GetCommentsTask extends BaseTask<Map<Integer, Comment>> {
             e.printStackTrace();
             vote.setCount(0);
         }
+        try {
+            vote.setVoted(Integer.parseInt(voteElement.attr("data-voted")) > 0);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            vote.setVoted(false);
+        }
         meta.setVote(vote);
 
         comment.setMeta(meta);

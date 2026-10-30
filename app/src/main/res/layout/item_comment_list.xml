@@ -68,7 +68,7 @@
         android:layout_below="@id/content"
         android:layout_marginLeft="215dp"
         android:background="@null"
-        android:src="@drawable/button_vote"/>
+        android:src="@drawable/vote"/>
 
     <TextView
         android:id="@+id/vote_count"

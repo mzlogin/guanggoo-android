@@ -4,6 +4,7 @@ import org.mazhuang.guanggoo.base.BasePresenter;
 import org.mazhuang.guanggoo.base.BaseView;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
+import org.mazhuang.guanggoo.data.entity.VoteCommentResponse;
 
 import java.io.InputStream;
 
@@ -45,9 +46,10 @@ public interface TopicDetailContract {
         /**
          * 对评论点赞
          * @param url URL
+         * @param voteValue 点赞值
          * @param listener 点赞结果回调
          */
-        void voteComment(String url, OnResponseListener<Boolean> listener);
+        void voteComment(String url, String voteValue, OnResponseListener<VoteCommentResponse> listener);
 
         /**
          * 关注用户

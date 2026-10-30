@@ -31,6 +31,7 @@ import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Node;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
+import org.mazhuang.guanggoo.data.entity.VoteCommentResponse;
 import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.ui.widget.PreImeEditText;
 import org.mazhuang.guanggoo.util.*;
@@ -468,7 +469,7 @@ public class TopicDetailFragment extends BaseUploadImageFragment<TopicDetailCont
     }
 
     @Override
-    public void onVote(String username, String url, OnResponseListener<Boolean> listener) {
+    public void onVote(String username, String url, boolean isVoted, OnResponseListener<VoteCommentResponse> listener) {
         if (AuthInfoManager.getInstance().getUsername().equals(username)) {
             toast(getString(R.string.cannot_vote_self));
             return;
@@ -478,7 +479,7 @@ public class TopicDetailFragment extends BaseUploadImageFragment<TopicDetailCont
             return;
         }
 
-        mPresenter.voteComment(url, listener);
+        mPresenter.voteComment(url, isVoted ? "0" : "1", listener);
     }
 
     @Override
