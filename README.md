@@ -10,13 +10,18 @@
 
 下载地址
 
-<https://www.coolapk.com/apk/164523>
+<https://mazhuang.org/guanggoo-android/guozaoke-release-latest.apk>
 
 ## 源代码
 
 <https://github.com/mzlogin/guanggoo-android>
 
 ## 版本说明
+
+### v2.4.188
+
+1. 新增搜索功能
+2. 修复图床、崩溃问题
 
 ### v2.3.176
 

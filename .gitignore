@@ -1,2 +1,7 @@
 .DS_Store
 *.swp
+.gradle/
+.idea/
+app/
+config/
+local.properties
