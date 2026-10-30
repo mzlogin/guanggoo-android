@@ -38,6 +38,7 @@ public class ConstantUtil {
 
     public static final String ABOUT_URL = "INNER_PAGE_ABOUT";
     public static final String SEARCH_URL = "SEARCH_URL";
+    public static final String SEARCH_RESULT_URL = BASE_URL + "/search";
     public static final String SETTINGS_URL = "SETTINGS_URL";
     public static final String SETTINGS_EDIT_URL = "SETTINGS_EDIT_URL";
     public static final String FEEDBACK_URL = "FEEDBACK_URL";

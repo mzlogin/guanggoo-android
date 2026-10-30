@@ -1,28 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical"
     android:padding="@dimen/normal_margin">
 
     <EditText
         android:id="@+id/keyword"
+        style="@style/DefaultEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/please_input_user_id"
+        android:hint="@string/search_hint"
         android:maxLines="1"
-        android:singleLine="true"
-        style="@style/DefaultEditText" />
+        android:singleLine="true" />
 
-    <Button
-        android:id="@+id/search"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/keyword"
         android:layout_marginTop="@dimen/normal_margin"
-        android:background="@drawable/blue_button"
-        android:text="@string/search"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_button"/>
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_scope_label"
+            android:textColor="@color/major"
+            android:textSize="@dimen/font_normal" />
+
+        <Spinner
+            android:id="@+id/scope"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/normal_margin"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/normal_margin"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/search_topics"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/blue_button"
+            android:text="@string/search_topics"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_button" />
+
+        <Button
+            android:id="@+id/search_user"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/normal_margin"
+            android:layout_weight="1"
+            android:background="@drawable/blue_button"
+            android:text="@string/search_user"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_button" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -11,6 +11,7 @@ import org.mazhuang.guanggoo.newtopic.SelectNodeFragment;
 import org.mazhuang.guanggoo.nodescloud.NodesCloudFragment;
 import org.mazhuang.guanggoo.notifications.NotificationsFragment;
 import org.mazhuang.guanggoo.search.SearchFragment;
+import org.mazhuang.guanggoo.search.SearchResultFragment;
 import org.mazhuang.guanggoo.settings.SettingsEditFragment;
 import org.mazhuang.guanggoo.settings.SettingsFragment;
 import org.mazhuang.guanggoo.topicdetail.TopicDetailFragment;
@@ -69,6 +70,8 @@ public class FragmentFactory {
         VIEW_NOTIFICATIONS,
         // 搜索页面
         SEARCH,
+        // 搜索结果页面
+        SEARCH_RESULT,
         // 设置页面
         SETTINGS,
         // 设置项字符串填写页面
@@ -90,6 +93,7 @@ public class FragmentFactory {
     private static final Pattern USER_TOPICS_PATTERN = Pattern.compile("^https://www.guozaoke.com/u/\\w+/topics$");
     private static final Pattern USER_REPLIES_PATTERN = Pattern.compile("^https://www.guozaoke.com/u/\\w+/replies$");
     private static final Pattern NEW_TOPIC_PATTERN = Pattern.compile("^https://www.guozaoke.com/t/create/\\w+$");
+    private static final Pattern SEARCH_RESULT_PATTERN = Pattern.compile("^https://www.guozaoke.com/search([?].*)?$");
     private static final Pattern VIEW_IMAGE_PATTERN = Pattern.compile("^http[s]?://.+\\.(png|jpg|jpeg)$");
 
 
@@ -185,6 +189,10 @@ public class FragmentFactory {
                 fragment = new SearchFragment();
                 break;
 
+            case SEARCH_RESULT:
+                fragment = new SearchResultFragment();
+                break;
+
             case SETTINGS:
                 fragment = new SettingsFragment();
                 break;
@@ -272,6 +280,10 @@ public class FragmentFactory {
 
         if (ConstantUtil.ABOUT_URL.equals(url)) {
             return PageType.ABOUT;
+        }
+
+        if (SEARCH_RESULT_PATTERN.matcher(url).find()) {
+            return PageType.SEARCH_RESULT;
         }
 
         if (ConstantUtil.SEARCH_URL.equals(url)) {
