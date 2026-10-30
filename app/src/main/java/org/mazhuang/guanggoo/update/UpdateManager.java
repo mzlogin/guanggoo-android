@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.data.entity.UpdateInfo;
 import org.mazhuang.guanggoo.util.ConstantUtil;
+import org.mazhuang.guanggoo.util.DialogUtil;
 import org.mazhuang.guanggoo.util.PrefsUtil;
 import org.mazhuang.guanggoo.util.VersionUtil;
 
@@ -247,7 +248,7 @@ public class UpdateManager {
             message = message + "\n\n" + activity.getString(R.string.update_force_tip);
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+        AlertDialog.Builder builder = DialogUtil.builder(activity)
                 .setTitle(activity.getString(R.string.update_found_title, version))
                 .setMessage(message)
                 .setPositiveButton(R.string.update_now,
@@ -527,7 +528,7 @@ public class UpdateManager {
             return;
         }
 
-        new AlertDialog.Builder(activity)
+        DialogUtil.builder(activity)
                 .setTitle(R.string.update_download_failed_title)
                 .setMessage(R.string.update_download_failed)
                 .setCancelable(false)

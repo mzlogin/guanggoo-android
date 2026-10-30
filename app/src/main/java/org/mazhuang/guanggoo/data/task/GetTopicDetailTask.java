@@ -84,7 +84,11 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
             String commentsCountText = commentsHeaderElements.first().text();
             if (!TextUtils.isEmpty(commentsCountText)) {
                 commentsCountText = commentsCountText.replaceAll("[^\\d]", "");
-                topicDetail.setCommentsCount(Integer.parseInt(commentsCountText));
+                try {
+                    topicDetail.setCommentsCount(Integer.parseInt(commentsCountText));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
             }
         }
 

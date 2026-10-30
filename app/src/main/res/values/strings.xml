@@ -127,9 +127,20 @@
     <string name="not_agree_now">暂不使用</string>
     <string name="privacy_policy_title">使用确认</string>
     <string name="privacy_and_policy">隐私与政策</string>
-    <string name="img_bed_api_key_label">图床 API KEY</string>
-    <string name="img_bed_api_key_hint">请输入 sm.ms 图床 api key</string>
-    <string name="help_image_bed_api_key">如何获取图床 API KEY</string>
+    <string name="imgchr_account_label">路过图床账号</string>
+    <string name="imgchr_logged_in">已登录</string>
+    <string name="imgchr_not_logged_in">未登录，点击登录</string>
+    <string name="imgchr_account_tip">登录后上传的图片永久保存；未登录上传的图片 14 天后自动删除。</string>
+    <string name="imgchr_relogin">重新登录</string>
+    <string name="imgchr_logout">退出登录</string>
+    <string name="imgchr_login_title">登录路过图床</string>
+    <string name="imgchr_login_done">完成</string>
+    <string name="imgchr_login_success">登录成功</string>
+    <string name="imgchr_login_failed">登录未完成，请先登录</string>
+    <string name="imgchr_login_prompt_title">未登录路过图床</string>
+    <string name="imgchr_login_prompt_message">登录后上传的图片永久保存，未登录上传的图片 14 天后自动删除，是否先登录？</string>
+    <string name="go_login">去登录</string>
+    <string name="upload_without_login">免登录上传</string>
 
     <string-array name="home_tab_names">
         <item>@string/default_order_topics</item>

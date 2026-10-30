@@ -53,6 +53,12 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity
+            android:name=".imgchr.ImgchrLoginActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <meta-data
             android:name="BUGLY_APP_CHANNEL"
             android:value="${appChannel}" />
