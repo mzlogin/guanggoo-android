@@ -1,7 +1,6 @@
 package org.mazhuang.guanggoo;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -21,6 +20,7 @@ import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.task.AuthCheckTask;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.PrefsUtil;
+import org.mazhuang.guanggoo.util.IntentUtil;
 
 /**
  * @author mazhuang
@@ -59,12 +59,14 @@ public class SplashActivity extends AppCompatActivity {
 
         TextView tvAlreadyRead = v.findViewById(R.id.privacy_policy_tip);
 
-        SpannableString spannableString = new SpannableString("请您务必审慎阅读、充分理解用户信息保护及隐私政策各条款，包括但不限于：个人信息收集及使用、信息使用方式和信息的保护等，您可以在「关于我们」界面随时查看用户信息保护及隐私政策。\n\n您可阅读《用户信息保护及隐私政策》了解详细信息。如您同意，请点击「同意」开始接受我们的服务。");
+        final String policyTitle = "《用户信息保护及隐私政策》";
+        final String privacyTip = "请您务必审慎阅读、充分理解用户信息保护及隐私政策各条款，包括但不限于：个人信息收集及使用、信息使用方式和信息的保护等，您可以在「关于我们」界面随时查看用户信息保护及隐私政策。\n\n您可阅读" + policyTitle + "了解详细信息。如您同意，请点击「同意」开始接受我们的服务。";
+        SpannableString spannableString = new SpannableString(privacyTip);
 
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ConstantUtil.PRIVACY_URL)));
+                IntentUtil.openUrl(SplashActivity.this, ConstantUtil.PRIVACY_URL);
             }
 
             @Override
@@ -73,10 +75,14 @@ public class SplashActivity extends AppCompatActivity {
                 ds.setUnderlineText(false);//去掉下划线
             }
         };
-        spannableString.setSpan(clickableSpan, 93, 106, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        int policyIndex = privacyTip.indexOf(policyTitle);
+        if (policyIndex >= 0) {
+            int policyEnd = policyIndex + policyTitle.length();
+            spannableString.setSpan(clickableSpan, policyIndex, policyEnd, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
 
-        ForegroundColorSpan colorSpan = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorPrimary));
-        spannableString.setSpan(colorSpan, 93, 106, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+            ForegroundColorSpan colorSpan = new ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorPrimary));
+            spannableString.setSpan(colorSpan, policyIndex, policyEnd, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        }
 
         tvAlreadyRead.setText(spannableString);
         tvAlreadyRead.setMovementMethod(LinkMovementMethod.getInstance());

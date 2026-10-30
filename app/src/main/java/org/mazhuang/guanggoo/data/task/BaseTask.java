@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 
+import com.tencent.bugly.crashreport.CrashReport;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Connection;
@@ -55,6 +56,23 @@ public abstract class BaseTask<T> implements Runnable {
                 }
             });
         }
+    }
+
+    /**
+     * 兜底的错误提示：异常没有可用信息时使用默认文案，避免出现空的提示。
+     */
+    protected String errorMessage(Throwable e, String fallback) {
+        String message = (e == null) ? null : e.getMessage();
+        return TextUtils.isEmpty(message) ? fallback : message;
+    }
+
+    /**
+     * 任务内部未捕获异常的兜底处理，由调度器在发生意外异常时调用。
+     */
+    public void handleUnexpectedError(Throwable e) {
+        // 这类异常以前会直接导致崩溃，现在虽然兜底处理了，但仍上报便于定位问题
+        CrashReport.postCatchedException(e);
+        failedOnUI(errorMessage(e, "操作失败，请稍后重试"));
     }
 
     protected void failedOnUI(final String msg) {
@@ -146,12 +164,22 @@ public abstract class BaseTask<T> implements Runnable {
     }
 
     protected boolean checkAuth(Document doc) {
+        if (doc == null) {
+            return false;
+        }
         Elements elements = doc.select("div.usercard");
         if (!elements.isEmpty()) {
             Element usercardElement = elements.first();
+            Element usernameElement = usercardElement.select("div.username").first();
+            if (usernameElement == null) {
+                return false;
+            }
+            Element avatarElement = usercardElement.select("img.avatar").first();
 
-            AuthInfoManager.getInstance().setUsername(usercardElement.select("div.username").first().text());
-            AuthInfoManager.getInstance().setAvatar(usercardElement.select("img.avatar").first().attr("src"));
+            AuthInfoManager.getInstance().setUsername(usernameElement.text());
+            if (avatarElement != null) {
+                AuthInfoManager.getInstance().setAvatar(avatarElement.attr("src"));
+            }
             return true;
         }
         return false;

@@ -9,7 +9,6 @@ import org.mazhuang.guanggoo.data.entity.Reply;
 import org.mazhuang.guanggoo.data.entity.Topic;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +77,7 @@ public class GetReplyListTask extends BaseTask<ListResult<Reply>> {
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

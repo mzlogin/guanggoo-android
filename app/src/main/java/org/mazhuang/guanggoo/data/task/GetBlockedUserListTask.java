@@ -7,7 +7,6 @@ import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.UserProfile;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +28,9 @@ public class GetBlockedUserListTask extends BaseTask<List<UserProfile>> {
 
         try {
             doc = get(ConstantUtil.BLOCKED_USER_URL);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            failedOnUI(e.getMessage());
+            failedOnUI(errorMessage(e, "操作失败，请稍后重试"));
             return;
         }
 

@@ -6,7 +6,6 @@ import org.jsoup.select.Elements;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.UserProfile;
 
-import java.io.IOException;
 
 /**
  *
@@ -28,9 +27,9 @@ public class GetUserProfileTask extends BaseTask<UserProfile> {
 
         try {
             doc = get(mUrl);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            failedOnUI(e.getMessage());
+            failedOnUI(errorMessage(e, "操作失败，请稍后重试"));
             return;
         }
 

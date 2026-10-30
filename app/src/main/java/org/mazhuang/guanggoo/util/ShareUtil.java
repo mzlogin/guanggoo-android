@@ -17,6 +17,10 @@ public class ShareUtil {
     private ShareUtil() {}
 
     public static void shareLink(@NonNull Activity activity, String url) {
+        if (activity == null || activity.isFinishing()) {
+            return;
+        }
+
         if (TextUtils.isEmpty(url)) {
             Toast.makeText(activity, R.string.cannot_share, Toast.LENGTH_SHORT).show();
             return;

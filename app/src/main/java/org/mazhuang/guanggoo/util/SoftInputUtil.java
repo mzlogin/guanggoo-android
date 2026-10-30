@@ -19,6 +19,10 @@ public class SoftInputUtil {
      * @param context the context
      */
     public static void showSoftInput(Context context) {
+        if (context == null) {
+            return;
+        }
+
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
@@ -31,6 +35,10 @@ public class SoftInputUtil {
      * @param context the context
      */
     public static void hideSoftInput(Context context) {
+        if (context == null) {
+            return;
+        }
+
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         boolean isOpen = (imm != null && imm.isActive());
         if (isOpen) {
@@ -45,6 +53,10 @@ public class SoftInputUtil {
      * @param v       the v
      */
     public static void hideSoftInputFromWindow(Context context, View v) {
+        if (context == null || v == null) {
+            return;
+        }
+
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);

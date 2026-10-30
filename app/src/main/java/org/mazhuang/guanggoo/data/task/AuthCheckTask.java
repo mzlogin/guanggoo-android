@@ -8,7 +8,6 @@ import org.mazhuang.guanggoo.data.AuthInfoManager;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 
-import java.io.IOException;
 
 /**
  *
@@ -38,7 +37,7 @@ public class AuthCheckTask extends BaseTask<String> {
                 successOnUI("succeed");
                 return;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -55,7 +54,7 @@ public class AuthCheckTask extends BaseTask<String> {
             Document doc;
             try {
                 doc = get(ConstantUtil.VERIFY_TELEPHONE_URL);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 return;
             }

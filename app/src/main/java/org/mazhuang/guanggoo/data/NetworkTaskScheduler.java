@@ -1,6 +1,8 @@
 package org.mazhuang.guanggoo.data;
 
+import com.tencent.bugly.crashreport.CrashReport;
 import org.mazhuang.guanggoo.base.NamedThreadFactory;
+import org.mazhuang.guanggoo.data.task.BaseTask;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -37,7 +39,30 @@ public class NetworkTaskScheduler {
         );
     }
 
-    public void execute(Runnable runnable) {
-        mExecutor.execute(runnable);
+    public void execute(final Runnable runnable) {
+        if (runnable == null) {
+            return;
+        }
+
+        try {
+            mExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        runnable.run();
+                    } catch (Throwable e) {
+                        // 后台任务的任何异常都不应该让应用崩溃
+                        e.printStackTrace();
+                        if (runnable instanceof BaseTask) {
+                            ((BaseTask<?>) runnable).handleUnexpectedError(e);
+                        } else {
+                            CrashReport.postCatchedException(e);
+                        }
+                    }
+                }
+            });
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 }

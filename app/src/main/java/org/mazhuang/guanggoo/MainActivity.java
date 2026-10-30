@@ -2,8 +2,13 @@ package org.mazhuang.guanggoo;
 
 import android.animation.ObjectAnimator;
 import android.animation.StateListAnimator;
+import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
+import android.window.OnBackInvokedCallback;
+import android.window.OnBackInvokedDispatcher;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.Fragment;
@@ -29,6 +34,7 @@ import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.router.annotations.ClearTop;
 import org.mazhuang.guanggoo.router.annotations.FinishWhenCovered;
 import org.mazhuang.guanggoo.router.annotations.StartsWithAppBar;
+import org.mazhuang.guanggoo.update.UpdateManager;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.DimensUtil;
 import org.mazhuang.guanggoo.util.GlideUtil;
@@ -46,6 +52,8 @@ public class MainActivity extends AppCompatActivity
 
     private long mLastBackPressTime;
 
+    private Object mBackInvokedCallback;
+
     private ImageView mAvatarImageView;
     private TextView mUsernameTextView;
     private ImageView mSearchImageView;
@@ -62,6 +70,24 @@ public class MainActivity extends AppCompatActivity
         initViews();
 
         initLoginInUserInfo();
+
+        UpdateManager.getInstance().checkDaily(this);
+
+        registerBackCallback();
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterBackCallback();
+
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        UpdateManager.getInstance().onActivityResumed(this);
     }
 
     private void initLoginInUserInfo() {
@@ -88,9 +114,13 @@ public class MainActivity extends AppCompatActivity
         // 设置抽屉菜单图标为图片原色
         navigationView.setItemIconTintList(null);
 
-        mAvatarImageView = navigationView.getHeaderView(0).findViewById(R.id.avatar);
-        mUsernameTextView = navigationView.getHeaderView(0).findViewById(R.id.username);
-        mSearchImageView = navigationView.getHeaderView(0).findViewById(R.id.search);
+        View navHeader = navigationView.getHeaderView(0);
+        if (navHeader == null) {
+            navHeader = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        }
+        mAvatarImageView = navHeader.findViewById(R.id.avatar);
+        mUsernameTextView = navHeader.findViewById(R.id.username);
+        mSearchImageView = navHeader.findViewById(R.id.search);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,20 +192,68 @@ public class MainActivity extends AppCompatActivity
     }
 
     public static void addFragmentToStack(FragmentManager fm, Fragment fragment) {
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.fragment_container, fragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.addToBackStack(sStackName);
-        ft.commit();
+        try {
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.fragment_container, fragment);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.addToBackStack(sStackName);
+            // 异步回调可能晚于 onSaveInstanceState，用 commitAllowingStateLoss 避免崩溃
+            ft.commitAllowingStateLoss();
+        } catch (Exception e) {
+            // FragmentManager 已销毁时忽略本次跳转
+            e.printStackTrace();
+        }
     }
 
     public static void setOnlyFragmentToStack(FragmentManager fm, Fragment fragment) {
-        fm.popBackStackImmediate(sStackName, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        try {
+            fm.popBackStackImmediate(sStackName, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         addFragmentToStack(fm, fragment);
     }
 
     @Override
     public void onBackPressed() {
+        handleBackPressed();
+    }
+
+    /**
+     * Android 16 起，targetSdk 36 的应用默认启用预测性返回，
+     * onBackPressed 不再被系统调用，需要注册 OnBackInvokedCallback 才能拦截返回事件。
+     */
+    private void registerBackCallback() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            mBackInvokedCallback = BackCallbackCompat.register(this, this::handleBackPressed);
+        }
+    }
+
+    private void unregisterBackCallback() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && mBackInvokedCallback != null) {
+            BackCallbackCompat.unregister(this, mBackInvokedCallback);
+            mBackInvokedCallback = null;
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private static class BackCallbackCompat {
+        static Object register(Activity activity, Runnable onBack) {
+            OnBackInvokedCallback callback = onBack::run;
+            activity.getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
+                    OnBackInvokedDispatcher.PRIORITY_DEFAULT, callback);
+            return callback;
+        }
+
+        static void unregister(Activity activity, Object callback) {
+            if (callback instanceof OnBackInvokedCallback) {
+                activity.getOnBackInvokedDispatcher()
+                        .unregisterOnBackInvokedCallback((OnBackInvokedCallback) callback);
+            }
+        }
+    }
+
+    private void handleBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -232,10 +310,6 @@ public class MainActivity extends AppCompatActivity
                 openPage(ConstantUtil.NODES_CLOUD_URL, getString(R.string.nodes_list));
                 break;
 
-            case R.id.nav_beginner_guide:
-                openPage(ConstantUtil.BEGINNER_GUIDE_URL, getString(R.string.beginner_guide));
-                break;
-
             case R.id.nav_about:
                 openPage(ConstantUtil.ABOUT_URL, getString(R.string.about));
                 break;
@@ -272,7 +346,13 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        BaseFragment fragment = FragmentFactory.getFragmentByUrl(url);
+        BaseFragment fragment;
+        try {
+            fragment = FragmentFactory.getFragmentByUrl(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fragment = null;
+        }
         if (fragment == null) {
             Toast.makeText(this, getString(R.string.error_happened), Toast.LENGTH_SHORT).show();
             return;

@@ -1,5 +1,6 @@
 package org.mazhuang.guanggoo.newtopic;
 
+import android.app.Activity;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import android.text.TextUtils;
@@ -119,11 +120,12 @@ public class NewTopicFragment extends BaseUploadImageFragment<NewTopicContract.P
 
     @Override
     public void onNewTopicSucceed() {
-        if (getContext() == null) {
+        Activity activity = getActivity();
+        if (activity == null) {
             return;
         }
 
-        getActivity().onBackPressed();
+        activity.onBackPressed();
     }
 
     @Override

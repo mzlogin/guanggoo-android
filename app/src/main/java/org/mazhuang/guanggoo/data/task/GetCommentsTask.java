@@ -11,7 +11,6 @@ import org.mazhuang.guanggoo.data.entity.User;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.PrefsUtil;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -37,9 +36,9 @@ public class GetCommentsTask extends BaseTask<Map<Integer, Comment>> {
             Document doc = get(mUrl);
             Map<Integer, Comment> comments = getCommentsFromElements(doc.select("div.topic-reply"));
             successOnUI(comments);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            failedOnUI(e.getMessage());
+            failedOnUI(errorMessage(e, "操作失败，请稍后重试"));
         }
     }
 
@@ -68,32 +67,47 @@ public class GetCommentsTask extends BaseTask<Map<Integer, Comment>> {
         Element metaElement = element.select("div.meta").first();
         Comment.Meta meta = new Comment.Meta();
 
-        Element replyUsernameElement = metaElement.select("a.reply-username").first();
         User replier = new User();
-        replier.setUrl(replyUsernameElement.absUrl("href"));
-        replier.setUsername(replyUsernameElement.select("span.username").text());
-        meta.setReplier(replier);
-
-        meta.setTime(metaElement.select("span.time").text());
-
-        try {
-            meta.setFloor(Integer.valueOf(metaElement.select("span.fr.floor").first().text().replaceAll("[^\\d]", "")));
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            meta.setFloor(0);
-        }
-
-        Element voteElement = metaElement.select("a.J_replyVote").first();
         Comment.Vote vote = new Comment.Vote();
-        vote.setUrl(voteElement.absUrl("href"));
-        try {
-            vote.setCount(Integer.valueOf(voteElement.attr("data-count")));
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            vote.setCount(0);
-        }
-        meta.setVote(vote);
 
+        if (metaElement != null) {
+            Element replyUsernameElement = metaElement.select("a.reply-username").first();
+            if (replyUsernameElement != null) {
+                replier.setUrl(replyUsernameElement.absUrl("href"));
+                replier.setUsername(replyUsernameElement.select("span.username").text());
+            }
+
+            meta.setTime(metaElement.select("span.time").text());
+
+            Element floorElement = metaElement.select("span.fr.floor").first();
+            try {
+                meta.setFloor(floorElement == null
+                        ? 0 : Integer.valueOf(floorElement.text().replaceAll("[^\\d]", "")));
+            } catch (Exception e) {
+                e.printStackTrace();
+                meta.setFloor(0);
+            }
+
+            Element voteElement = metaElement.select("a.J_replyVote").first();
+            if (voteElement != null) {
+                vote.setUrl(voteElement.absUrl("href"));
+                try {
+                    vote.setCount(Integer.valueOf(voteElement.attr("data-count")));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    vote.setCount(0);
+                }
+                try {
+                    vote.setVoted(Integer.parseInt(voteElement.attr("data-voted")) > 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    vote.setVoted(false);
+                }
+            }
+        }
+
+        meta.setReplier(replier);
+        meta.setVote(vote);
         comment.setMeta(meta);
 
         comment.setContent(element.select("span.content").outerHtml());

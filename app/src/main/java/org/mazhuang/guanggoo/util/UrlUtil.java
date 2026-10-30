@@ -28,6 +28,10 @@ public class UrlUtil {
     }
 
     public static String getTid(String url) {
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+
         Matcher m = sTidPattern.matcher(url);
         if (m.find()) {
             return m.group(1);
@@ -37,6 +41,10 @@ public class UrlUtil {
     }
 
     public static String getNodeCode(String url) {
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+
         Matcher m = sNodeCodePattern.matcher(url);
         if (m.find()) {
             return m.group(1);
@@ -46,6 +54,10 @@ public class UrlUtil {
     }
 
     public static String getUserName(String url) {
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+
         Matcher m = sUserNamePattern.matcher(url);
         if (m.find()) {
             return m.group(2);

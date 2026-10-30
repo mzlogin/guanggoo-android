@@ -1,8 +1,7 @@
 package org.mazhuang.guanggoo.login;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,6 +15,7 @@ import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.SoftInputUtil;
+import org.mazhuang.guanggoo.util.IntentUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,8 +63,7 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
     }
 
     private void gotoRegister() {
-        String url = ConstantUtil.REGISTER_URL;
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        IntentUtil.openUrl(getContext(), ConstantUtil.REGISTER_URL);
     }
 
     private void attemptLogin() {
@@ -110,15 +109,18 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
 
     @Override
     public void onLoginSucceed(String data) {
-        if (getContext() == null) {
+        Activity activity = getActivity();
+        if (activity == null) {
             return;
         }
 
-        SoftInputUtil.hideSoftInput(getActivity());
+        SoftInputUtil.hideSoftInput(activity);
 
-        mListener.onLoginStatusChanged(true);
+        if (mListener != null) {
+            mListener.onLoginStatusChanged(true);
+        }
 
-        getActivity().onBackPressed();
+        activity.onBackPressed();
         if (mListener != null && !ConstantUtil.LOGIN_URL.equals(mUrl)) {
             mListener.openPage(mUrl, mTitle);
         }
@@ -126,11 +128,12 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
 
     @Override
     public void onLoginFailed(String msg) {
-        if (getContext() == null) {
+        Activity activity = getActivity();
+        if (activity == null) {
             return;
         }
 
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override

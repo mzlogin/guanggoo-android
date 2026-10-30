@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/normal_margin"
+    android:paddingTop="@dimen/normal_margin"
+    android:paddingRight="@dimen/normal_margin">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="@dimen/line_spacing_multiplier"
+        android:maxLines="3"
+        android:textColor="@color/major"
+        android:textSize="@dimen/font_normal" />
+
+    <TextView
+        android:id="@+id/meta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/inner_margin"
+        android:textColor="@color/advance"
+        android:textSize="@dimen/font_smallest" />
+
+    <TextView
+        android:id="@+id/excerpt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/inner_margin"
+        android:ellipsize="end"
+        android:maxLines="4"
+        android:textColor="@color/minor"
+        android:textSize="@dimen/font_small" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/split_height"
+        android:layout_marginTop="@dimen/normal_margin"
+        android:background="@color/split" />
+
+</LinearLayout>

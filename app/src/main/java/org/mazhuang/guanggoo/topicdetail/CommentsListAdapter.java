@@ -11,6 +11,7 @@ import android.widget.TextView;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.Comment;
+import org.mazhuang.guanggoo.data.entity.VoteCommentResponse;
 import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.util.GlideUtil;
 import org.mazhuang.guanggoo.util.MyHtmlHttpImageGetter;
@@ -64,7 +65,14 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
     }
 
     public void addData(Map<Integer, Comment> data) {
-        mData.putAll(data);
+        if (data == null || data.isEmpty()) {
+            return;
+        }
+        if (mData == null) {
+            mData = data;
+        } else {
+            mData.putAll(data);
+        }
         notifyDataSetChanged();
     }
 
@@ -91,6 +99,9 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = getItem(position);
+        if (holder.mItem == null || holder.mItem.getMeta() == null) {
+            return;
+        }
         holder.mLastTouchedTextView.setText(holder.mItem.getMeta().getTime());
         GlideUtil.loadImage(holder.mAvatarImageView, holder.mItem.getAvatar());
         holder.mAuthorTextView.setText(holder.mItem.getMeta().getReplier().getUsername());
@@ -103,7 +114,7 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
                 .linkifyHtml(holder.mContentTextView)
                 .setOnLinkClickListener(mOnLinkClickListener);
 
-        holder.mVoteImageView.setEnabled(!holder.mItem.getMeta().getVote().isVoted());
+        holder.mVoteImageView.setImageResource(holder.mItem.getMeta().getVote().isVoted() ? R.drawable.voted : R.drawable.vote);
         holder.mVoteCountTextView.setText(String.valueOf(holder.mItem.getMeta().getVote().getCount()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -156,14 +167,12 @@ public class CommentsListAdapter extends RecyclerView.Adapter<CommentsListAdapte
                     break;
 
                 case R.id.vote:
-                    mListener.onVote(mItem.getMeta().getReplier().getUsername(), mItem.getMeta().getVote().getUrl(), new OnResponseListener<Boolean>() {
+                    mListener.onVote(mItem.getMeta().getReplier().getUsername(), mItem.getMeta().getVote().getUrl(), mItem.getMeta().getVote().isVoted(), new OnResponseListener<VoteCommentResponse>() {
                         @Override
-                        public void onSucceed(Boolean succeed) {
+                        public void onSucceed(VoteCommentResponse response) {
                             Comment.Vote vote = mItem.getMeta().getVote();
-                            vote.setVoted(true);
-                            if (succeed) {
-                                vote.setCount(vote.getCount() + 1);
-                            }
+                            vote.setVoted(response.isVoted());
+                            vote.setCount(response.getCount());
                             notifyDataSetChanged();
                         }
 

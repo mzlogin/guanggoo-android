@@ -1,6 +1,7 @@
 package org.mazhuang.guanggoo.topicdetail;
 
 import org.mazhuang.guanggoo.data.OnResponseListener;
+import org.mazhuang.guanggoo.data.entity.VoteCommentResponse;
 
 /**
  *
@@ -26,7 +27,8 @@ public interface CommentsActionListener {
      * 给评论点赞
      * @param username 要点赞的评论的作者
      * @param url 点赞 URL
+     * @param isVoted 是否已经点过赞
      * @param listener 点赞结果回调
      */
-    void onVote(String username, String url, OnResponseListener<Boolean> listener);
+    void onVote(String username, String url, boolean isVoted, OnResponseListener<VoteCommentResponse> listener);
 }

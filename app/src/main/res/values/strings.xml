@@ -23,7 +23,6 @@
     </string>
     <string name="back_to_quit">连按两次返回键退出</string>
     <string name="load_more_comments">加载更多评论</string>
-    <string name="beginner_guide">新手指南</string>
     <string name="comment">评论</string>
     <string name="cancel">取消</string>
     <string name="please_input_comment_content">评论内容不能为空</string>
@@ -67,8 +66,23 @@
     <string name="error_invalid_title">标题太短</string>
     <string name="error_invalid_content">内容太短</string>
     <string name="feedback">建议与反馈</string>
-    <string name="issue_address">https://github.com/mzlogin/guanggoo-android/issues</string>
     <string name="check_updates">检查新版本</string>
+    <string name="update_found_title">发现新版本 v%1$s</string>
+    <string name="update_found_message">发现新版本，是否立即升级？</string>
+    <string name="update_now">立即升级</string>
+    <string name="update_later">以后再说</string>
+    <string name="update_is_latest">当前已是最新版本</string>
+    <string name="update_check_failed">检查更新失败，请稍后重试</string>
+    <string name="update_downloading">新版本下载中，请稍候…</string>
+    <string name="update_download_description">正在下载 v%1$s</string>
+    <string name="update_download_failed">新版本下载失败，请稍后重试</string>
+    <string name="update_download_corrupted">安装包校验失败，请重新下载</string>
+    <string name="update_install_permission_tip">请允许安装未知来源应用，返回后继续安装</string>
+    <string name="update_install_failed">安装失败，请重新下载安装包</string>
+    <string name="update_force_tip">此版本为必要更新，升级完成后即可继续使用。</string>
+    <string name="update_download_failed_title">下载失败</string>
+    <string name="retry">重试</string>
+    <string name="exit_app">退出应用</string>
     <string name="share_link">分享链接</string>
     <string name="favorite">收藏</string>
     <string name="cancel_favorite">取消收藏</string>
@@ -101,6 +115,16 @@
     <string name="search">搜索</string>
     <string name="please_input_user_id">请输入用户ID</string>
     <string name="search_user">搜索用户</string>
+    <string name="search_hint">搜内容，或用户 ID</string>
+    <string name="search_scope_label">搜索范围</string>
+    <string name="search_scope_all">主题和回复</string>
+    <string name="search_scope_title">标题和标签</string>
+    <string name="search_scope_topic">主题正文</string>
+    <string name="search_scope_reply">回复内容</string>
+    <string name="search_topics">搜索帖子</string>
+    <string name="search_results">搜索结果</string>
+    <string name="please_input_search_keyword">请输入搜索关键词</string>
+    <string name="search_no_result">未找到相关帖子</string>
     <string name="please_login_first">请先登录</string>
     <string name="settings">设置</string>
     <string name="comments_order_desc">倒序显示评论</string>
@@ -112,9 +136,20 @@
     <string name="not_agree_now">暂不使用</string>
     <string name="privacy_policy_title">使用确认</string>
     <string name="privacy_and_policy">隐私与政策</string>
-    <string name="img_bed_api_key_label">图床 API KEY</string>
-    <string name="img_bed_api_key_hint">请输入 sm.ms 图床 api key</string>
-    <string name="help_image_bed_api_key">如何获取图床 API KEY</string>
+    <string name="imgchr_account_label">路过图床账号</string>
+    <string name="imgchr_logged_in">已登录</string>
+    <string name="imgchr_not_logged_in">未登录，点击登录</string>
+    <string name="imgchr_account_tip">登录后上传的图片永久保存；未登录上传的图片 14 天后自动删除。</string>
+    <string name="imgchr_relogin">重新登录</string>
+    <string name="imgchr_logout">退出登录</string>
+    <string name="imgchr_login_title">登录路过图床</string>
+    <string name="imgchr_login_done">完成</string>
+    <string name="imgchr_login_success">登录成功</string>
+    <string name="imgchr_login_failed">登录未完成，请先登录</string>
+    <string name="imgchr_login_prompt_title">未登录路过图床</string>
+    <string name="imgchr_login_prompt_message">登录后上传的图片永久保存，未登录上传的图片 14 天后自动删除，是否先登录？</string>
+    <string name="go_login">去登录</string>
+    <string name="upload_without_login">免登录上传</string>
 
     <string-array name="home_tab_names">
         <item>@string/default_order_topics</item>

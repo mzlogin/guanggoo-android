@@ -1,28 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/normal_margin">
+    android:background="@color/white"
+    android:fillViewport="true">
 
-    <EditText
-        android:id="@+id/keyword"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/please_input_user_id"
-        android:maxLines="1"
-        android:singleLine="true"
-        style="@style/DefaultEditText" />
+        android:orientation="vertical"
+        android:padding="@dimen/normal_margin">
 
-    <Button
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/keyword"
-        android:layout_marginTop="@dimen/normal_margin"
-        android:background="@drawable/blue_button"
-        android:text="@string/search"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_button"/>
+        <EditText
+            android:id="@+id/keyword"
+            style="@style/DefaultEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_margin"
+            android:text="@string/search_scope_label"
+            android:textColor="@color/minor"
+            android:textSize="@dimen/font_small" />
+
+        <RadioGroup
+            android:id="@+id/scope_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/scope_all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:minHeight="48dp"
+                android:paddingLeft="@dimen/inner_margin"
+                android:paddingRight="@dimen/inner_margin"
+                android:text="@string/search_scope_all"
+                android:textColor="@color/major"
+                android:textSize="@dimen/font_normal"
+                app:buttonTint="@color/main" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/scope_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:paddingLeft="@dimen/inner_margin"
+                android:paddingRight="@dimen/inner_margin"
+                android:text="@string/search_scope_title"
+                android:textColor="@color/major"
+                android:textSize="@dimen/font_normal"
+                app:buttonTint="@color/main" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/scope_topic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:paddingLeft="@dimen/inner_margin"
+                android:paddingRight="@dimen/inner_margin"
+                android:text="@string/search_scope_topic"
+                android:textColor="@color/major"
+                android:textSize="@dimen/font_normal"
+                app:buttonTint="@color/main" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/scope_reply"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:paddingLeft="@dimen/inner_margin"
+                android:paddingRight="@dimen/inner_margin"
+                android:text="@string/search_scope_reply"
+                android:textColor="@color/major"
+                android:textSize="@dimen/font_normal"
+                app:buttonTint="@color/main" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_margin"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/search_user"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height"
+                android:background="@drawable/shape_gray"
+                android:paddingLeft="@dimen/normal_margin"
+                android:paddingRight="@dimen/normal_margin"
+                android:text="@string/search_user"
+                android:textAllCaps="false"
+                android:textColor="@color/major"
+                android:textSize="@dimen/font_small" />
+
+            <Button
+                android:id="@+id/search_topics"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginLeft="@dimen/middle_margin"
+                android:background="@drawable/blue_button"
+                android:paddingLeft="@dimen/normal_margin"
+                android:paddingRight="@dimen/normal_margin"
+                android:text="@string/search_topics"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_small" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

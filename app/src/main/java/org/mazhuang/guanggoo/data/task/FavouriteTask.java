@@ -1,6 +1,5 @@
 package org.mazhuang.guanggoo.data.task;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,7 +49,7 @@ public class FavouriteTask extends BaseTask<String> {
                 failedOnUI("不能收藏自己的主题");
                 return;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

@@ -22,18 +22,17 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/img_bed_api_key"
+        android:id="@+id/imgchr_account"
         style="@style/LinearClickableItem"
         android:layout_marginTop="10dp">
         <TextView
-            android:id="@+id/img_bed_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/img_bed_api_key_label"
+            android:text="@string/imgchr_account_label"
             android:textSize="@dimen/font_normal"
             android:textColor="@color/major"/>
         <TextView
-            android:id="@+id/img_bed_content"
+            android:id="@+id/imgchr_account_status"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -41,7 +40,7 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textSize="@dimen/font_normal"
-            android:hint="@string/img_bed_api_key_hint" />
+            android:textColor="@color/minor" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,13 +53,11 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/help_image_bed_api_key"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/help_image_bed_api_key"
+            android:text="@string/imgchr_account_tip"
             android:textSize="@dimen/font_smallest"
-            android:textColor="@color/listBackground"
-            android:drawableLeft="@drawable/help_how" />
+            android:textColor="@color/listBackground" />
     </LinearLayout>
 
 </LinearLayout>

@@ -73,6 +73,10 @@ public class MenuItemBadge {
         ImageView imageView;
 
         badge = (FrameLayout) menu.getActionView();
+        if (badge == null) {
+            // 菜单项还没有 action view（例如被收进了更多菜单），直接跳过
+            return;
+        }
 
         badgeTextView = (MaterialBadgeTextView) badge.findViewById(R.id.menu_badge);
         imageView = (ImageView) badge.findViewById(R.id.menu_badge_icon);
@@ -135,8 +139,10 @@ public class MenuItemBadge {
             return null;
         }
         FrameLayout badge = (FrameLayout) menu.getActionView();
-        MaterialBadgeTextView badgeView = (MaterialBadgeTextView) badge.findViewById(R.id.menu_badge);
-        return badgeView;
+        if (badge == null) {
+            return null;
+        }
+        return (MaterialBadgeTextView) badge.findViewById(R.id.menu_badge);
     }
 
     /**

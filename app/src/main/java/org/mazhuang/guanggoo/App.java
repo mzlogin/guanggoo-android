@@ -4,7 +4,7 @@ import android.os.Build;
 import android.os.StrictMode;
 import androidx.lifecycle.MutableLiveData;
 import androidx.multidex.MultiDexApplication;
-import com.tencent.bugly.Bugly;
+import com.tencent.bugly.crashreport.CrashReport;
 import org.mazhuang.guanggoo.util.ConfigUtil;
 
 /**
@@ -33,7 +33,12 @@ public class App extends MultiDexApplication {
 
         mGlobal = new GlobalData();
 
-        Bugly.init(getApplicationContext(), "6ace1b5b58", false);
+        try {
+            CrashReport.initCrashReport(getApplicationContext(), "6ace1b5b58", false);
+        } catch (Exception e) {
+            // 崩溃上报 SDK 初始化失败不能影响应用启动
+            e.printStackTrace();
+        }
     }
 
     public static App getInstance() {

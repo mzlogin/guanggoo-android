@@ -6,6 +6,7 @@ import org.mazhuang.guanggoo.App;
 import org.mazhuang.guanggoo.data.NetworkTaskScheduler;
 import org.mazhuang.guanggoo.data.OnResponseListener;
 import org.mazhuang.guanggoo.data.entity.TopicDetail;
+import org.mazhuang.guanggoo.data.entity.VoteCommentResponse;
 import org.mazhuang.guanggoo.data.task.CommentTask;
 import org.mazhuang.guanggoo.data.task.FavouriteTask;
 import org.mazhuang.guanggoo.data.task.FollowUserTask;
@@ -129,16 +130,14 @@ public class TopicDetailPresenter implements TopicDetailContract.Presenter {
     }
 
     @Override
-    public void voteComment(String url, final OnResponseListener<Boolean> listener) {
+    public void voteComment(String url, String voteValue, final OnResponseListener<VoteCommentResponse> listener) {
         mView.startLoading();
-        NetworkTaskScheduler.getInstance().execute(new VoteCommentTask(url, new OnResponseListener<Boolean>() {
+        NetworkTaskScheduler.getInstance().execute(new VoteCommentTask(url, voteValue, new OnResponseListener<VoteCommentResponse>() {
             @Override
-            public void onSucceed(Boolean value) {
+            public void onSucceed(VoteCommentResponse response) {
                 mView.stopLoading();
-                listener.onSucceed(value);
-                if (value) {
-                    mView.onVoteCommentSucceed();
-                } else {
+                listener.onSucceed(response);
+                if (response.getSuccess() == 1 && response.isVoted() && !response.isChanged()) {
                     mView.onVoteCommentFailed("您已经点过赞了");
                 }
             }

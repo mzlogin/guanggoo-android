@@ -9,7 +9,6 @@ import org.mazhuang.guanggoo.data.entity.UserProfile;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.UrlUtil;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,9 +63,9 @@ public class FollowUserTask extends BaseTask<Boolean> {
                     failedOnUI(msg);
                 }
             }).run();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            failedOnUI(e.getMessage());
+            failedOnUI(errorMessage(e, "操作失败，请稍后重试"));
         }
 
     }

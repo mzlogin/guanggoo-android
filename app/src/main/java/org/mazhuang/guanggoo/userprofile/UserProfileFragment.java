@@ -1,6 +1,7 @@
 package org.mazhuang.guanggoo.userprofile;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import androidx.lifecycle.Observer;
 import android.content.DialogInterface;
@@ -175,21 +176,32 @@ public class UserProfileFragment extends BaseFragment<UserProfileContract.Presen
                         mReplyTextView.getText().toString());
                 break;
 
-            case R.id.logout:
-                new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme_AlertDialog))
+            case R.id.logout: {
+                Activity activity = getActivity();
+                if (activity == null) {
+                    break;
+                }
+
+                new AlertDialog.Builder(new ContextThemeWrapper(activity, R.style.AppTheme_AlertDialog))
                         .setTitle(R.string.logout_confirm)
                         .setMessage(R.string.logout_tip_message)
                         .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                mListener.onLoginStatusChanged(false);
-                                getActivity().onBackPressed();
+                                if (mListener != null) {
+                                    mListener.onLoginStatusChanged(false);
+                                }
+                                Activity currentActivity = getActivity();
+                                if (currentActivity != null) {
+                                    currentActivity.onBackPressed();
+                                }
                             }
                         })
                         .setNegativeButton(R.string.cancel, null)
                         .create()
                         .show();
                 break;
+            }
 
             case R.id.follow: {
                 String username = mUserProfile.getUsername();

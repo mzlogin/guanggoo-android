@@ -32,7 +32,7 @@ public class VersionUtil {
     /**
      * 获取 versionCode
      */
-    private static int getVersionCode(Context context) {
+    public static int getVersionCode(Context context) {
         try {
             PackageInfo pi=context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return pi.versionCode;
