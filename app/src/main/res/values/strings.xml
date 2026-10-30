@@ -117,6 +117,10 @@
     <string name="search_user">搜索用户</string>
     <string name="search_hint">搜内容，或用户 ID</string>
     <string name="search_scope_label">搜索范围</string>
+    <string name="search_scope_all">主题和回复</string>
+    <string name="search_scope_title">标题和标签</string>
+    <string name="search_scope_topic">主题正文</string>
+    <string name="search_scope_reply">回复内容</string>
     <string name="search_topics">搜索帖子</string>
     <string name="search_results">搜索结果</string>
     <string name="please_input_search_keyword">请输入搜索关键词</string>
@@ -146,13 +150,6 @@
     <string name="imgchr_login_prompt_message">登录后上传的图片永久保存，未登录上传的图片 14 天后自动删除，是否先登录？</string>
     <string name="go_login">去登录</string>
     <string name="upload_without_login">免登录上传</string>
-
-    <string-array name="search_scopes">
-        <item>主题和回复</item>
-        <item>标题和标签</item>
-        <item>主题正文</item>
-        <item>回复内容</item>
-    </string-array>
 
     <string-array name="home_tab_names">
         <item>@string/default_order_topics</item>
