@@ -23,7 +23,6 @@
     </string>
     <string name="back_to_quit">连按两次返回键退出</string>
     <string name="load_more_comments">加载更多评论</string>
-    <string name="beginner_guide">新手指南</string>
     <string name="comment">评论</string>
     <string name="cancel">取消</string>
     <string name="please_input_comment_content">评论内容不能为空</string>
@@ -69,6 +68,22 @@
     <string name="feedback">建议与反馈</string>
     <string name="issue_address">https://github.com/mzlogin/guanggoo-android/issues</string>
     <string name="check_updates">检查新版本</string>
+    <string name="update_found_title">发现新版本 v%1$s</string>
+    <string name="update_found_message">发现新版本，是否立即升级？</string>
+    <string name="update_now">立即升级</string>
+    <string name="update_later">以后再说</string>
+    <string name="update_is_latest">当前已是最新版本</string>
+    <string name="update_check_failed">检查更新失败，请稍后重试</string>
+    <string name="update_downloading">新版本下载中，请稍候…</string>
+    <string name="update_download_description">正在下载 v%1$s</string>
+    <string name="update_download_failed">新版本下载失败，请稍后重试</string>
+    <string name="update_download_corrupted">安装包校验失败，请重新下载</string>
+    <string name="update_install_permission_tip">请允许安装未知来源应用，返回后继续安装</string>
+    <string name="update_install_failed">安装失败，请重新下载安装包</string>
+    <string name="update_force_tip">此版本为必要更新，升级完成后即可继续使用。</string>
+    <string name="update_download_failed_title">下载失败</string>
+    <string name="retry">重试</string>
+    <string name="exit_app">退出应用</string>
     <string name="share_link">分享链接</string>
     <string name="favorite">收藏</string>
     <string name="cancel_favorite">取消收藏</string>

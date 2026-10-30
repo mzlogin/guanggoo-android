@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.Nullable;
-import com.tencent.bugly.beta.Beta;
 import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
 import org.mazhuang.guanggoo.R;
 import org.mazhuang.guanggoo.base.BaseFragment;
+import org.mazhuang.guanggoo.update.UpdateManager;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.ShareUtil;
 import org.mazhuang.guanggoo.util.VersionUtil;
@@ -32,7 +32,7 @@ public class AboutFragment extends BaseFragment {
         Element checkUpdateElement = new Element();
         checkUpdateElement.setTitle(getString(R.string.check_updates))
                 .setIconDrawable(R.drawable.ic_update)
-                .setOnClickListener(v -> Beta.checkUpgrade(true, false));
+                .setOnClickListener(v -> checkUpdate());
 
         Element qrcodeElement = new Element();
         qrcodeElement.setTitle(getString(R.string.feedback))
@@ -44,7 +44,7 @@ public class AboutFragment extends BaseFragment {
                 .setIconDrawable(R.drawable.ic_menu_share)
                 .setOnClickListener(v -> {
                     if (getActivity() != null) {
-                        ShareUtil.shareLink(getActivity(), ConstantUtil.DOWNLOAD_URL_COOLAPK);
+                        ShareUtil.shareLink(getActivity(), ConstantUtil.APP_HOME_PAGE);
                     }
                 });
 
@@ -63,6 +63,12 @@ public class AboutFragment extends BaseFragment {
                 .addItem(policyElement)
                 .addGitHub(getString(R.string.source_code_address), getString(R.string.source_code))
                 .create();
+    }
+
+    private void checkUpdate() {
+        if (getActivity() != null) {
+            UpdateManager.getInstance().checkManually(getActivity());
+        }
     }
 
     @Override

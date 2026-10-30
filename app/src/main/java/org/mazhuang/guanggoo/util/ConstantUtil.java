@@ -17,7 +17,6 @@ public class ConstantUtil {
     public static final String UN_FAVORITE_URL = BASE_URL + "/unfavorite";
     public static final String LOGIN_URL = BASE_URL + "/login";
     public static final String REGISTER_URL = BASE_URL + "/register";
-    public static final String BEGINNER_GUIDE_URL = BASE_URL + "/t/2657";
     public static final String NODES_CLOUD_URL = BASE_URL + "/nodes";
     public static final String SELECT_NODE_URL = NODES_CLOUD_URL + " ";
     public static final String BLOCKED_USER_URL = BASE_URL + "/setting/blockedUser";
@@ -67,7 +66,12 @@ public class ConstantUtil {
 
     public static final int MAX_TOPICS = 1024;
 
-    public static final String DOWNLOAD_URL_COOLAPK = "https://www.coolapk.com/apk/164523";
+    public static final String APP_HOME_PAGE = "https://mazhuang.org/guanggoo-android/";
+
+    /**
+     * 升级检测接口地址，返回最新版本信息，格式见 UpdateInfo。
+     */
+    public static final String UPDATE_CHECK_URL = "https://mazhuang.org/guanggoo-android/update.json";
     public static final String PRIVACY_URL = "https://mazhuang.org/guanggoo-android/policy";
     public static final String IMAGE_BED_HELP_URL = "https://mazhuang.org/guanggoo-android/image-bed-help";
 }

@@ -2,6 +2,7 @@ package org.mazhuang.guanggoo.topicdetail.viewimage;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -95,18 +96,11 @@ public class ViewImageFragment extends BaseFragment<ViewImageContract.Presenter>
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                boolean isAllPermissionsGranted = true;
-                for (String permission : PERMISSIONS) {
-                    if (ActivityCompat.checkSelfPermission(getContext().getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
-                        isAllPermissionsGranted = false;
-                        break;
-                    }
-                }
-
-                if (!isAllPermissionsGranted) {
-                    requestPermissions(PERMISSIONS, PERMISSIONS_REQUEST_CODE);
-                } else {
+                // Android 10 起图片通过 MediaStore 保存，无需再申请存储权限
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q || hasStoragePermission()) {
                     mPresenter.saveImage(mImageView);
+                } else {
+                    requestPermissions(PERMISSIONS, PERMISSIONS_REQUEST_CODE);
                 }
 
                 return true;
@@ -116,6 +110,15 @@ public class ViewImageFragment extends BaseFragment<ViewImageContract.Presenter>
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean hasStoragePermission() {
+        for (String permission : PERMISSIONS) {
+            if (ActivityCompat.checkSelfPermission(getContext().getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

@@ -78,13 +78,13 @@ public class GetTopicDetailTask extends BaseTask<TopicDetail> {
 
         Elements commentsElements = doc.select("div.topic-reply");
 
-        Elements commentsHeaderElements = commentsElements.select("div.ui-header");
+        Elements commentsHeaderElements = commentsElements.select("div.ui-header span");
 
         if (!commentsHeaderElements.isEmpty()) {
             String commentsCountText = commentsHeaderElements.first().text();
             if (!TextUtils.isEmpty(commentsCountText)) {
                 commentsCountText = commentsCountText.replaceAll("[^\\d]", "");
-                topicDetail.setCommentsCount(Integer.valueOf(commentsCountText));
+                topicDetail.setCommentsCount(Integer.parseInt(commentsCountText));
             }
         }
 

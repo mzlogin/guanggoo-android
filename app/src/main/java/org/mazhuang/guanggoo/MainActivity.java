@@ -2,8 +2,13 @@ package org.mazhuang.guanggoo;
 
 import android.animation.ObjectAnimator;
 import android.animation.StateListAnimator;
+import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
+import android.window.OnBackInvokedCallback;
+import android.window.OnBackInvokedDispatcher;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.Fragment;
@@ -29,6 +34,7 @@ import org.mazhuang.guanggoo.router.FragmentFactory;
 import org.mazhuang.guanggoo.router.annotations.ClearTop;
 import org.mazhuang.guanggoo.router.annotations.FinishWhenCovered;
 import org.mazhuang.guanggoo.router.annotations.StartsWithAppBar;
+import org.mazhuang.guanggoo.update.UpdateManager;
 import org.mazhuang.guanggoo.util.ConstantUtil;
 import org.mazhuang.guanggoo.util.DimensUtil;
 import org.mazhuang.guanggoo.util.GlideUtil;
@@ -46,6 +52,8 @@ public class MainActivity extends AppCompatActivity
 
     private long mLastBackPressTime;
 
+    private Object mBackInvokedCallback;
+
     private ImageView mAvatarImageView;
     private TextView mUsernameTextView;
     private ImageView mSearchImageView;
@@ -62,6 +70,24 @@ public class MainActivity extends AppCompatActivity
         initViews();
 
         initLoginInUserInfo();
+
+        UpdateManager.getInstance().checkDaily(this);
+
+        registerBackCallback();
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterBackCallback();
+
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        UpdateManager.getInstance().onActivityResumed(this);
     }
 
     private void initLoginInUserInfo() {
@@ -176,6 +202,44 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        handleBackPressed();
+    }
+
+    /**
+     * Android 16 起，targetSdk 36 的应用默认启用预测性返回，
+     * onBackPressed 不再被系统调用，需要注册 OnBackInvokedCallback 才能拦截返回事件。
+     */
+    private void registerBackCallback() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            mBackInvokedCallback = BackCallbackCompat.register(this, this::handleBackPressed);
+        }
+    }
+
+    private void unregisterBackCallback() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && mBackInvokedCallback != null) {
+            BackCallbackCompat.unregister(this, mBackInvokedCallback);
+            mBackInvokedCallback = null;
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private static class BackCallbackCompat {
+        static Object register(Activity activity, Runnable onBack) {
+            OnBackInvokedCallback callback = onBack::run;
+            activity.getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
+                    OnBackInvokedDispatcher.PRIORITY_DEFAULT, callback);
+            return callback;
+        }
+
+        static void unregister(Activity activity, Object callback) {
+            if (callback instanceof OnBackInvokedCallback) {
+                activity.getOnBackInvokedDispatcher()
+                        .unregisterOnBackInvokedCallback((OnBackInvokedCallback) callback);
+            }
+        }
+    }
+
+    private void handleBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -230,10 +294,6 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.nav_nodes:
                 openPage(ConstantUtil.NODES_CLOUD_URL, getString(R.string.nodes_list));
-                break;
-
-            case R.id.nav_beginner_guide:
-                openPage(ConstantUtil.BEGINNER_GUIDE_URL, getString(R.string.beginner_guide));
                 break;
 
             case R.id.nav_about:
